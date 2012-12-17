@@ -13,6 +13,9 @@ All methods take a final parameter callback with three parameters: `error`, `res
 We try to parse the `body` into a javascript object, and return it to the callback as such for easier use and inspection by the client.
 `response.statusCode` will be `200` if everything worked OK. See Mailgun documentation for other (error) response codes.
 
+Currently we implement only the `send message` (non-MIME) API and the 'Mailboxes` and `Routes` API's. These would be the most common
+and practical API's to be programmatically used. Others would be easy to add if needed.
+
 ```javascript
 var Mailgun = require('mailgun-js');
 
@@ -38,7 +41,7 @@ Returns a Mailgun object with your Mailgun API key and Mailgun domain set on the
 
 ## Methods
 
-### mailgun.sendMessage(data, callback);
+### mailgun.sendMessage(data, callback)
 
 ```javascript
 var data = {
@@ -62,12 +65,13 @@ Sample `body` is a javascript object
 }
 ```
 
-### mailgun.getMailboxes(callback);
+### mailgun.getMailboxes(callback)
 
 Gets a list of mailboxes for the domain. Sample `body`:
 
 ```
-{ total_count: 4,
+{
+  total_count: 4,
   items:
    [ { size_bytes: 167936,
        created_at: 'Thu, 13 Sep 2012 17:41:58 GMT',
@@ -85,7 +89,7 @@ Gets a list of mailboxes for the domain. Sample `body`:
 }
 ```
 
-### mailgun.createMailbox(data, callback);
+### mailgun.createMailbox(data, callback)
 
 Creates a new mailbox for the domain.
 
@@ -100,7 +104,7 @@ mailgun.createMailbox(data, function (error, response, body) {
 });
 ```
 
-Sample `body` is a javascript object
+Sample `body`:
 
 ```
 {
@@ -108,7 +112,7 @@ Sample `body` is a javascript object
 }
 ```
 
-### mailgun.deleteMailbox(mailbox, callback);
+### mailgun.deleteMailbox(mailbox, callback)
 
 Deletes the specified mailbox for the domain.
 
@@ -118,7 +122,7 @@ mailgun.deleteMailbox('testmailbox1', function (error, response, body) {
 });
 ```
 
-Sample `body` is a javascript object
+Sample `body`:
 
 ```
 {
@@ -127,7 +131,7 @@ Sample `body` is a javascript object
 }
 ```
 
-### mailgun.updateMailbox(data, callback);
+### mailgun.updateMailbox(data, callback)
 
 Updates the password for a specified mailbox in the the domain.
 
@@ -142,13 +146,117 @@ mailgun.updateMailbox(data, function (error, response, body) {
 });
 ```
 
-Sample `body` is a javascript object
+Sample `body`:
 
 ```
 {
   message: 'Password changed'
 }
 ```
+
+### mailgun.getRoutes(callback)
+
+Gets all the routes. Sample `body`:
+
+```
+{ total_count: 1,
+  items:
+   [ { description: 'my route',
+       created_at: 'Fri, 14 Dec 2012 20:46:14 GMT',
+       actions: [ 'forward("http://mydomain.com/mail/receive")' ],
+       priority: 0,
+       expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
+       id: '28cb12345cbd98765e123b84' },
+   ]
+}
+```
+### mailgun.createRoute(data, callback)
+
+Creates a new route.
+
+```javascript
+var data = {
+  description: 'my new route!',
+  action: 'forward("http://mydomain.com/mail/receive")',
+  expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")'
+};
+
+mailgun.createRoute(data, function (error, response, body) {
+  console.log(body);
+});
+```
+
+Sample `body`:
+
+```
+{
+  message: 'Route has been created',
+  route:
+   {
+     description: 'my new route!',
+     created_at: 'Mon, 17 Dec 2012 15:21:33 GMT',
+     actions: [ 'forward("http://mydomain.com/mail/receive")' ],
+     priority: 0,
+     expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
+     id: '12cf345d09876d23450211ed'
+   }
+}
+```
+
+### mailgun.deleteRoute(id, callback)
+
+Deletes the specified route
+
+```javascript
+mailgun.deleteRoute('12cf345d09876d23450211ed', function (error, response, body) {
+  console.log(body);
+});
+```
+
+Sample `body`:
+
+```
+{
+  message: 'Route has been deleted',
+  id: '12cf345d09876d23450211ed'
+}
+```
+
+### mailgun.updateRoute(id, data, callback)
+
+Updates a given route by ID. All data parameters optional.
+This API call only updates the specified fields leaving others unchanged.
+
+```javascript
+var data = {
+  description: 'my new updated route!',
+  action: 'forward("http://mydomain.com/receiveMail")',
+  expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")'
+};
+
+mailgun.updateRoute('12cf345d09876d23450211ed', data, function (error, response, body) {
+  console.log(body);
+});
+```
+
+Sample `body`:
+
+```
+{
+  priority: 0,
+  description: 'my new updated route!',
+  created_at: 'Mon, 17 Dec 2012 15:21:33 GMT',
+  expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
+  message: 'Route has been updated',
+  actions: [ 'forward("http://mydomain.com/receiveMail")' ],
+  id: '12cf345d09876d23450211ed'
+}
+```
+
+## TODO
+
+* Automated tests. This is to come.
+* Other API sections.
 
 ## License
 
