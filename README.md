@@ -172,7 +172,7 @@ Gets all the routes. Sample `body`:
        priority: 0,
        expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
        id: '28cb12345cbd98765e123b84'
-     },
+     }
    ]
 }
 ```
