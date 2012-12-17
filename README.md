@@ -159,7 +159,7 @@ Sample `body`:
 
 ### mailgun.getRoutes(callback)
 
-Gets all the routes. Sample `body`:
+Gets all the routes. Note that all `Routes` API methods are not domain-specific. Sample `body`:
 
 ```
 { total_count: 1,
