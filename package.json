@@ -1,0 +1,25 @@
+{
+  "author": {
+    "name": "Bojan Djurkovic <bojan@onelobby.com>"
+  },
+  "name": "mailgun-js",
+  "description": "Simple Node.js helper module for Mailgun API",
+  "keywords": ["email", "mailgun"],
+  "version": "0.1.0",
+  "homepage": "https://github.com/onelobby/mailgun-js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/onelobby/mailgun-js.git"
+  },
+  "bugs" : { 
+    "url" : "http://github.com/onelobby/mailgun-js/issues"
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "main": "./mailgun.js",
+  "dependencies": {
+  	"request": "2.12.x"
+  }
+}
