@@ -63,7 +63,7 @@ Sample `body` is a javascript object
 ```
 {
   message: 'Queued. Thank you.',
-  id: '<20121217142109.14542.78348@onelobby.mailgun.org>'
+  id: '<20121217142109.14542.78348@mydomain.com>'
 }
 ```
 
@@ -75,7 +75,8 @@ Gets a list of mailboxes for the domain. Sample `body`:
 {
   total_count: 4,
   items:
-   [ { size_bytes: 167936,
+   [
+     { size_bytes: 167936,
        created_at: 'Thu, 13 Sep 2012 17:41:58 GMT',
        mailbox: 'mailbox1@mydomain.com' },
      { size_bytes: 225280,
@@ -163,12 +164,15 @@ Gets all the routes. Sample `body`:
 ```
 { total_count: 1,
   items:
-   [ { description: 'my route',
+   [
+     {
+       description: 'my route',
        created_at: 'Fri, 14 Dec 2012 20:46:14 GMT',
        actions: [ 'forward("http://mydomain.com/mail/receive")' ],
        priority: 0,
        expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
-       id: '28cb12345cbd98765e123b84' },
+       id: '28cb12345cbd98765e123b84'
+     },
    ]
 }
 ```
@@ -232,8 +236,7 @@ This API call only updates the specified fields leaving others unchanged.
 ```javascript
 var data = {
   description: 'my new updated route!',
-  action: 'forward("http://mydomain.com/receiveMail")',
-  expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")'
+  action: 'forward("http://mydomain.com/receiveMail")'
 };
 
 mailgun.updateRoute('12cf345d09876d23450211ed', data, function (error, response, body) {
