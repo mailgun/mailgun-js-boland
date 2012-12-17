@@ -217,8 +217,6 @@ Mailgun.prototype.request = function (method, resource, data, cb) {
     getDomain(),
     resource);
 
-  console.log(url);
-
   var opts = {
     url: url,
     method: method,
