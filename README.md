@@ -13,6 +13,7 @@ Most methods take a `data` parameter, which is a Javascript object that would co
 All methods take a final parameter callback with three parameters: `error`, `response`, and `body`, exactly like the request callback.
 We try to parse the `body` into a javascript object, and return it to the callback as such for easier use and inspection by the client.
 `response.statusCode` will be `200` if everything worked OK. See Mailgun documentation for other (error) response codes.
+If there was an error a new `Error` object will be passed to the callback in the `error` parameter.
 
 Currently we only implement the `send message` (non-MIME) API and the `Mailboxes` and `Routes` API's. These would be the most common
 and practical API's to be programmatically used. Others would be easy to add if needed.
