@@ -303,6 +303,8 @@ $ npm install
 $ npm test
 ```
 
+The tests will call Mailgun API, and will send a test email, create mailbox(es) and route(s).
+
 ## TODO
 
 * Other API sections.
