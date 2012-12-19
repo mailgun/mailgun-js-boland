@@ -1,0 +1,4 @@
+--ui exports
+--slow 1000ms
+--timeout 5000ms
+--reporter spec

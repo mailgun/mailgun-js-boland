@@ -1,0 +1,13 @@
+{ "message": {
+    "to": "me@samples.mailgun.org",
+    "from": "you@samples.mailgun.org",
+    "subject": "Test email subject",
+    "text": "Test email text"
+}, "route": {
+    "description": "Sample test route",
+    "expression": "match_recipient('.*@samples.mailgun.org')",
+    "action": "forward('http://myhost.com/messages/')"
+}, "mailbox": {
+    "mailbox": "sampletestmailbox",
+    "password": "password1"
+}}

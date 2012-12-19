@@ -176,6 +176,33 @@ Gets all the routes. Note that all `Routes` API methods are not domain-specific.
    ]
 }
 ```
+
+### mailgun.getRoute(id, callback)
+
+Returns a single route object based on its ID.
+
+```javascript
+mailgun.getRoute('12cf345d09876d23450211ed', function (error, response, body) {
+  console.log(body);
+});
+```
+
+Sample `body`:
+
+```
+{
+  route:
+   {
+     description: 'my new route!',
+     created_at: 'Mon, 17 Dec 2012 15:21:33 GMT',
+     actions: [ 'forward("http://mydomain.com/mail/receive")' ],
+     priority: 0,
+     expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
+     id: '12cf345d09876d23450211ed'
+   }
+}
+```
+
 ### mailgun.createRoute(data, callback)
 
 Creates a new route.
@@ -258,9 +285,26 @@ Sample `body`:
 }
 ```
 
+## Tests
+
+To run the test suite you must first have a Mailgun account with a domain setup. Then create a file named _./test/auth.json_, which contains your credentials as JSON, for example:
+
+```json
+{ "api_key": "key-XXXXXXXXXXXXXXXXXXXXXXX", "domain": "mydomain.mailgun.org" }
+```
+
+You should edit _./test/fixture.json_ and modify at least the `to` and `from` fields of the `message` object to match
+emails you would like to test with. Modify other fields as desired, though the given defaults will work.
+
+Then install the dev dependencies and execute the test suite:
+
+```
+$ npm install
+$ npm test
+```
+
 ## TODO
 
-* Automated tests. This is to come.
 * Other API sections.
 
 ## License

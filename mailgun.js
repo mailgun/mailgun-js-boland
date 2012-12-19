@@ -14,6 +14,14 @@ var request = require('request');
  * @type {Function}
  */
 var Mailgun = module.exports = function (api_key, domain) {
+  if (!api_key) {
+    throw new Error('Mailgun "API key" required');
+  }
+
+  if (!domain) {
+    throw new Error('Mailgun "domain" required');
+  }
+
   this.username = 'api'
   this.api_key = api_key;
   this.domain = domain;
@@ -35,13 +43,13 @@ var Mailgun = module.exports = function (api_key, domain) {
  */
 Mailgun.prototype.sendMessage = function (data, cb) {
   if (!data.to) {
-    return cb(new Error('You must include a \'to\' number.'));
+    return cb(new Error('You must include a "to" parameter.'));
   }
   if (!data.from) {
-    return cb(new Error('You must include a \'from\' number.'));
+    return cb(new Error('You must include a "from" parameter.'));
   }
   if (!data.text && !data.html) {
-    return cb(new Error('You must include a \'text\' or \'html\' parameter.'));
+    return cb(new Error('You must include a "text" or "html" parameter.'));
   }
 
   return this.request('POST', '/messages', data, cb);
@@ -81,7 +89,7 @@ Mailgun.prototype.createMailbox = function (data, cb) {
  * @type {Function}
  */
 Mailgun.prototype.deleteMailbox = function (mailbox, cb) {
-  if (!mailbox) {
+  if (!mailbox || typeof mailbox !== 'string') {
     return cb(new Error('You must include name of the mailbox.'));
   }
 
@@ -126,7 +134,7 @@ Mailgun.prototype.getRoutes = function (data, cb) {
  * @type {Function}
  */
 Mailgun.prototype.getRoute = function (id, cb) {
-  if (!id) {
+  if (!id || typeof id !== 'string') {
     return cb(new Error('You must include id of the route.'));
   }
 
@@ -159,7 +167,7 @@ Mailgun.prototype.createRoute = function (data, cb) {
  * @type {Function}
  */
 Mailgun.prototype.updateRoute = function (id, data, cb) {
-  if (!id) {
+  if (!id || typeof id !== 'string') {
     return cb(new Error('You must include id of the route.'));
   }
 
@@ -173,8 +181,8 @@ Mailgun.prototype.updateRoute = function (id, data, cb) {
  * @type {Function}
  */
 Mailgun.prototype.deleteRoute = function (id, cb) {
-  if (!id) {
-    return cb(new Error('You must include the ID of the mailbox.'));
+  if (!id || typeof id !== 'string') {
+    return cb(new Error('You must include the id of the route.'));
   }
 
   return this.request('DELETE', '/routes/' + id, cb);
