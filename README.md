@@ -210,7 +210,7 @@ Creates a new route.
 ```javascript
 var data = {
   description: 'my new route!',
-  action: 'forward("http://mydomain.com/mail/receive")',
+  action: [ 'forward("http://mydomain.com/mail/receive")', 'stop()' ],
   expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")'
 };
 
@@ -228,30 +228,13 @@ Sample `body`:
    {
      description: 'my new route!',
      created_at: 'Mon, 17 Dec 2012 15:21:33 GMT',
-     actions: [ 'forward("http://mydomain.com/mail/receive")' ],
+     actions: 
+       [ 'forward("http://mydomain.com/mail/receive")',
+         'stop()' ],
      priority: 0,
      expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
      id: '12cf345d09876d23450211ed'
    }
-}
-```
-
-### mailgun.deleteRoute(id, callback)
-
-Deletes the specified route
-
-```javascript
-mailgun.deleteRoute('12cf345d09876d23450211ed', function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body`:
-
-```
-{
-  message: 'Route has been deleted',
-  id: '12cf345d09876d23450211ed'
 }
 ```
 
@@ -281,6 +264,25 @@ Sample `body`:
   expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
   message: 'Route has been updated',
   actions: [ 'forward("http://mydomain.com/receiveMail")' ],
+  id: '12cf345d09876d23450211ed'
+}
+```
+
+### mailgun.deleteRoute(id, callback)
+
+Deletes the specified route
+
+```javascript
+mailgun.deleteRoute('12cf345d09876d23450211ed', function (error, response, body) {
+  console.log(body);
+});
+```
+
+Sample `body`:
+
+```
+{
+  message: 'Route has been deleted',
   id: '12cf345d09876d23450211ed'
 }
 ```
