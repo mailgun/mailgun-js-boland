@@ -64,7 +64,7 @@ For actual examples see the tests source code. Note that `routes` and `lists` AP
    * `.list(listAddress, data)` - list mailing list members. `data` is optional and can contain `subscribed`, `limit` and `skip`.
    * `.get(listAddress, memberAddress)` - get a specific mailing list member given mailing list address and member address.
    * `.create(listAddress, data)` - create a mailing list member. `data` should contain `address`, optional member `name`, `subscribed`, `upsert`, and any additional `vars`.
-   * `.update(listAddress, memberAddress, data)` - update a mailing list member with given properties. Won�t touch the property if it�s not passed in.
+   * `.update(listAddress, memberAddress, data)` - update a mailing list member with given properties. Won't touch the property if it's not passed in.
    * `.del(listAddress, memberAddress)` - delete a mailing list member given mailing list address and member address.
 
 
