@@ -10,18 +10,18 @@ Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
 Please see [Mailgun Documentation](http://documentation.mailgun.net) for full Mailgun API reference. Depends on [request module](https://github.com/mikeal/request).
 Most methods take a `data` parameter, which is a Javascript object that would contain the arguments for the Mailgun API.
-All methods take a final parameter callback with three parameters: `error`, `response`, and `body`, exactly like the request callback.
+All methods take a final parameter callback with three parameters: `error`, `response`, and `body`, exactly like the [request](https://github.com/mikeal/request) callback.
 We try to parse the `body` into a javascript object, and return it to the callback as such for easier use and inspection by the client.
 `response.statusCode` will be `200` if everything worked OK. See Mailgun documentation for other (error) response codes.
 If there was an error a new `Error` object will be passed to the callback in the `error` parameter.
 
-Currently we only implement the `send message` (non-MIME) API and the `Mailboxes` and `Routes` API's. These would be the most common
+Currently we only implement the `send message` (non-MIME) API and the `Mailboxes`, `Routes`, and `Mailing Lists` API's. These would be the most common
 and practical API's to be programmatically used. Others would be easy to add if needed.
 
 ```javascript
-var Mailgun = require('mailgun-js');
-
-var mailgun = new Mailgun('key-...............................', 'mydomain.com');
+var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
+var domain = 'mydomain.mailgun.org';
+var mailgun = require('mailgun-js')(api_key, domain);
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -30,262 +30,43 @@ var data = {
   text: 'Testing some Mailgun awesomness!'
 };
 
-mailgun.sendMessage(data, function (error, response, body) {
+mailgun.messages.send(data, function (error, response, body) {
   console.log(body);
 });
 ```
 
-## Constructor
+## API
 
-### new Mailgun(key, domain);
+All methods take a callback as their last parameter. The callback is called with a Javascript `Error` (if any) and then the `response` and the `body` returned by mailgun. 
+For actual examples see the tests source code. Note that `routes` and `lists` API's do not act on specified mailgun domains and are global for the mailgun account.
 
-Returns a Mailgun object with your Mailgun API key and Mailgun domain set on the object.
+* `mailgun.messages` - Creates a new email message and sends it using mailgun.
+   * `.send(data)` - [send a message](http://documentation.mailgun.net/api-sending.html).
+* `mailgun.mailboxes` - create, update, delete and list [mailboxes](http://documentation.mailgun.net/api-mailboxes.html).
+   * `.list(data)` - list mailboxes. `data` is optional and can contain `limit` and `skip`.
+   * `.create(data)` - create a mailbox. `data` should have `mailbox` name and `password`.
+   * `.update(data)` - update a mailbox given the `mailbox` name. Currently only the `password` can be changed.
+   * `.del(mailbox)` - delete a mailbox given the `mailbox` name.
+* `mailgun.routes` - create, get, update, delete and list [routes](http://documentation.mailgun.net/api-routes.html).
+   * `.list(data)` - list routes. `data` is optional and can contain `limit` and `skip`.
+   * `.get(id)` - get a specific route given the route `id`.
+   * `.create(data)` - create a route. `data` should contain `priority`, `description`, `expression` and `action` as strings.
+   * `.update(id, data)` - update a route given route `id`. All `data` parameters optional. This API call only updates the specified fields leaving others unchanged.
+   * `.del(id)` - delete a route given route `id`.
+* `mailgun.lists` - create, get, update, delete and list [mailing lists](http://documentation.mailgun.net/api-mailinglists.html) and get mailing list stats.
+   * `.list(data)` - list mailing lists. `data` is optional and can contain `address`, `limit` and `skip`.
+   * `.get(address)` - get a specific mailing list given mailing list `address`.
+   * `.create(data)` - create a mailing list. `data` should contain `address`, `name`, `description`, and `access_level` as strings.
+   * `.update(address, data)` - update a mailing list given mailing list `address`.
+   * `.del(address)` - delete a mailing list given mailing list `address`.
+   * `.stats(address)` - fetches mailing list stats given mailing list `address`.
+* `mailgun.lists.members` - create, get, update, delete and list [mailing list members](http://documentation.mailgun.net/api-mailinglists.html).
+   * `.list(listAddress, data)` - list mailing list members. `data` is optional and can contain `subscribed`, `limit` and `skip`.
+   * `.get(listAddress, memberAddress)` - get a specific mailing list member given mailing list address and member address.
+   * `.create(listAddress, data)` - create a mailing list member. `data` should contain `address`, optional member `name`, `subscribed`, `upsert`, and any additional `vars`.
+   * `.update(listAddress, memberAddress, data)` - update a mailing list member with given properties. Won’t touch the property if it’s not passed in.
+   * `.del(listAddress, memberAddress)` - delete a mailing list member given mailing list address and member address.
 
-## Methods
-
-### mailgun.sendMessage(data, callback)
-
-```javascript
-var data = {
-  from: 'Excited User <me@samples.mailgun.org>',
-  to: 'serobnic@mail.ru',
-  subject: 'Hello',
-  text: 'Testing some Mailgun awesomness!'
-};
-
-mailgun.sendMessage(data, function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body` is a javascript object
-
-```
-{
-  message: 'Queued. Thank you.',
-  id: '<20121217142109.14542.78348@mydomain.com>'
-}
-```
-
-### mailgun.getMailboxes(callback)
-
-Gets a list of mailboxes for the domain. Sample `body`:
-
-```
-{
-  total_count: 4,
-  items:
-   [
-     { size_bytes: 167936,
-       created_at: 'Thu, 13 Sep 2012 17:41:58 GMT',
-       mailbox: 'mailbox1@mydomain.com' },
-     { size_bytes: 225280,
-       created_at: 'Sat, 13 Oct 2012 17:52:28 GMT',
-       mailbox: 'mailbox2@mydomain.com' },
-     { size_bytes: null,
-       created_at: 'Wed, 12 Dec 2012 19:39:32 GMT',
-       mailbox: 'mailbox3@mydomain.com' },
-     { size_bytes: 0,
-       created_at: 'Wed, 12 Dec 2012 21:19:57 GMT',
-       mailbox: 'mailbox4@mydomain.com' }
-   ]
-}
-```
-
-### mailgun.createMailbox(data, callback)
-
-Creates a new mailbox for the domain.
-
-```javascript
-var data = {
-  mailbox: 'testmailbox1',
-  password: 'password1'
-};
-
-mailgun.createMailbox(data, function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body`:
-
-```
-{
-  message: 'Created 1 mailboxes'
-}
-```
-
-### mailgun.deleteMailbox(mailbox, callback)
-
-Deletes the specified mailbox for the domain.
-
-```javascript
-mailgun.deleteMailbox('testmailbox1', function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body`:
-
-```
-{
-  message: 'Mailbox has been deleted',
-  spec: 'testmailbox1@mydomain.com'
-}
-```
-
-### mailgun.updateMailbox(data, callback)
-
-Updates the password for a specified mailbox in the the domain.
-
-```javascript
-var data = {
-  mailbox: 'testmailbox1',
-  password: 'newpassword2'
-};
-
-mailgun.updateMailbox(data, function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body`:
-
-```
-{
-  message: 'Password changed'
-}
-```
-
-### mailgun.getRoutes(callback)
-
-Gets all the routes. Note that all `Routes` API methods are not domain-specific. Sample `body`:
-
-```
-{ total_count: 1,
-  items:
-   [
-     {
-       description: 'my route',
-       created_at: 'Fri, 14 Dec 2012 20:46:14 GMT',
-       actions: [ 'forward("http://mydomain.com/mail/receive")' ],
-       priority: 0,
-       expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
-       id: '28cb12345cbd98765e123b84'
-     }
-   ]
-}
-```
-
-### mailgun.getRoute(id, callback)
-
-Returns a single route object based on its ID.
-
-```javascript
-mailgun.getRoute('12cf345d09876d23450211ed', function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body`:
-
-```
-{
-  route:
-   {
-     description: 'my new route!',
-     created_at: 'Mon, 17 Dec 2012 15:21:33 GMT',
-     actions: [ 'forward("http://mydomain.com/mail/receive")' ],
-     priority: 0,
-     expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
-     id: '12cf345d09876d23450211ed'
-   }
-}
-```
-
-### mailgun.createRoute(data, callback)
-
-Creates a new route.
-
-```javascript
-var data = {
-  description: 'my new route!',
-  action: [ 'forward("http://mydomain.com/mail/receive")', 'stop()' ],
-  expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")'
-};
-
-mailgun.createRoute(data, function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body`:
-
-```
-{
-  message: 'Route has been created',
-  route:
-   {
-     description: 'my new route!',
-     created_at: 'Mon, 17 Dec 2012 15:21:33 GMT',
-     actions: 
-       [ 'forward("http://mydomain.com/mail/receive")',
-         'stop()' ],
-     priority: 0,
-     expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
-     id: '12cf345d09876d23450211ed'
-   }
-}
-```
-
-### mailgun.updateRoute(id, data, callback)
-
-Updates a given route by ID. All data parameters optional.
-This API call only updates the specified fields leaving others unchanged.
-
-```javascript
-var data = {
-  description: 'my new updated route!',
-  action: 'forward("http://mydomain.com/receiveMail")'
-};
-
-mailgun.updateRoute('12cf345d09876d23450211ed', data, function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body`:
-
-```
-{
-  priority: 0,
-  description: 'my new updated route!',
-  created_at: 'Mon, 17 Dec 2012 15:21:33 GMT',
-  expression: 'match_recipient("^[A-Z0-9._%+-]+@mydomain.com")',
-  message: 'Route has been updated',
-  actions: [ 'forward("http://mydomain.com/receiveMail")' ],
-  id: '12cf345d09876d23450211ed'
-}
-```
-
-### mailgun.deleteRoute(id, callback)
-
-Deletes the specified route
-
-```javascript
-mailgun.deleteRoute('12cf345d09876d23450211ed', function (error, response, body) {
-  console.log(body);
-});
-```
-
-Sample `body`:
-
-```
-{
-  message: 'Route has been deleted',
-  id: '12cf345d09876d23450211ed'
-}
-```
 
 ## Tests
 
@@ -315,6 +96,6 @@ The tests will call Mailgun API, and will send a test email, create mailbox(es) 
 
 This project is not endorsed by or affiliated with [Mailgun](http://www.mailgun.com).
 
-Copyright 2012 OneLobby
+Copyright 2012, 2013 OneLobby
 
 Licensed under the MIT License.

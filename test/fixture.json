@@ -10,4 +10,8 @@
 }, "mailbox": {
     "mailbox": "sampletestmailbox",
     "password": "password1"
+}, "mailingList" : {
+    "address": "devtest@samples.mailgun.org",
+    "name": "MailgunDev",
+    "description": "Mailgun developers list"
 }}
