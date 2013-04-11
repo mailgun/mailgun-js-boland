@@ -5,7 +5,7 @@
  */
 
 var request = require('request');
-
+var querystring = require('querystring');
 /**
  * Initializes the Mailgun module
  * @param api_key {String} the API Key for the mailgun account
