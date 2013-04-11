@@ -85,6 +85,12 @@ module.exports = function (api_key, domain) {
         }
       }
 
+    // Handle form data as a querystring for GET requests.
+    if(opts.method === "GET"){
+      opts.url += "?" + querystring.stringify(opts.form);
+    }
+
+
       return (cb || Function)(error, response, body);
     };
 
