@@ -69,8 +69,15 @@ module.exports = function (api_key, domain) {
       url: url,
       method: method,
       headers: headers,
-      form: data
+      agent: false
     };
+
+    if (method === 'GET' || method === 'DELETE') {
+      opts.qs = data;
+    }
+    else {
+      opts.form = data;
+    }
 
     var responseCb = function (error, response, body) {
       if (response && (response.headers['content-type'] === 'application/json')) {
