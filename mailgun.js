@@ -115,6 +115,21 @@ module.exports = function (api_key, domain) {
   }
 
   return {
+
+    /**
+     * Expose helper methods to allow users to interact with parts of the api that
+     * are not exposed already.
+     *
+     * Example
+     *  mailgun._get('/stats',function(err,stats){
+     *    console.log(stats)
+     *  })
+     */
+    _post : post,
+    _get : get,
+    _del : del,
+    _put : put,
+
     messages: {
       /**
        * Creates a new email message and sends it using mailgun
