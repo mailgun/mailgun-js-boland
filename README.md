@@ -66,7 +66,24 @@ For actual examples see the tests source code. Note that `routes` and `lists` AP
    * `.create(listAddress, data)` - create a mailing list member. `data` should contain `address`, optional member `name`, `subscribed`, `upsert`, and any additional `vars`.
    * `.update(listAddress, memberAddress, data)` - update a mailing list member with given properties. Won't touch the property if it's not passed in.
    * `.del(listAddress, memberAddress)` - delete a mailing list member given mailing list address and member address.
+* `mailgun._get(resource,data,callback)` - sends GET request to the specified resource on api.
+* `mailgun._post(resource,data,callback)` - sends POST request to the specified resource on api.
+* `mailgun._del(resource,data,callback)` - sends DELETE request to the specified resource on api.
+* `mailgun._put(resource,data,callback)` - sends PUT request to the specified resource on api.
 
+### Unexposed API Methods
+
+Mailgun-js also provides helper methods to allow users to interact with parts of the api that are not exposed already.
+
+Example: Get All Stats
+
+```js
+  
+mailgun._get('/stats', function (error, response, body) {
+  console.log(body);
+});
+
+```
 
 ## Tests
 
