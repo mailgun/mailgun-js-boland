@@ -79,7 +79,7 @@ Example: Get All Stats
 
 ```js
   
-mailgun._get('/stats', function (error, response, body) {
+mailgun.get('/stats', function (error, response, body) {
   console.log(body);
 });
 

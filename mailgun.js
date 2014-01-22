@@ -6,6 +6,9 @@
 
 var request = require('request');
 
+var noop = function () {
+};
+
 /**
  * Initializes the Mailgun module
  * @param api_key {String} the API Key for the mailgun account
@@ -92,25 +95,25 @@ module.exports = function (api_key, domain) {
         }
       }
 
-      return (cb || Function)(error, response, body);
+      return (cb || noop)(error, response, body);
     };
 
     return request(opts, responseCb);
   }
 
-  function post(path, data, callback) {
+  function _post(path, data, callback) {
     return _request('POST', path, data, callback);
   }
 
-  function get(path, data, callback) {
+  function _get(path, data, callback) {
     return _request('GET', path, data, callback);
   }
 
-  function del(path, data, callback) {
+  function _del(path, data, callback) {
     return _request('DELETE', path, data, callback);
   }
 
-  function put(path, data, callback) {
+  function _put(path, data, callback) {
     return _request('PUT', path, data, callback);
   }
 
@@ -121,14 +124,14 @@ module.exports = function (api_key, domain) {
      * are not exposed already.
      *
      * Example
-     *  mailgun._get('/stats',function(err,stats){
+     *  mailgun.get('/stats',function(err,stats){
      *    console.log(stats)
      *  })
      */
-    _post : post,
-    _get : get,
-    _del : del,
-    _put : put,
+    post: _post,
+    get: _get,
+    del: _del,
+    put: _put,
 
     messages: {
       /**
@@ -140,16 +143,16 @@ module.exports = function (api_key, domain) {
        */
       send: function (data, cb) {
         if (!data.to) {
-          return (cb || Function)(new Error('You must include a "to" parameter.'));
+          return (cb || noop)(new Error('You must include a "to" parameter.'));
         }
         if (!data.from) {
-          return (cb || Function)(new Error('You must include a "from" parameter.'));
+          return (cb || noop)(new Error('You must include a "from" parameter.'));
         }
         if (!data.text && !data.html) {
-          return (cb || Function)(new Error('You must include a "text" or "html" parameter.'));
+          return (cb || noop)(new Error('You must include a "text" or "html" parameter.'));
         }
 
-        return post('/messages', data, cb);
+        return _post('/messages', data, cb);
       }
     },
 
@@ -161,7 +164,7 @@ module.exports = function (api_key, domain) {
        * @type {Function}
        */
       list: function (data, cb) {
-        return get('/mailboxes', data, cb);
+        return _get('/mailboxes', data, cb);
       },
 
       /**
@@ -172,13 +175,13 @@ module.exports = function (api_key, domain) {
        */
       create: function (data, cb) {
         if (!data.mailbox) {
-          return (cb || Function)(new Error('You must include name of the mailbox in the \'mailbox\' parameter.'));
+          return (cb || noop)(new Error('You must include name of the mailbox in the \'mailbox\' parameter.'));
         }
         if (!data.password) {
-          return (cb || Function)(new Error('You must include a password for the new mailbox.'));
+          return (cb || noop)(new Error('You must include a password for the new mailbox.'));
         }
 
-        return post('/mailboxes', data, cb);
+        return _post('/mailboxes', data, cb);
       },
 
       /**
@@ -189,10 +192,10 @@ module.exports = function (api_key, domain) {
        */
       del: function (mailbox, cb) {
         if (!mailbox || typeof mailbox !== 'string') {
-          return (cb || Function)(new Error('You must include name of the mailbox.'));
+          return (cb || noop)(new Error('You must include name of the mailbox.'));
         }
 
-        return del('/mailboxes/' + mailbox, cb);
+        return _del('/mailboxes/' + mailbox, cb);
       },
 
       /**
@@ -203,16 +206,16 @@ module.exports = function (api_key, domain) {
        */
       update: function (data, cb) {
         if (!data.mailbox) {
-          return (cb || Function)(new Error('You must include name of the mailbox in the \'mailbox\' parameter.'));
+          return (cb || noop)(new Error('You must include name of the mailbox in the \'mailbox\' parameter.'));
         }
         if (!data.password) {
-          return (cb || Function)(new Error('You must include a password for the mailbox.'));
+          return (cb || noop)(new Error('You must include a password for the mailbox.'));
         }
 
         var mailbox = data.mailbox;
         delete data.mailbox;
 
-        return put('/mailboxes/' + mailbox, data, cb);
+        return _put('/mailboxes/' + mailbox, data, cb);
       }
     },
 
@@ -224,7 +227,7 @@ module.exports = function (api_key, domain) {
        * @type {Function}
        */
       list: function (data, cb) {
-        return get('/routes', data, cb);
+        return _get('/routes', data, cb);
       },
 
       /**
@@ -235,10 +238,10 @@ module.exports = function (api_key, domain) {
        */
       get: function (id, cb) {
         if (!id || typeof id !== 'string') {
-          return (cb || Function)(new Error('You must include id of the route.'));
+          return (cb || noop)(new Error('You must include id of the route.'));
         }
 
-        return get('/routes/' + id, cb);
+        return _get('/routes/' + id, cb);
       },
 
       /**
@@ -249,13 +252,13 @@ module.exports = function (api_key, domain) {
        */
       create: function (data, cb) {
         if (!data.expression) {
-          return (cb || Function)(new Error('You must include route expression.'));
+          return (cb || noop)(new Error('You must include route expression.'));
         }
         if (!data.action) {
-          return (cb || Function)(new Error('You must include route action.'));
+          return (cb || noop)(new Error('You must include route action.'));
         }
 
-        return post('/routes', data, cb);
+        return _post('/routes', data, cb);
       },
 
       /**
@@ -268,14 +271,14 @@ module.exports = function (api_key, domain) {
        */
       update: function (id, data, cb) {
         if (!data || (typeof data !== 'object')) {
-          return (cb || Function)(new Error('You must include data.'));
+          return (cb || noop)(new Error('You must include data.'));
         }
 
         if (!id || typeof id !== 'string') {
           return cb(new Error('You must include id of the route.'));
         }
 
-        return put('/routes/' + id, data, cb);
+        return _put('/routes/' + id, data, cb);
       },
 
       /**
@@ -286,10 +289,10 @@ module.exports = function (api_key, domain) {
        */
       del: function (id, cb) {
         if (!id || typeof id !== 'string') {
-          return (cb || Function)(new Error('You must include the id of the route.'));
+          return (cb || noop)(new Error('You must include the id of the route.'));
         }
 
-        return del('/routes/' + id, cb);
+        return _del('/routes/' + id, cb);
       }
     },
 
@@ -301,7 +304,7 @@ module.exports = function (api_key, domain) {
        * @type {Function}
        */
       list: function (data, cb) {
-        return get('/lists', data, cb);
+        return _get('/lists', data, cb);
       },
 
       /**
@@ -312,10 +315,10 @@ module.exports = function (api_key, domain) {
        */
       get: function (address, cb) {
         if (!address || typeof address !== 'string') {
-          return (cb || Function)(new Error('You must include mailing list address.'));
+          return (cb || noop)(new Error('You must include mailing list address.'));
         }
 
-        return get('/lists/' + address, cb);
+        return _get('/lists/' + address, cb);
       },
 
       /**
@@ -326,10 +329,10 @@ module.exports = function (api_key, domain) {
        */
       create: function (data, cb) {
         if (!data.address) {
-          return (cb || Function)(new Error('You must include mailing list address.'));
+          return (cb || noop)(new Error('You must include mailing list address.'));
         }
 
-        return post('/lists', data, cb);
+        return _post('/lists', data, cb);
       },
 
       /**
@@ -341,14 +344,14 @@ module.exports = function (api_key, domain) {
        */
       update: function (address, data, cb) {
         if (!data || (typeof data !== 'object')) {
-          return (cb || Function)(new Error('You must include data.'));
+          return (cb || noop)(new Error('You must include data.'));
         }
 
         if (!address || typeof address !== 'string') {
-          return (cb || Function)(new Error('You must include mailing list address.'));
+          return (cb || noop)(new Error('You must include mailing list address.'));
         }
 
-        return put('/lists/' + address, data, cb);
+        return _put('/lists/' + address, data, cb);
       },
 
       /**
@@ -359,10 +362,10 @@ module.exports = function (api_key, domain) {
        */
       del: function (address, cb) {
         if (!address || typeof address !== 'string') {
-          return (cb || Function)(new Error('You must include mailing list address.'));
+          return (cb || noop)(new Error('You must include mailing list address.'));
         }
 
-        return del('/lists/' + address, cb);
+        return _del('/lists/' + address, cb);
       },
 
       /**
@@ -373,10 +376,10 @@ module.exports = function (api_key, domain) {
        */
       stats: function (address, cb) {
         if (!address || typeof address !== 'string') {
-          return (cb || Function)(new Error('You must include mailing list address.'));
+          return (cb || noop)(new Error('You must include mailing list address.'));
         }
 
-        return get('/lists/' + address + '/stats', cb);
+        return _get('/lists/' + address + '/stats', cb);
       },
 
       members: {
@@ -394,7 +397,7 @@ module.exports = function (api_key, domain) {
             return callback(new Error('You must include mailing list address.'));
           }
 
-          return get('/lists/' + listAddress + '/members', data, cb);
+          return _get('/lists/' + listAddress + '/members', data, cb);
         },
 
         /**
@@ -415,7 +418,7 @@ module.exports = function (api_key, domain) {
             return callback(new Error('You must include member address.'));
           }
 
-          return get('/lists/' + listAddress + '/members/' + memberAddress, cb);
+          return _get('/lists/' + listAddress + '/members/' + memberAddress, cb);
         },
 
         /**
@@ -452,7 +455,7 @@ module.exports = function (api_key, domain) {
             params = data;
           }
 
-          return post('/lists/' + listAddress + '/members', params, cb);
+          return _post('/lists/' + listAddress + '/members', params, cb);
         },
 
         /**
@@ -491,7 +494,7 @@ module.exports = function (api_key, domain) {
             params = data;
           }
 
-          return put('/lists/' + listAddress + '/members/' + memberAddress, params, cb);
+          return _put('/lists/' + listAddress + '/members/' + memberAddress, params, cb);
         },
 
         /**
@@ -512,7 +515,7 @@ module.exports = function (api_key, domain) {
             return callback(new Error('You must include member address.'));
           }
 
-          return del('/lists/' + listAddress + '/members/' + memberAddress, cb);
+          return _del('/lists/' + listAddress + '/members/' + memberAddress, cb);
         }
       }
     }
