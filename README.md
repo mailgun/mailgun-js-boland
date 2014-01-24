@@ -82,12 +82,10 @@ Mailgun-js also provides helper methods to allow users to interact with parts of
 
 Example: Get All Stats
 
-```js
-  
+```javascript
 mailgun.get('/stats', function (error, response, body) {
   console.log(body);
 });
-
 ```
 
 ## Tests
