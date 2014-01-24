@@ -47,6 +47,11 @@ For actual examples see the tests source code. Note that `routes` and `lists` AP
    * `.create(data)` - create a mailbox. `data` should have `mailbox` name and `password`.
    * `.update(data)` - update a mailbox given the `mailbox` name. Currently only the `password` can be changed.
    * `.del(mailbox)` - delete a mailbox given the `mailbox` name.
+* `mailgun.domains` - create, get, delete and list [domains](http://documentation.mailgun.net/api-domains.html).
+   * `.list(data)` - list domains. `data` is optional and can contain `limit` and `skip`.
+   * `.create(data)` - create a domains. `data` should have `name` and `smtp_password`.
+   * `.get(domain)` - get the domain given the `domain` name.
+   * `.del(domain)` - delete a domain given the `domain` name.
 * `mailgun.routes` - create, get, update, delete and list [routes](http://documentation.mailgun.net/api-routes.html).
    * `.list(data)` - list routes. `data` is optional and can contain `limit` and `skip`.
    * `.get(id)` - get a specific route given the route `id`.
@@ -66,10 +71,10 @@ For actual examples see the tests source code. Note that `routes` and `lists` AP
    * `.create(listAddress, data)` - create a mailing list member. `data` should contain `address`, optional member `name`, `subscribed`, `upsert`, and any additional `vars`.
    * `.update(listAddress, memberAddress, data)` - update a mailing list member with given properties. Won't touch the property if it's not passed in.
    * `.del(listAddress, memberAddress)` - delete a mailing list member given mailing list address and member address.
-* `mailgun._get(resource,data,callback)` - sends GET request to the specified resource on api.
-* `mailgun._post(resource,data,callback)` - sends POST request to the specified resource on api.
-* `mailgun._del(resource,data,callback)` - sends DELETE request to the specified resource on api.
-* `mailgun._put(resource,data,callback)` - sends PUT request to the specified resource on api.
+* `mailgun.get(resource, data, callback)` - sends GET request to the specified resource on api.
+* `mailgun.post(resource, data, callback)` - sends POST request to the specified resource on api.
+* `mailgun.del(resource, data, callback)` - sends DELETE request to the specified resource on api.
+* `mailgun.put(resource, data, callback)` - sends PUT request to the specified resource on api.
 
 ### Unexposed API Methods
 
@@ -77,12 +82,10 @@ Mailgun-js also provides helper methods to allow users to interact with parts of
 
 Example: Get All Stats
 
-```js
-  
+```javascript
 mailgun.get('/stats', function (error, response, body) {
   console.log(body);
 });
-
 ```
 
 ## Tests
