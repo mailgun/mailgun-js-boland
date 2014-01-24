@@ -13,73 +13,92 @@ catch (err) {
 
 var routeId = -1;
 
+function cleanup(fn) {
+  var counter = 0;
+  // lame hack
+  var finishAfter = function () {
+    counter = counter + 1;
+    if (counter >= 4) {
+      if (fn) {
+        fn();
+      }
+    }
+  };
+
+  mailgun.mailboxes.del(fixture.mailbox.mailbox, function (err, res, body) {
+    finishAfter();
+  });
+
+  mailgun.routes.del(routeId, function (err, res, body) {
+    finishAfter();
+  });
+
+  mailgun.lists.del(fixture.mailingList.address, function (err, res, body) {
+    finishAfter();
+  });
+
+  mailgun.domains.del(fixture.domain.name, function (err, res, body) {
+    finishAfter();
+  });
+}
+
 module.exports = {
-  before: function (done) {
 
+  before: function (fn) {
     console.log('Setup');
-    var counter = 0;
-    var finish = function () {
-      counter = counter + 1;
-      if (counter >= 3) {
-        if (done) {
-          console.log('Starting tests...\n');
-          done();
+    // first clean up so we hopefully don't run into limit errors
+    cleanup(function () {
+      var counter = 0;
+      var finish = function () {
+        counter = counter + 1;
+        if (counter >= 4) {
+          if (fn) {
+            console.log('Starting tests...\n');
+            fn();
+          }
         }
-      }
-    };
+      };
 
-    mailgun.mailboxes.create(fixture.mailbox, function (err, res, body) {
-      if (err) {
-        console.log(err);
-        throw new Error('Failed to create sample mailbox for test setup');
-      }
-      finish();
-    });
+      mailgun.mailboxes.create(fixture.mailbox, function (err, res, body) {
+        if (err) {
+          console.log(err);
+          throw new Error('Failed to create sample mailbox for test setup');
+        }
+        finish();
+      });
 
-    mailgun.routes.create(fixture.route, function (err, res, body) {
-      if (err) {
-        console.log(err);
-        throw new Error('Failed to create sample route for test setup');
-      }
-      else {
-        routeId = body.route.id;
-      }
-      finish();
-    });
+      mailgun.routes.create(fixture.route, function (err, res, body) {
+        if (err) {
+          console.log(err);
+          throw new Error('Failed to create sample route for test setup');
+        }
+        else {
+          routeId = body.route.id;
+        }
+        finish();
+      });
 
-    mailgun.lists.create(fixture.mailingList, function (err, res, body) {
-      if (err) {
-        console.log(err);
-        throw new Error('Failed to create sample mailing list for test setup');
-      }
-      finish();
+      mailgun.lists.create(fixture.mailingList, function (err, res, body) {
+        if (err) {
+          console.log(err);
+          throw new Error('Failed to create sample mailing list for test setup');
+        }
+        finish();
+      });
+
+      mailgun.domains.create(fixture.domain, function (err, res, body) {
+        if (err) {
+          console.log(err);
+          throw new Error('Failed to create sample domain for test setup');
+        }
+        finish();
+      });
     });
   },
 
-  after: function (afterDone) {
-
+  after: function (fn) {
     console.log('Cleanup');
-    var counter = 0;
-    var finishAfter = function () {
-      counter = counter + 1;
-      if (counter >= 3) {
-        if (afterDone) {
-          afterDone();
-        }
-      }
-    };
-
-    mailgun.mailboxes.del(fixture.mailbox.mailbox, function (err, res, body) {
-      finishAfter();
-    });
-
-    mailgun.routes.del(routeId, function (err, res, body) {
-      finishAfter();
-    });
-
-    mailgun.lists.del(fixture.mailingList.address, function (err, res, body) {
-      finishAfter();
-    });
+    cleanup(fn);
   },
 
   'test messages.send() invalid "to"': function (done) {
@@ -626,6 +645,83 @@ module.exports = {
       assert.ok(body.member);
       assert.ok(body.member.address);
       assert.equal(address, body.member.address);
+      done();
+    });
+  },
+
+  'test domains.list()': function (done) {
+    mailgun.domains.list(function (err, res, body) {
+      assert.ifError(err);
+      assert.equal(200, res.statusCode);
+      assert.ok(body.total_count);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  'test domains.get() invalid domain type': function (done) {
+    mailgun.domains.get(123, function (err, res, body) {
+      assert.ok(err);
+      assert(/must include domain name/.test(err.message));
+      done();
+    });
+  },
+
+  'test domains.get()': function (done) {
+    mailgun.domains.get(fixture.domain.name, function (err, res, body) {
+      assert.ifError(err);
+      assert.equal(200, res.statusCode);
+      assert.ok(body.domain);
+      assert.equal(fixture.domain.name, body.domain.name);
+      assert.equal(fixture.domain.smtp_password, body.domain.smtp_password);
+      done();
+    });
+  },
+
+  'test domains.del() invalid name type': function (done) {
+    mailgun.domains.del(123, function (err, res, body) {
+      assert.ok(err);
+      assert(/must include domain name/.test(err.message));
+      done();
+    });
+  },
+
+  'test domains.del()': function (done) {
+    var domain = fixture.domain.name;
+    mailgun.domains.del(domain, function (err, res, body) {
+      assert.ifError(err);
+      assert.equal(200, res.statusCode);
+      assert.ok(body.message);
+      assert(/Domain has been deleted/.test(body.message));
+      done();
+    });
+  },
+
+  'test domains.create() invalid missing address': function (done) {
+    mailgun.domains.create({}, function (err, res, body) {
+      assert.ok(err);
+      assert(/must include domain name/.test(err.message));
+      done();
+    });
+  },
+
+  'test domains.create() invalid missing smtp password': function (done) {
+    mailgun.domains.create({ name: 'units.mailgun.org' }, function (err, res, body) {
+      assert.ok(err);
+      assert(/must include SMTP password/.test(err.message));
+      done();
+    });
+  },
+
+  'test domains.create() ': function (done) {
+    mailgun.domains.create(fixture.domain, function (err, res, body) {
+      assert.ifError(err);
+      assert.equal(200, res.statusCode);
+      assert.ok(body.message);
+      assert(/Domain has been created/.test(body.message));
+      assert.ok(body.domain);
+      assert.equal(fixture.domain.name, body.domain.name);
+      assert.equal(fixture.domain.smtp_password, body.domain.smtp_password);
       done();
     });
   }

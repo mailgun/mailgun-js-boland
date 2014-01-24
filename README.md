@@ -47,6 +47,11 @@ For actual examples see the tests source code. Note that `routes` and `lists` AP
    * `.create(data)` - create a mailbox. `data` should have `mailbox` name and `password`.
    * `.update(data)` - update a mailbox given the `mailbox` name. Currently only the `password` can be changed.
    * `.del(mailbox)` - delete a mailbox given the `mailbox` name.
+* `mailgun.domains` - create, get, delete and list [domains](http://documentation.mailgun.net/api-domains.html).
+   * `.list(data)` - list domains. `data` is optional and can contain `limit` and `skip`.
+   * `.create(data)` - create a domains. `data` should have `name` and `smtp_password`.
+   * `.get(domain)` - get the domain given the `domain` name.
+   * `.del(domain)` - delete a domain given the `domain` name.
 * `mailgun.routes` - create, get, update, delete and list [routes](http://documentation.mailgun.net/api-routes.html).
    * `.list(data)` - list routes. `data` is optional and can contain `limit` and `skip`.
    * `.get(id)` - get a specific route given the route `id`.

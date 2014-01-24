@@ -14,4 +14,7 @@
     "address": "devtest@samples.mailgun.org",
     "name": "MailgunDev",
     "description": "Mailgun developers list"
+}, "domain" : {
+  "name": "units.mailgun.org",
+  "smtp_password": "testpassword1"
 }}

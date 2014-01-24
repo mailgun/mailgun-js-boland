@@ -52,7 +52,8 @@ module.exports = function (api_key, domain) {
       var d = '/' + domain;
       //filter out API calls that do not require a domain specified
       if ((resource.indexOf('routes') >= 0)
-        || (resource.indexOf('lists') >= 0)) {
+        || (resource.indexOf('lists') >= 0)
+        || (resource.indexOf('domains') >= 0 )) {
         d = '';
       }
       return d;
@@ -517,6 +518,65 @@ module.exports = function (api_key, domain) {
 
           return _del('/lists/' + listAddress + '/members/' + memberAddress, cb);
         }
+      }
+    },
+
+    domains: {
+      /**
+       * Returns a list of domains under your account.
+       * @param data {Object} the optional object containing the GET options 'address', 'limit' and 'skip'
+       * @param cb {Function} callback function accepting error, response and body
+       * @type {Function}
+       */
+      list: function (data, cb) {
+        return _get('/domains', data, cb);
+      },
+
+      /**
+       * Returns a single domain, including credentials and DNS records.
+       * @param domain {String} the domain name
+       * @param cb {Function} callback function accepting error, response and body
+       * @type {Function}
+       */
+      get: function (domain, cb) {
+        if (!domain || typeof domain !== 'string') {
+          return (cb || noop)(new Error('You must include domain name.'));
+        }
+
+        return _get('/domains/' + domain, cb);
+      },
+
+      /**
+       * Create a new domain.
+       * @param data {Object} the object containing the domain name, smtp_password, spam_action and wildcard.
+       *                      name, smtp_password, and spam_action are string. wildcard boolean.
+       * @param cb {Function} callback function accepting error, response and body
+       * @type {Function}
+       */
+      create: function (data, cb) {
+        if (!data.name) {
+          return (cb || noop)(new Error('You must include domain name.'));
+        }
+
+        if (!data.smtp_password) {
+          return (cb || noop)(new Error('You must include SMTP password.'));
+        }
+
+        return _post('/domains', data, cb);
+      },
+
+      /**
+       * Delete a domain from your account.
+       * @param domain {String} domain name
+       * @param cb {Function} callback function accepting error, response and body
+       * @type {Function}
+       */
+      del: function (domain, cb) {
+        if (!domain || typeof domain !== 'string') {
+          return (cb || noop)(new Error('You must include domain name.'));
+        }
+
+        return _del('/domains/' + domain, cb);
       }
     }
   };
