@@ -8,14 +8,14 @@ Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
 ## Usage overview
 
-Please see [Mailgun Documentation](http://documentation.mailgun.net) for full Mailgun API reference. Depends on [request module](https://github.com/mikeal/request).
+Please see [Mailgun Documentation](http://documentation.mailgun.net) for full Mailgun API reference.
 Most methods take a `data` parameter, which is a Javascript object that would contain the arguments for the Mailgun API.
-All methods take a final parameter callback with three parameters: `error`, `response`, and `body`, exactly like the [request](https://github.com/mikeal/request) callback.
+All methods take a final parameter callback with three parameters: `error`, `response`, and `body`.
 We try to parse the `body` into a javascript object, and return it to the callback as such for easier use and inspection by the client.
 `response.statusCode` will be `200` if everything worked OK. See Mailgun documentation for other (error) response codes.
 If there was an error a new `Error` object will be passed to the callback in the `error` parameter.
 
-Currently we only implement the `send message` (non-MIME) API and the `Mailboxes`, `Routes`, and `Mailing Lists` API's. These would be the most common
+Currently we only implement the `send message` (non-MIME) API and the `Mailboxes`, `Routes`, `Mailing Lists` and `Domains` API's. These would be the most common
 and practical API's to be programmatically used. Others would be easy to add if needed.
 
 ```javascript
@@ -116,6 +116,6 @@ The tests will call Mailgun API, and will send a test email, create mailbox(es),
 
 This project is not endorsed by or affiliated with [Mailgun](http://www.mailgun.com).
 
-Copyright 2012, 2013 OneLobby
+Copyright 2012, 2013, 2014 OneLobby
 
 Licensed under the MIT License.
