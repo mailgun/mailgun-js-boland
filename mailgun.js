@@ -4,7 +4,8 @@
  * MIT Licensed
  */
 
-var request = require('request');
+var https = require('https');
+var qs = require('querystring');
 
 var noop = function () {
 };
@@ -25,13 +26,9 @@ module.exports = function (api_key, domain) {
   }
 
   var username = 'api';
-  var protocol = 'https://';
   var host = 'api.mailgun.net';
   var endpoint = '/v2';
-
-  var headers = {};
-  var b = new Buffer([username, api_key].join(':'));
-  headers['Authorization'] = "Basic " + b.toString('base64');
+  var auth = [username, api_key].join(':');
 
   /**
    * The main function that does all the work. The client really shouldn't call this.
@@ -48,6 +45,8 @@ module.exports = function (api_key, domain) {
       data = {};
     }
 
+    if (!cb) cb = noop;
+
     var getDomain = function () {
       var d = '/' + domain;
       //filter out API calls that do not require a domain specified
@@ -59,47 +58,62 @@ module.exports = function (api_key, domain) {
       return d;
     };
 
-    var url = '';
-    url = url.concat(
-      protocol,
-      username, ':', api_key,
-      '@',
-      host,
-      endpoint,
-      getDomain(),
-      resource);
+    var path = ''.concat(endpoint, getDomain(), resource);
+
+    var qsdata = qs.stringify(data);
+
+    var headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': qsdata.length
+    };
 
     var opts = {
-      url: url,
+      hostname: host,
+      path: path,
       method: method,
       headers: headers,
+      auth: auth,
       agent: false
     };
 
-    if (method === 'GET' || method === 'DELETE') {
-      opts.qs = data;
-    }
-    else {
-      opts.form = data;
-    }
+    var req = https.request(opts, function (res) {
+      var chunks = '';
+      var error;
 
-    var responseCb = function (error, response, body) {
-      if (response && (response.headers['content-type'] === 'application/json')) {
-        try {
-          body = JSON.parse(body);
+      res.on('data', function (chunk) {
+        chunks += chunk;
+      });
 
-          if (!error && response.statusCode !== 200) {
-            error = new Error(body.message);
-          }
-        } catch (e) {
+      res.on('error', function (err) {
+        error = err;
+      });
 
+      res.on('end', function () {
+        if (error) {
+          return cb(error, res);
         }
-      }
 
-      return (cb || noop)(error, response, body);
-    };
+        if (res && (res.headers['content-type'] === 'application/json')) {
+          try {
+            var body = JSON.parse(chunks);
+            if (!error && res.statusCode !== 200) {
+              error = new Error(body.message);
+            }
+          }
+          catch (e) {
+          }
+        }
 
-    return request(opts, responseCb);
+        return cb(error, res, body);
+      });
+    });
+
+    req.on('error', function (e) {
+      return cb(e);
+    });
+
+    req.write(qsdata);
+    req.end();
   }
 
   function _post(path, data, callback) {

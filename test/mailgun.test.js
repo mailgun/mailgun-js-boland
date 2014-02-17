@@ -171,7 +171,7 @@ module.exports = {
       assert.ifError(err);
       assert.equal(200, res.statusCode);
       assert.ok(body.message);
-      assert(/Created 1 mailboxes/.test(body.message));
+      assert(/Created 1/.test(body.message));
       done();
     });
   },
@@ -207,7 +207,7 @@ module.exports = {
       assert.ifError(err);
       assert.equal(200, res.statusCode);
       assert.ok(body.message);
-      assert(/Mailbox has been deleted/.test(body.message));
+      assert(/deleted/.test(body.message));
       done();
     });
   },
@@ -424,7 +424,7 @@ module.exports = {
       assert.ifError(err);
       assert.equal(200, res.statusCode);
       assert.ok(body.message);
-      assert(/Mailing list has been deleted/.test(body.message));
+      assert(/removed/.test(body.message));
       assert.equal(address, body.address);
       done();
     });
@@ -482,7 +482,6 @@ module.exports = {
       assert.ifError(err);
       assert.equal(200, res.statusCode);
       assert.ok(body.message);
-      assert(/Mailing list member has been created/.test(body.message));
       assert.ok(body.member);
       assert.ok(body.member.vars);
       assert.equal(data.subscribed, body.member.subscribed);
