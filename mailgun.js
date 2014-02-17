@@ -28,10 +28,7 @@ module.exports = function (api_key, domain) {
   var username = 'api';
   var host = 'api.mailgun.net';
   var endpoint = '/v2';
-
-  var headers = {};
-  var b = new Buffer([username, api_key].join(':'));
-  headers['Authorization'] = "Basic " + b.toString('base64');
+  var auth = [username, api_key].join(':');
 
   /**
    * The main function that does all the work. The client really shouldn't call this.
@@ -61,19 +58,21 @@ module.exports = function (api_key, domain) {
       return d;
     };
 
-    var path = '';
-    path = path.concat(endpoint, getDomain(), resource);
+    var path = ''.concat(endpoint, getDomain(), resource);
 
     var qsdata = qs.stringify(data);
 
-    headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    headers['Content-Length'] = qsdata.length;
+    var headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': qsdata.length
+    };
 
     var opts = {
       hostname: host,
       path: path,
       method: method,
       headers: headers,
+      auth: auth,
       agent: false
     };
 
