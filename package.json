@@ -1,28 +1,28 @@
 {
-    "author": {
-        "name": "Bojan Djurkovic <bojan@onelobby.com>"
-    },
-    "name": "mailgun-js",
-    "description": "Simple Node.js helper module for Mailgun API",
-    "keywords": ["email", "mailgun"],
-    "version": "0.3.1",
-    "homepage": "https://github.com/1lobby/mailgun-js",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/1lobby/mailgun-js.git"
-    },
-    "bugs": {
-        "url": "http://github.com/1lobby/mailgun-js/issues"
-    },
-    "engines": {
-        "node": "0.8.x"
-    },
-    "main": "./mailgun.js",
-    "devDependencies": {
-        "mocha": "*"
-    },
-    "scripts": {
-        "test": "mocha"
-    }
+  "author": {
+    "name": "Bojan Djurkovic <bojan@onelobby.com>"
+  },
+  "name": "mailgun-js",
+  "description": "Simple Node.js helper module for Mailgun API",
+  "keywords": ["email", "mailgun"],
+  "version": "0.3.2",
+  "homepage": "https://github.com/1lobby/mailgun-js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/1lobby/mailgun-js.git"
+  },
+  "bugs": {
+    "url": "http://github.com/1lobby/mailgun-js/issues"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "main": "./mailgun.js",
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
 }
