@@ -1,5 +1,3 @@
-[![NPM](https://nodei.co/npm/mailgun-js.png?downloads=true&stars=true)](https://nodei.co/npm/mailgun-js/)
-
 # mailgun.js
 
 Simple Node.js module for [Mailgun](http://www.mailgun.com).
