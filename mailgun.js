@@ -93,7 +93,7 @@ module.exports = function (api_key, domain) {
           return cb(error, res);
         }
 
-        if (res && (res.headers['content-type'].indexOf('application/json') == 0) {
+        if (res && (res.headers['content-type'].indexOf('application/json') == 0)) {
           try {
             var body = JSON.parse(chunks);
             if (!error && res.statusCode !== 200) {
