@@ -61,12 +61,14 @@ module.exports = function (api_key, domain) {
     var path = ''.concat(endpoint, getDomain(), resource);
 
     var qsdata = qs.stringify(data);
-
+    
+    var headers = {};
+    
     if (method === 'GET' || method === 'DELETE') {
       path = path.concat('?', qsdata);
     }
     else {
-      var headers = {
+      headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': qsdata.length
       };
