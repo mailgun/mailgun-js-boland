@@ -62,15 +62,13 @@ module.exports = function (api_key, domain) {
 
     var qsdata = qs.stringify(data);
     
-    if (method === 'GET' || method === 'DELETE') {
-    	path += '?' + qsdata;
-    }
-
+    var headers = {};
+    
     if (method === 'GET' || method === 'DELETE') {
       path = path.concat('?', qsdata);
     }
     else {
-      var headers = {
+      headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': qsdata.length
       };
