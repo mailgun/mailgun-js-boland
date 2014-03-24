@@ -66,10 +66,15 @@ module.exports = function (api_key, domain) {
     	path += '?' + qsdata;
     }
 
-    var headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Content-Length': qsdata.length
-    };
+    if (method === 'GET' || method === 'DELETE') {
+      path = path.concat('?', qsdata);
+    }
+    else {
+      var headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': qsdata.length
+      };
+    }
 
     var opts = {
       hostname: host,
@@ -116,7 +121,10 @@ module.exports = function (api_key, domain) {
       return cb(e);
     });
 
-    req.write(qsdata);
+    if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
+      req.write(qsdata);
+    }
+
     req.end();
   }
 
