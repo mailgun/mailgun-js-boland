@@ -723,5 +723,16 @@ module.exports = {
       assert.equal(fixture.domain.smtp_password, body.domain.smtp_password);
       done();
     });
+  },
+
+  'test utility get stats sent': function (done) {
+    mailgun.get('/stats', { event: 'sent' }, function (err, res, body) {
+      assert.ifError(err);
+      assert.equal(200, res.statusCode);
+      assert.ok(body);
+      assert.ok(body.total_count >= 0);
+      assert.ok(body.items);
+      done();
+    });
   }
 };

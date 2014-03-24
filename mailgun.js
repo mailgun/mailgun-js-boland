@@ -60,16 +60,15 @@ module.exports = function (api_key, domain) {
 
     var path = ''.concat(endpoint, getDomain(), resource);
 
+    var headers = {};
     var qsdata = qs.stringify(data);
 
     if (method === 'GET' || method === 'DELETE') {
       path = path.concat('?', qsdata);
     }
     else {
-      var headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': qsdata.length
-      };
+      headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      headers['Content-Length'] = qsdata.length;
     }
 
     var opts = {
@@ -98,7 +97,7 @@ module.exports = function (api_key, domain) {
           return cb(error, res);
         }
 
-        if (res && (res.headers['content-type'].indexOf('application/json') == 0)) {
+        if (res && (res.headers['content-type'].indexOf('application/json') >= 0)) {
           try {
             var body = JSON.parse(chunks);
             if (!error && res.statusCode !== 200) {
