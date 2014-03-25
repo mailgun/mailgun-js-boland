@@ -1,20 +1,36 @@
-{ "message": {
-    "to": "me@samples.mailgun.org",
+{
+  "message": {
+    "to": "mm@samples.mailgun.org",
     "from": "you@samples.mailgun.org",
     "subject": "Test email subject",
     "text": "Test email text"
-}, "route": {
+  },
+  "route": {
     "description": "Sample test route",
-    "expression": "match_recipient('.*@samples.mailgun.org')",
+    "expression": "match_recipient('.*@sandbox77047.mailgun.org')",
     "action": "forward('http://myhost.com/messages/')"
-}, "mailbox": {
-    "mailbox": "sampletestmailbox",
-    "password": "password1"
-}, "mailingList" : {
-    "address": "devtest@samples.mailgun.org",
+  },
+  "mailingList": {
+    "address": "devtest@sandbox77047.mailgun.org",
     "name": "MailgunDev",
     "description": "Mailgun developers list"
-}, "domain" : {
-  "name": "units.mailgun.org",
-  "smtp_password": "testpassword1"
-}}
+  },
+  "new_domain": {
+    "name": "mgjsunits1234.mailgun.org",
+    "smtp_password": "testpassword1"
+  },
+  "existing_domain": {
+    "name": "sandbox77047.mailgun.org"
+  },
+  "credentials": {
+    "login": "user01@sandbox77047.mailgun.org",
+    "password": "12345"
+  },
+  "unsubscribe": {
+    "address":"me@test.mailgun.org",
+    "tag": "*"
+  },
+  "bounce": {
+    "address":"me@test.mailgun.org"
+  }
+}

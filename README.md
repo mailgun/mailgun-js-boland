@@ -9,19 +9,23 @@ Simple Node.js module for [Mailgun](http://www.mailgun.com).
 ## Usage overview
 
 Please see [Mailgun Documentation](http://documentation.mailgun.net) for full Mailgun API reference.
-Most methods take a `data` parameter, which is a Javascript object that would contain the arguments for the Mailgun API.
-All methods take a final parameter callback with three parameters: `error`, `response`, and `body`.
-We try to parse the `body` into a javascript object, and return it to the callback as such for easier use and inspection by the client.
-`response.statusCode` will be `200` if everything worked OK. See Mailgun documentation for other (error) response codes.
-If there was an error a new `Error` object will be passed to the callback in the `error` parameter.
 
-Currently we only implement the `send message` (non-MIME) API and the `Mailboxes`, `Routes`, `Mailing Lists` and `Domains` API's. These would be the most common
+Currently we implement the `send message` (non-MIME) API and the `Domains`, `Routes`, `Mailing Lists`, `Unsubscribes` and `Bounces` API's. These would be the most common
 and practical API's to be programmatically used. Others would be easy to add if needed.
+
+This module works by providing proxy objects for interacting with different resources through the Mailgun API.
+Most methods take a `data` parameter, which is a Javascript object that would contain the arguments for the Mailgun API.
+All methods take a final parameter callback with two parameters: `error`, and `body`.
+We try to parse the `body` into a javascript object, and return it to the callback as such for easier use and inspection by the client.
+If there was an error a new `Error` object will be passed to the callback in the `error` parameter.
+See the `/docs` folder for detailed documentation. For full usage examples see the `/test` folder.
 
 ```javascript
 var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
 var domain = 'mydomain.mailgun.org';
-var mailgun = require('mailgun-js')(api_key, domain);
+var Mailgun = require('mailgun-js');
+
+var mailgun = new Mailgun({apiKey: api_key, domain: domain});
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -30,63 +34,74 @@ var data = {
   text: 'Testing some Mailgun awesomness!'
 };
 
-mailgun.messages.send(data, function (error, response, body) {
+mailgun.messages().send(data, function (error, body) {
   console.log(body);
 });
 ```
 
-## API
+Something more elaborate. Get mailing list info, create a member and get mailing list members and update member.
+Notice that the proxy objects can be reused.
 
-All methods take a callback as their last parameter. The callback is called with a Javascript `Error` (if any) and then the `response` and the `body` returned by mailgun. 
-For actual examples see the tests source code. Note that `routes` and `lists` API's do not act on specified mailgun domains and are global for the mailgun account.
+```
+var list = mailgun.lists('mylist@mycompany.com');
 
-* `mailgun.messages` - Creates a new email message and sends it using mailgun.
-   * `.send(data)` - [send a message](http://documentation.mailgun.net/api-sending.html).
-* `mailgun.mailboxes` - create, update, delete and list [mailboxes](http://documentation.mailgun.net/api-mailboxes.html).
-   * `.list(data)` - list mailboxes. `data` is optional and can contain `limit` and `skip`.
-   * `.create(data)` - create a mailbox. `data` should have `mailbox` name and `password`.
-   * `.update(data)` - update a mailbox given the `mailbox` name. Currently only the `password` can be changed.
-   * `.del(mailbox)` - delete a mailbox given the `mailbox` name.
-* `mailgun.domains` - create, get, delete and list [domains](http://documentation.mailgun.net/api-domains.html).
-   * `.list(data)` - list domains. `data` is optional and can contain `limit` and `skip`.
-   * `.create(data)` - create a domains. `data` should have `name` and `smtp_password`.
-   * `.get(domain)` - get the domain given the `domain` name.
-   * `.del(domain)` - delete a domain given the `domain` name.
-* `mailgun.routes` - create, get, update, delete and list [routes](http://documentation.mailgun.net/api-routes.html).
-   * `.list(data)` - list routes. `data` is optional and can contain `limit` and `skip`.
-   * `.get(id)` - get a specific route given the route `id`.
-   * `.create(data)` - create a route. `data` should contain `priority`, `description`, `expression` and `action` as strings.
-   * `.update(id, data)` - update a route given route `id`. All `data` parameters optional. This API call only updates the specified fields leaving others unchanged.
-   * `.del(id)` - delete a route given route `id`.
-* `mailgun.lists` - create, get, update, delete and list [mailing lists](http://documentation.mailgun.net/api-mailinglists.html) and get mailing list stats.
-   * `.list(data)` - list mailing lists. `data` is optional and can contain `address`, `limit` and `skip`.
-   * `.get(address)` - get a specific mailing list given mailing list `address`.
-   * `.create(data)` - create a mailing list. `data` should contain `address`, `name`, `description`, and `access_level` as strings.
-   * `.update(address, data)` - update a mailing list given mailing list `address`.
-   * `.del(address)` - delete a mailing list given mailing list `address`.
-   * `.stats(address)` - fetches mailing list stats given mailing list `address`.
-* `mailgun.lists.members` - create, get, update, delete and list [mailing list members](http://documentation.mailgun.net/api-mailinglists.html).
-   * `.list(listAddress, data)` - list mailing list members. `data` is optional and can contain `subscribed`, `limit` and `skip`.
-   * `.get(listAddress, memberAddress)` - get a specific mailing list member given mailing list address and member address.
-   * `.create(listAddress, data)` - create a mailing list member. `data` should contain `address`, optional member `name`, `subscribed`, `upsert`, and any additional `vars`.
-   * `.update(listAddress, memberAddress, data)` - update a mailing list member with given properties. Won't touch the property if it's not passed in.
-   * `.del(listAddress, memberAddress)` - delete a mailing list member given mailing list address and member address.
-* `mailgun.get(resource, data, callback)` - sends GET request to the specified resource on api.
-* `mailgun.post(resource, data, callback)` - sends POST request to the specified resource on api.
-* `mailgun.del(resource, data, callback)` - sends DELETE request to the specified resource on api.
-* `mailgun.put(resource, data, callback)` - sends PUT request to the specified resource on api.
+list.info(function (err, data) {
+  // `data` is mailing list info
+  console.log(data);
+});
 
-### Unexposed API Methods
+var bob = {
+  subscribed: true,
+  address: 'bob@gmail.com',
+  name: 'Bob Bar',
+  vars: {age: 26}
+};
+
+list.members().create(bob, function (err, data) {
+  // `data` is the member details
+  console.log(data);
+});
+
+list.members().list(function (err, members) {
+  // `members` is the list of members
+  console.log(members);
+});
+
+list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
+  console.log(body);
+});
+```
+
+## Generic requests
 
 Mailgun-js also provides helper methods to allow users to interact with parts of the api that are not exposed already.
 
-Example: Get All Stats
+* `mailgun.get(resource, data, callback)` - sends GET request to the specified resource on api.
+* `mailgun.post(resource, data, callback)` - sends POST request to the specified resource on api.
+* `mailgun.delete(resource, data, callback)` - sends DELETE request to the specified resource on api.
+* `mailgun.put(resource, data, callback)` - sends PUT request to the specified resource on api.
+
+Example: Get some stats
 
 ```javascript
-mailgun.get('/stats', function (error, response, body) {
+mailgun.get('/stats', { event: ['sent', 'delivered'] }, function (error, body) {
   console.log(body);
 });
 ```
+
+## Promises
+
+Module works with Node-style callbacks, but also implements promises with the [Q](http://github.com/kriskowal/q) library.
+
+```
+mailgun.lists('mylist@mydomain.com').info().then(function (data) {
+  console.log(data);
+}, function (err) {
+  console.log(err);
+});
+```
+
+The function passed as 2nd argument is optional and not needed if you don't care about the fail case.
 
 ## Tests
 
@@ -96,8 +111,7 @@ To run the test suite you must first have a Mailgun account with a domain setup.
 { "api_key": "key-XXXXXXXXXXXXXXXXXXXXXXX", "domain": "mydomain.mailgun.org" }
 ```
 
-You should edit _./test/fixture.json_ and modify at least the `to` and `from` fields of the `message` object to match
-emails you would like to test with. Modify other fields as desired, though the given defaults will work.
+You should edit _./test/fixture.json_ and modify the data to match your context.
 
 Then install the dev dependencies and execute the test suite:
 
@@ -106,15 +120,14 @@ $ npm install
 $ npm test
 ```
 
-The tests will call Mailgun API, and will send a test email, create mailbox(es), route(s), mailing list and mailing list member.
+The tests will call Mailgun API, and will send a test email, create route(s), mailing list and mailing list member.
 
-## TODO
-
-* Other API sections.
-
-## License
+## Notes
 
 This project is not endorsed by or affiliated with [Mailgun](http://www.mailgun.com).
+The general design and some code was heavily influenced by [node-heroku-client](https://github.com/jclem/node-heroku-client).
+
+## License
 
 Copyright 2012, 2013, 2014 OneLobby
 
