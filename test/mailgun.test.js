@@ -62,10 +62,29 @@ module.exports = {
 
   'test messages().send() with attachment using file buffer': function (done) {
     var msg = fixture.message;
+
     var filename = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename);
 
     msg.attachment = file;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with attachment using Attachment object': function (done) {
+    var msg = fixture.message;
+
+    var filename = '/mailgun_logo.png';
+    var filepath = path.join(__dirname, filename);
+    var file = fs.readFileSync(filepath);
+
+    msg.attachment = new Mailgun.Attachment(file, filename);
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);

@@ -74,11 +74,8 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 
 #### Attachments
 
-Sending attachments can be done either by passing the path as a `string` or
-the `Buffer` containing the file data. If a buffer is used the data will be attached using a generic filename "file".
-If `attachment` is of type `string` it is assumed to be a path to a file. If attachment parameter is not of type `Buffer` or
-a `string` it is ignored. Multiple attachments can be sent by passing an array in the `attachment` parameter.
-The array elements can either be Buffers or string and each one will be handled appropriately.
+Sending attachments can be done in a few ways. We can use the path to a file in the `attachment` parameter. If the
+`attachment` parameter is of type `string` it is assumed to be the path to a file.
 
 ```
 var filepath = path.join(__dirname, '/mailgun_logo.png');
@@ -96,6 +93,9 @@ mailgun.messages().send(data, function (error, body) {
 });
 ```
 
+We can pass a buffer (has to be a `Buffer` object) of the data. If a buffer is used the data will be attached using a
+generic filename "file".
+
 ```
 var filepath = path.join(__dirname, '/mailgun_logo.png');
 var file = fs.readFileSync(filepath);
@@ -112,6 +112,33 @@ mailgun.messages().send(data, function (error, body) {
   console.log(body);
 });
 ```
+
+Finally we provide a `Mailgun.Attachment` class to add attachment and specify both the buffer and filename data.
+
+```
+var filename = '/mailgun_logo.png';
+var filepath = path.join(__dirname, filename);
+var file = fs.readFileSync(filepath);
+
+var attch = new Mailgun.Attachment(file, filename);
+
+var data = {
+  from: 'Excited User <me@samples.mailgun.org>',
+  to: 'serobnic@mail.ru',
+  subject: 'Hello',
+  text: 'Testing some Mailgun awesomness!',
+  attachment: attch
+};
+
+mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});
+```
+
+If an attachment object is not of type `Buffer` or a `string` or a `Mailgun.Attachment` object with valid data it is
+ignored. Multiple attachments can be sent by passing an array in the `attachment` parameter. The array elements can
+be of any one of the valid types and each one will be handled appropriately.
+
 
 #### Creating mailing list members
 
