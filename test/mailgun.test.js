@@ -1,6 +1,8 @@
 var auth = require('./auth.json');
 var fixture = require('./fixture.json');
 var assert = require('assert');
+var fs = require('fs');
+var path = require('path');
 var Mailgun = require('../lib/mailgun');
 
 var mailgun = new Mailgun({apiKey: auth.api_key, domain: auth.domain});
@@ -23,6 +25,66 @@ module.exports = {
 
   'test messages().send()': function (done) {
     mailgun.messages().send(fixture.message, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with invalid attachment should go ok': function (done) {
+    var msg = fixture.message;
+    msg.attachment = 123;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with attachment using filename': function (done) {
+    var msg = fixture.message;
+    var filename = path.join(__dirname, '/mailgun_logo.png');
+    msg.attachment = filename;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with attachment using file buffer': function (done) {
+    var msg = fixture.message;
+    var filename = path.join(__dirname, '/mailgun_logo.png');
+    var file = fs.readFileSync(filename);
+
+    msg.attachment = file;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with multiple attachments': function (done) {
+    var msg = fixture.message;
+    var filename = path.join(__dirname, '/fixture.json');
+    var filename2 = path.join(__dirname, '/mailgun_logo.png');
+    var file = fs.readFileSync(filename2);
+
+    msg.attachment = [filename, file];
+
+    mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
       assert.ok(body.id);
       assert.ok(body.message);
