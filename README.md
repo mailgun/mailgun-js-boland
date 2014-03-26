@@ -72,7 +72,7 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 });
 ```
 
-### Attachments
+#### Attachments
 
 Sending attachments can be done either by passing the path as a `string` or
 the `Buffer` containing the file data. If a buffer is used the data will be attached using a generic filename "file".
@@ -113,11 +113,11 @@ mailgun.messages().send(data, function (error, body) {
 });
 ```
 
-### Creating mailing list members
+#### Creating mailing list members
 
 `members().create({data})` will create a mailing list member with `data`. Mailgun also offers a resource for creating
 members in bulk. Doing a `POST` to `/lists/<address>/members.json` adds multiple members, up to 1,000 per call,
-to a Mailing List. This can be accomplished using the `add()`.
+to a Mailing List. This can be accomplished using `members().add()`.
 
 ```
 var members = [
