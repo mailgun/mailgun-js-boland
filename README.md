@@ -72,21 +72,23 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 });
 ```
 
+### Attachments
+
 Sending attachments can be done either by passing the path as a `string` or
 the `Buffer` containing the file data. If a buffer is used the data will be attached using a generic filename "file".
-If `attachment` is a `string` it is assumed to be a path to a file. If attachment parameter is not of type `Buffer` or
+If `attachment` is of type `string` it is assumed to be a path to a file. If attachment parameter is not of type `Buffer` or
 a `string` it is ignored. Multiple attachments can be sent by passing an array in the `attachment` parameter.
-The array elements can either Buffers or string and will be handled appropriately.
+The array elements can either be Buffers or string and each one will be handled appropriately.
 
 ```
-var filename = path.join(__dirname, '/mailgun_logo.png');
+var filepath = path.join(__dirname, '/mailgun_logo.png');
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
   to: 'serobnic@mail.ru',
   subject: 'Hello',
   text: 'Testing some Mailgun awesomness!',
-  attachment: filename
+  attachment: filepath
 };
 
 mailgun.messages().send(data, function (error, body) {
@@ -95,8 +97,8 @@ mailgun.messages().send(data, function (error, body) {
 ```
 
 ```
-var filename = path.join(__dirname, '/mailgun_logo.png');
-var file = fs.readFileSync(filename);
+var filepath = path.join(__dirname, '/mailgun_logo.png');
+var file = fs.readFileSync(filepath);
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -107,6 +109,30 @@ var data = {
 };
 
 mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});
+```
+
+### Creating mailing list members
+
+`members().create({data})` will create a mailing list member with `data`. Mailgun also offers a resource for creating
+members in bulk. Doing a `POST` to `/lists/<address>/members.json` adds multiple members, up to 1,000 per call,
+to a Mailing List. This can be accomplished using the `add()`.
+
+```
+var members = [
+  {
+    address: 'Alice <alice@example.com>',
+    vars: { age: 26 }
+  },
+  {
+    name: 'Bob',
+    address: 'bob@example.com',
+    vars: { age: 34 }
+  }
+];
+
+mailgun.lists('mylist@mycompany.com').members().add({ members: members, subscribed: true }, function (err, body) {
   console.log(body);
 });
 ```
@@ -164,7 +190,7 @@ The tests will call Mailgun API, and will send a test email, create route(s), ma
 ## Notes
 
 This project is not endorsed by or affiliated with [Mailgun](http://www.mailgun.com).
-The general design and some code was heavily influenced by [node-heroku-client](https://github.com/jclem/node-heroku-client).
+The general design and some code was heavily inspired by [node-heroku-client](https://github.com/jclem/node-heroku-client).
 
 ## License
 
