@@ -72,6 +72,45 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 });
 ```
 
+Sending attachments can be done either by passing the path as a `string` to the filename or
+the `Buffer` containing the file data. If a buffer is used the data will be attached using a generic filename `file`.
+If `attachment` is a `string` it is assumed to be a path to a file. If attachment parameter is not a `Buffer` or
+a `string` it is ignored. Multiple attachments can be sent by passing an array in the `attachment` parameter.
+The array elements can either Buffers or string and will be handled appropriately.
+
+```
+var filename = path.join(__dirname, '/mailgun_logo.png');
+
+var data = {
+  from: 'Excited User <me@samples.mailgun.org>',
+  to: 'serobnic@mail.ru',
+  subject: 'Hello',
+  text: 'Testing some Mailgun awesomness!',
+  attachment: filename
+};
+
+mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});
+```
+
+```
+var filename = path.join(__dirname, '/mailgun_logo.png');
+var file = fs.readFileSync(filename);
+
+var data = {
+  from: 'Excited User <me@samples.mailgun.org>',
+  to: 'serobnic@mail.ru',
+  subject: 'Hello',
+  text: 'Testing some Mailgun awesomness!',
+  attachment: file
+};
+
+mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});
+```
+
 ## Generic requests
 
 Mailgun-js also provides helper methods to allow users to interact with parts of the api that are not exposed already.
