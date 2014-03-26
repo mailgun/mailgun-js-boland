@@ -72,9 +72,9 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 });
 ```
 
-Sending attachments can be done either by passing the path as a `string` to the filename or
-the `Buffer` containing the file data. If a buffer is used the data will be attached using a generic filename `file`.
-If `attachment` is a `string` it is assumed to be a path to a file. If attachment parameter is not a `Buffer` or
+Sending attachments can be done either by passing the path as a `string` or
+the `Buffer` containing the file data. If a buffer is used the data will be attached using a generic filename "file".
+If `attachment` is a `string` it is assumed to be a path to a file. If attachment parameter is not of type `Buffer` or
 a `string` it is ignored. Multiple attachments can be sent by passing an array in the `attachment` parameter.
 The array elements can either Buffers or string and will be handled appropriately.
 
