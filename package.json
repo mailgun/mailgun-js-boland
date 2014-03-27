@@ -5,7 +5,7 @@
   "name": "mailgun-js",
   "description": "Simple Node.js helper module for Mailgun API",
   "keywords": ["email", "mailgun"],
-  "version": "0.3.5",
+  "version": "0.4.0",
   "homepage": "https://github.com/1lobby/mailgun-js",
   "license": "MIT",
   "repository": {
@@ -19,6 +19,12 @@
     "node": ">= 0.8.0"
   },
   "main": "./mailgun.js",
+  "dependencies": {
+    "form-data": "~0.1.2",
+    "inflection": "~1.2.6",
+    "path-proxy": "~1.0",
+    "q": "~1.0.1"
+  },
   "devDependencies": {
     "mocha": "*"
   },

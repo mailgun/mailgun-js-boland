@@ -1,0 +1,209 @@
+#!/usr/bin/env node
+
+var assert     = require('assert'),
+    fs         = require('fs'),
+    Mailgun    = require('../lib/mailgun'),
+    mailgun    = new Mailgun({}),
+    inflection = require('inflection'),
+    path       = require('path'),
+    resources  = require('../lib/schema').definitions,
+    resource,
+    resourceName;
+
+for (resourceName in resources) {
+  resource = resources[resourceName];
+  createDocumentation(resourceName, resource);
+}
+
+function createDocumentation (resourceName, resource) {
+  var file = createFile(resourceName);
+
+  process.stdout.write('\nBuilding docs for ' + resourceName + ':\n');
+
+  fs.appendFileSync(file, '# ' + resourceName + '\n\n');
+  if (resource.description) fs.appendFileSync(file, resource.description + '\n\n');
+
+  addActions(file, resource.links);
+  addAttributes(file, resource.attributes);
+}
+
+function getName(name) {
+  name = name.toLowerCase();
+  name = inflection.dasherize(name).replace(/-/g, '_');
+  name = inflection.camelize(name, true);
+
+  return name;
+}
+
+function createFile (resourceName) {
+  var fileName = getName(resourceName),
+      file     = path.join(__dirname, '../docs/' + fileName + '.md');
+
+  fs.writeFileSync(file, '');
+
+  return file;
+}
+
+function addActions (file, actions) {
+  var action, actionName, i;
+
+  process.stdout.write('  Building actions:');
+  fs.appendFileSync(file, '## Actions\n\n');
+
+  for (i in actions) {
+    action = actions[i];
+    actionName = action.title;
+
+    process.stdout.write('\n    ' + actionName);
+    addAction(file, actionName, action);
+  }
+}
+
+function addAction (file, actionName, action) {
+  fs.appendFileSync(file, '### `' + getName(actionName) + '`\n\n');
+  if (resource.description) fs.appendFileSync(file, action.description + '\n\n');
+  fs.appendFileSync(file, '`' + getFunctionCall(actionName, action) + '`\n\n');
+  fs.appendFileSync(file, 'Method | ');
+  fs.appendFileSync(file, 'Path\n');
+  fs.appendFileSync(file, '--- | ');
+  fs.appendFileSync(file, '---\n');
+  fs.appendFileSync(file, action.method + ' | ');
+
+  // HACKY special case for members bulk add
+  if(action.href === '/lists/{address}/members' && actionName === 'add') {
+    action.href = '/lists/{address}/members.json'
+  }
+
+  fs.appendFileSync(file, prettifyHref(action.href) + '\n\n');
+  addActionAttributes(file, action);
+
+  checkAction(actionName, action);
+}
+
+function getFunctionCall (actionName, action) {
+  var path = action.href.split(/\//),
+      segments = path.slice(1, path.length),
+      functionCall = 'mailgun',
+      i,
+      segment;
+
+  for (i = 0; i < segments.length; i ++) {
+    segment = segments[i];
+
+    if (segment.match(/{[^}]+}/)) {
+      continue;
+    } else {
+      functionCall += '.' + getName(segment);
+
+      if (segments[i + 1] && segments[i + 1].match(/{[^}]+}/)) {
+        functionCall += '(' + prettifySegment(segments[i + 1]) + ')';
+      } else {
+        functionCall += '()';
+      }
+    }
+  }
+
+  functionCall += '.' + getName(actionName) + '(';
+
+  if (['PATCH', 'POST', 'PUT'].indexOf(action.method) > -1) {
+    functionCall += '{attributes}, ';
+  }
+
+  functionCall += '{callback});';
+
+  return functionCall;
+}
+
+function prettifyHref (href) {
+  var segments = href.split(/\//);
+  segments = segments.slice(1, segments.length);
+  segments = segments.map(prettifySegment)
+  href = '/' + segments.join('/');
+  return href;
+}
+
+function prettifySegment (segment) {
+  var unescaped = unescape(segment),
+      identities;
+
+  if (unescaped === segment) {
+    return segment;
+  }
+
+  identities = getIdentitiesFromParam(unescaped);
+  return '{' + identities[0] + '_' + identities.slice(1, identities.length).sort().join('_or_') + '}';
+}
+
+function getIdentitiesFromParam(param) {
+  var identities = param.replace(/[{}()#]/g, '').split("/"),
+      resourceName;
+
+  identities = identities.slice(1, identities.length);
+  identities = resources[identities[1]].definitions.identity.anyOf;
+
+  identities = identities.map(function (identity) {
+    var parts = identity.$ref.split('/');
+    resourceName = parts[2];
+    return parts.slice(-1)[0]
+  });
+
+  identities.unshift(resourceName);
+
+  return identities;
+}
+
+function addActionAttributes (file, action) {
+  if (!action.attributes) return;
+
+  addActionAttributeGroup(file, action.attributes.optional, 'Optional');
+  fs.appendFileSync(file, '\n');
+
+  addActionAttributeGroup(file, action.attributes.required, 'Required');
+  fs.appendFileSync(file, '\n');
+}
+
+function addActionAttributeGroup (file, attributes, type) {
+  if (!attributes) return;
+
+  fs.appendFileSync(file, '#### ' + type + ' Attributes\n\n');
+
+  attributes.forEach(function (attribute) {
+    fs.appendFileSync(file, '- ' + attribute + '\n');
+  });
+}
+
+function addAttributes (file, attributes) {
+  var attributeName, attribute;
+
+  if (!attributes) return;
+
+  process.stdout.write('\n  Building attributes\n');
+  fs.appendFileSync(file, '## Attributes\n\n');
+
+  for (attributeName in attributes) {
+    attribute = attributes[attributeName];
+    addAttribute(file, attributeName, attribute);
+  }
+}
+
+function addAttribute (file, attributeName, attribute) {
+  fs.appendFileSync(file, '### `' + attributeName + '`\n\n');
+
+  fs.appendFileSync(file, '*' + attribute.description + '*\n\n');
+
+  fs.appendFileSync(file, 'Example | ');
+  fs.appendFileSync(file, 'Serialized? | ');
+  fs.appendFileSync(file, 'Type\n');
+  fs.appendFileSync(file, '--- | ');
+  fs.appendFileSync(file, '--- | ');
+  fs.appendFileSync(file, '---\n');
+  fs.appendFileSync(file, '`' + attribute.example + '` | ');
+  fs.appendFileSync(file, attribute.serialized + ' | ');
+  fs.appendFileSync(file, attribute.type + '\n\n');
+}
+
+function checkAction (actionName, action) {
+  var functionToTest = getFunctionCall(actionName, action).replace(/{.*}/g, '').slice(0, -3)
+  assert.equal(eval('typeof ' + functionToTest), 'function', functionToTest + ' is not a Function');
+  process.stdout.write(' ' + String.fromCharCode(0x2713));
+}
