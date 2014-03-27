@@ -20,7 +20,7 @@ We try to parse the `body` into a javascript object, and return it to the callba
 If there was an error a new `Error` object will be passed to the callback in the `error` parameter.
 See the `/docs` folder for detailed documentation. For full usage examples see the `/test` folder.
 
-```javascript
+```js
 var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
 var domain = 'mydomain.mailgun.org';
 var Mailgun = require('mailgun-js');
@@ -42,7 +42,7 @@ mailgun.messages().send(data, function (error, body) {
 Something more elaborate. Get mailing list info, create a member and get mailing list members and update member.
 Notice that the proxy objects can be reused.
 
-```
+```js
 var list = mailgun.lists('mylist@mycompany.com');
 
 list.info(function (err, data) {
@@ -77,7 +77,7 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 Sending attachments can be done in a few ways. We can use the path to a file in the `attachment` parameter. If the
 `attachment` parameter is of type `string` it is assumed to be the path to a file.
 
-```
+```js
 var filepath = path.join(__dirname, '/mailgun_logo.png');
 
 var data = {
@@ -96,7 +96,7 @@ mailgun.messages().send(data, function (error, body) {
 We can pass a buffer (has to be a `Buffer` object) of the data. If a buffer is used the data will be attached using a
 generic filename "file".
 
-```
+```js
 var filepath = path.join(__dirname, '/mailgun_logo.png');
 var file = fs.readFileSync(filepath);
 
@@ -115,7 +115,7 @@ mailgun.messages().send(data, function (error, body) {
 
 Finally we provide a `Mailgun.Attachment` class to add attachment and specify both the buffer and filename data.
 
-```
+```js
 var filename = '/mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
 var file = fs.readFileSync(filepath);
@@ -146,7 +146,7 @@ be of any one of the valid types and each one will be handled appropriately.
 members in bulk. Doing a `POST` to `/lists/<address>/members.json` adds multiple members, up to 1,000 per call,
 to a Mailing List. This can be accomplished using `members().add()`.
 
-```
+```js
 var members = [
   {
     address: 'Alice <alice@example.com>',
@@ -175,7 +175,7 @@ Mailgun-js also provides helper methods to allow users to interact with parts of
 
 Example: Get some stats
 
-```javascript
+```js
 mailgun.get('/stats', { event: ['sent', 'delivered'] }, function (error, body) {
   console.log(body);
 });
@@ -185,7 +185,7 @@ mailgun.get('/stats', { event: ['sent', 'delivered'] }, function (error, body) {
 
 Module works with Node-style callbacks, but also implements promises with the [Q](http://github.com/kriskowal/q) library.
 
-```
+```js
 mailgun.lists('mylist@mydomain.com').info().then(function (data) {
   console.log(data);
 }, function (err) {
