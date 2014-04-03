@@ -1,5 +1,9 @@
 # From .gitignore
 /npm-debug.log
+*.orig
+.idea
+dump.rdb
+main.js
 
 # Additions for .npmignore only
 /test/
