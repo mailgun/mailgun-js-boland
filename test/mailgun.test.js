@@ -112,6 +112,103 @@ module.exports = {
     });
   },
 
+  'test messages().send() with invalid inline attachment should go ok': function (done) {
+    var msg = fixture.message;
+    msg.inline = 123;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with inline attachment using filename': function (done) {
+    var msg = fixture.message;
+    var filename = path.join(__dirname, '/mailgun_logo.png');
+
+    msg.inline = filename;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with inline attachment using file buffer': function (done) {
+    var msg = fixture.message;
+
+    var filename = path.join(__dirname, '/mailgun_logo.png');
+    var file = fs.readFileSync(filename);
+
+    msg.inline = file;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with attachment using Attachment object': function (done) {
+    var msg = fixture.message;
+
+    var filename = '/mailgun_logo.png';
+    var filepath = path.join(__dirname, filename);
+    var file = fs.readFileSync(filepath);
+
+    msg.inline = new Mailgun.Attachment(file, filename);
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with multiple inline attachments': function (done) {
+    var msg = fixture.message;
+    var filename = path.join(__dirname, '/fixture.json');
+    var filename2 = path.join(__dirname, '/mailgun_logo.png');
+    var file = fs.readFileSync(filename2);
+
+    msg.inline = [filename, file];
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with multiple inline and normal attachments': function (done) {
+    var msg = fixture.message;
+    var filename = path.join(__dirname, '/fixture.json');
+    var filename2 = path.join(__dirname, '/mailgun_logo.png');
+
+    msg.attachment = filename;
+    msg.inline = filename2;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
   /*
    * Domains
    */
