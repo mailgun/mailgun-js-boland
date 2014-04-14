@@ -27,10 +27,15 @@
     "password": "12345"
   },
   "unsubscribe": {
-    "address":"me@test.mailgun.org",
+    "address": "me@test.mailgun.org",
     "tag": "*"
   },
   "bounce": {
-    "address":"me@test.mailgun.org"
+    "address": "me@test.mailgun.org"
+  },
+  "campaign": {
+    "name": "My test campaign",
+    "id": "mu_uniq_campaign_id",
+    "newName": "my_new_campaign_name"
   }
 }
