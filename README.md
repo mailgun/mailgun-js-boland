@@ -74,8 +74,12 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 
 #### Attachments
 
-Sending attachments can be done in a few ways. We can use the path to a file in the `attachment` parameter. If the
-`attachment` parameter is of type `string` it is assumed to be the path to a file.
+Attachments can be sent using either the `attachment` or `inline` parameters. `inline` parameter can be use to send an
+attachment with `inline` disposition. It can be used to send inline images. Both types are supported with same mechanisms
+as described, we will just use `attachment` parameter in the documentation below but same stands for `inline`.
+
+Sending attachments can be done in a few ways. We can use the path to a file in the `attachment` parameter.
+If the `attachment` parameter is of type `string` it is assumed to be the path to a file.
 
 ```js
 var filepath = path.join(__dirname, '/mailgun_logo.png');
@@ -138,7 +142,6 @@ mailgun.messages().send(data, function (error, body) {
 If an attachment object is not of type `Buffer` or a `string` or a `Mailgun.Attachment` object with valid data it is
 ignored. Multiple attachments can be sent by passing an array in the `attachment` parameter. The array elements can
 be of any one of the valid types and each one will be handled appropriately.
-
 
 #### Creating mailing list members
 
