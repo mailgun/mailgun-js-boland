@@ -753,5 +753,86 @@ module.exports = {
       assert.ok(body.items);
       done();
     });
+  },
+
+  /*
+   * Campaigns
+   */
+
+  'test campaigns().create() invalid missing address': function (done) {
+    mailgun.campaigns().create({}, function (err) {
+      assert.ok(err);
+      assert(/Missing parameter 'name'/.test(err.message));
+      done();
+    });
+  },
+
+  'test campaigns().create()': function (done) {
+    mailgun.campaigns().create(fixture.campaign, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      assert.ok(body.message);
+      assert.ok(body.campaign);
+      assert.equal(fixture.campaign.name, body.campaign.name);
+      assert.equal(fixture.campaign.id, body.campaign.id);
+      done();
+    });
+  },
+
+
+  'test campaigns().list() with invalid `limit` param': function (done) {
+    mailgun.campaigns().list({limit: "foo"}, function (err, body) {
+      assert.ok(err);
+      assert(/'limit' parameter is not an integer/.test(err.message));
+      done();
+    });
+  },
+
+  'test campaigns().list() with invalid `skip` param': function (done) {
+    mailgun.campaigns().list({skip: "bar"}, function (err, body) {
+      assert.ok(err);
+      assert(/'skip' parameter is not an integer/.test(err.message));
+      done();
+    });
+  },
+
+  'test campaigns().list()': function (done) {
+    mailgun.campaigns().list(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      assert.ok(body.total_count);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  'test campaigns().info()': function (done) {
+    mailgun.campaigns(fixture.campaign.id).info(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      assert.equal(fixture.campaign.id, body.id);
+      assert.equal(fixture.campaign.name, body.name);
+      done();
+    });
+  },
+
+  'test campaigns().update()': function (done) {
+    mailgun.campaigns(fixture.campaign.id).update({name: fixture.campaign.newName}, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      assert.ok(body.message);
+      assert.ok(body.campaign);
+      assert.equal(fixture.campaign.newName, body.campaign.name);
+      done();
+    });
+  },
+
+  'test campaigns().delete()': function (done) {
+    mailgun.campaigns(fixture.campaign.id).delete(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      assert.ok(body.message);
+      done();
+    });
   }
 };
