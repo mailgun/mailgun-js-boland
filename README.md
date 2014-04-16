@@ -25,7 +25,7 @@ var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
 var domain = 'mydomain.mailgun.org';
 var Mailgun = require('mailgun-js');
 
-var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+var mailgun = new Mailgun(api_key, domain);
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -34,7 +34,7 @@ var data = {
   text: 'Testing some Mailgun awesomness!'
 };
 
-mailgun.messages().send(data, function (error, body) {
+mailgun.messages.send(data, function (error, body) {
   console.log(body);
 });
 ```
