@@ -60,6 +60,7 @@ function addActions (file, actions) {
 }
 
 function addAction (file, actionName, action) {
+
   fs.appendFileSync(file, '### `' + getName(actionName) + '`\n\n');
   if (resource.description) fs.appendFileSync(file, action.description + '\n\n');
   fs.appendFileSync(file, '`' + getFunctionCall(actionName, action) + '`\n\n');
@@ -68,12 +69,6 @@ function addAction (file, actionName, action) {
   fs.appendFileSync(file, '--- | ');
   fs.appendFileSync(file, '---\n');
   fs.appendFileSync(file, action.method + ' | ');
-
-  // HACKY special case for members bulk add
-  if(action.href === '/lists/{address}/members' && actionName === 'add') {
-    action.href = '/lists/{address}/members.json'
-  }
-
   fs.appendFileSync(file, prettifyHref(action.href) + '\n\n');
   addActionAttributes(file, action);
 
@@ -81,7 +76,10 @@ function addAction (file, actionName, action) {
 }
 
 function getFunctionCall (actionName, action) {
-  var path = action.href.split(/\//),
+  // HACKY special case for members bulk add
+  var actionPath = action.href.replace(/\.json/gi,'');
+
+  var path = actionPath.split(/\//),
       segments = path.slice(1, path.length),
       functionCall = 'mailgun',
       i,
