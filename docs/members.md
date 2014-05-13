@@ -38,7 +38,7 @@ POST | /lists/{address}/members
 
 Adds multiple members, up to 1,000 per call, to a Mailing List.
 
-`mailgun.lists({address}).members.json().add({attributes}, {callback});`
+`mailgun.lists({address}).members().add({attributes}, {callback});`
 
 Method | Path
 --- | ---
