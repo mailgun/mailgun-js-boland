@@ -10,7 +10,7 @@ Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
 Please see [Mailgun Documentation](http://documentation.mailgun.net) for full Mailgun API reference.
 
-Currently we implement the `send message` (non-MIME) API and the `Domains`, `Routes`, `Campaigns`, `Mailing Lists`, `Unsubscribes` and `Bounces` API's. These would be the most common
+Currently we implement the `send message` (non-MIME) API and the `Domains`, `Routes`, `Campaigns`, `Mailing Lists`, `Unsubscribes`, `Stats`, and `Bounces` API's. These would be the most common
 and practical API's to be programmatically used. Others would be easy to add if needed.
 
 This module works by providing proxy objects for interacting with different resources through the Mailgun API.
@@ -38,6 +38,9 @@ mailgun.messages().send(data, function (error, body) {
   console.log(body);
 });
 ```
+
+Messages stored using the Mailgun `store()` action can be retrieved using `messages(<message_key>).info()` function.
+Optionally the MIME representation of the message can be retrieved if `MIME` argument is passed in and set to `true`.
 
 Something more elaborate. Get mailing list info, create a member and get mailing list members and update member.
 Notice that the proxy objects can be reused.
@@ -170,6 +173,8 @@ mailgun.lists('mylist@mycompany.com').members().add({ members: members, subscrib
 ## Generic requests
 
 Mailgun-js also provides helper methods to allow users to interact with parts of the api that are not exposed already.
+These are not tied to the domain passed in the constructor, and thus require the full path with the domain
+passed in the `resource` argument.
 
 * `mailgun.get(resource, data, callback)` - sends GET request to the specified resource on api.
 * `mailgun.post(resource, data, callback)` - sends POST request to the specified resource on api.
@@ -179,7 +184,7 @@ Mailgun-js also provides helper methods to allow users to interact with parts of
 Example: Get some stats
 
 ```js
-mailgun.get('/stats', { event: ['sent', 'delivered'] }, function (error, body) {
+mailgun.get('/samples.mailgun.org/stats', { event: ['sent', 'delivered'] }, function (error, body) {
   console.log(body);
 });
 ```

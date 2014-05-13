@@ -11,9 +11,13 @@ var routeId = -1;
 
 module.exports = {
 
-  /*
-   * Messages
-   */
+  beforeEach: function (done) {
+    setTimeout(done, 400);
+  },
+
+  //
+  // Messages
+  //
 
   'test messages.send() invalid "from"': function (done) {
     mailgun.messages().send({to: fixture.message.to}, function (err, body) {
@@ -209,9 +213,9 @@ module.exports = {
     });
   },
 
-  /*
-   * Domains
-   */
+  //
+  // Domains
+  //
 
   'test domains().create() invalid missing address': function (done) {
     mailgun.domains().create({}, function (err, body) {
@@ -350,9 +354,9 @@ module.exports = {
     });
   },
 
-  /*
-   * Unsubscribes
-   */
+//
+// Unsubscribes
+//
 
   'test unsubscribes().create() missing address': function (done) {
     mailgun.unsubscribes().create({}, function (err, body) {
@@ -419,9 +423,9 @@ module.exports = {
     });
   },
 
-  /*
-   * Bounces
-   */
+  //
+  // Bounces
+  //
 
   'test bounces().create() missing address': function (done) {
     mailgun.bounces().create({}, function (err, body) {
@@ -473,22 +477,14 @@ module.exports = {
     });
   },
 
-  /*
-   * Routes
-   */
+  //
+  // Routes
+  //
 
   'test routes().create() invalid missing expression': function (done) {
     mailgun.routes().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'expression'/.test(err.message));
-      done();
-    });
-  },
-
-  'test routes().create() invalid missing action': function (done) {
-    mailgun.routes().create({expression: fixture.route.expression}, function (err, body) {
-      assert.ok(err);
-      assert(/Missing parameter 'action'/.test(err.message));
       done();
     });
   },
@@ -521,11 +517,24 @@ module.exports = {
     });
   },
 
-  'test routes().update()': function (done) {
+  'test routes().update() with one action argument': function (done) {
     mailgun.routes(routeId).update({
       description: 'test new route update',
       expression: 'match_recipient(".*@samples.mailgun.org")',
       action: 'forward("http://myhost.com/messages/")'
+    }, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.message);
+      assert.equal(routeId, body.id);
+      done();
+    });
+  },
+
+  'test routes().update() with two action arguments': function (done) {
+    mailgun.routes(routeId).update({
+      description: 'test new route update',
+      expression: 'match_recipient(".*@samples.mailgun.org")',
+      action: ['forward("http://myhost.com/messages/")', "stop()"]
     }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
@@ -542,9 +551,9 @@ module.exports = {
     });
   },
 
-  /*
-   * Mailing lists
-   */
+  //
+  // Mailing lists
+  //
 
   'test lists().create() invalid missing address': function (done) {
     mailgun.lists().create({}, function (err, body) {
@@ -746,18 +755,9 @@ module.exports = {
     });
   },
 
-  'test stats': function (done) {
-    mailgun.get('/stats', {event: 'sent' }, function (err, body) {
-      assert.ifError(err);
-      assert.ok(body);
-      assert.ok(body.items);
-      done();
-    });
-  },
-
-  /*
-   * Campaigns
-   */
+  //
+  // Campaigns
+  //
 
   'test campaigns().create() invalid missing address': function (done) {
     mailgun.campaigns().create({}, function (err) {
@@ -832,6 +832,63 @@ module.exports = {
       assert.ifError(err);
       assert.ok(body);
       assert.ok(body.message);
+      done();
+    });
+  },
+
+  //
+  // STATS
+  //
+
+  'test mailgun.stats().list()': function (done) {
+    mailgun.stats().list(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.total_count);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  'test mailgun.stats().list() with one argument': function (done) {
+    mailgun.stats().list({ event: 'delivered' }, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.total_count);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  'test mailgun.stats().list() with arguments': function (done) {
+    mailgun.stats().list({ event: ['sent', 'delivered'] }, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.total_count);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  //
+  // TAGS
+  //
+
+  'test mailgun.tags().delete()': function (done) {
+    mailgun.tags('newsletter').delete(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.message);
+      done();
+    });
+  },
+
+  //
+  // GENERIC REST FUNCTIONS
+  //
+
+  'test mailgun.get()': function (done) {
+    var path = '/' + auth.domain + '/stats';
+    mailgun.get(path, { event: ['sent', 'delivered'] }, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.total_count);
+      assert.ok(body.items);
       done();
     });
   }
