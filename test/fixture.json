@@ -1,6 +1,6 @@
 {
   "message": {
-    "to": "mgunit@outlook.com",
+    "to": "mm@samples.mailgun.org",
     "from": "you@samples.mailgun.org",
     "subject": "Test email subject",
     "text": "Test email text"
