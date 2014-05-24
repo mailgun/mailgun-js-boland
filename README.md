@@ -120,8 +120,8 @@ mailgun.messages().send(data, function (error, body) {
 });
 ```
 
-Finally we provide a `Mailgun.Attachment` class to add attachment and specify both the buffer and filename data.
-
+Finally we provide a `Mailgun.Attachment` class to add attachment and specify both the data source and filename.
+The first constructor argument can be either a `Buffer` or a `string` (file path).
 ```js
 var filename = '/mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
