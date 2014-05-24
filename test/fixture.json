@@ -35,7 +35,7 @@
   },
   "campaign": {
     "name": "My test campaign",
-    "id": "mu_uniq_campaign_id",
+    "id": "my_unique_campaign_id",
     "newName": "my_new_campaign_name"
   }
 }
