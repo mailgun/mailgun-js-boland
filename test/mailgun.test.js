@@ -81,7 +81,7 @@ module.exports = {
     });
   },
 
-  'test messages().send() with attachment using Attachment object': function (done) {
+  'test messages().send() with attachment using Attachment object (Buffer)': function (done) {
     var msg = fixture.message;
 
     var filename = '/mailgun_logo.png';
@@ -89,6 +89,23 @@ module.exports = {
     var file = fs.readFileSync(filepath);
 
     msg.attachment = new Mailgun.Attachment(file, filename);
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with attachment using Attachment object (file)': function (done) {
+    var msg = fixture.message;
+
+    var filename = '/mailgun_logo.png';
+    var filepath = path.join(__dirname, filename);
+
+    msg.attachment = new Mailgun.Attachment(filepath, 'my_custom_name.png');
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -161,7 +178,7 @@ module.exports = {
     });
   },
 
-  'test messages().send() with attachment using Attachment object': function (done) {
+  'test messages().send() with inline attachment using Attachment object (Buffer)': function (done) {
     var msg = fixture.message;
 
     var filename = '/mailgun_logo.png';
@@ -169,6 +186,23 @@ module.exports = {
     var file = fs.readFileSync(filepath);
 
     msg.inline = new Mailgun.Attachment(file, filename);
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with inline attachment using Attachment object (file)': function (done) {
+    var msg = fixture.message;
+
+    var filename = '/mailgun_logo.png';
+    var filepath = path.join(__dirname, filename);
+
+    msg.inline = new Mailgun.Attachment(filepath, 'my_custom_name.png');
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
