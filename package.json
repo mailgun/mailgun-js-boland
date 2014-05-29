@@ -20,7 +20,8 @@
     "form-data": "~0.1.2",
     "inflection": "~1.2.6",
     "path-proxy": "~1.0",
-    "q": "~1.0.1"
+    "q": "~1.0.1",
+    "debug": "~0.8.1"
   },
   "author": {
     "name": "Bojan Djurkovic <bojan@onelobby.com>"
