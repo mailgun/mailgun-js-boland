@@ -12,5 +12,5 @@ Returns a list of event stat items. Each record represents counts for one event 
 
 Method | Path
 --- | ---
-GET | /stats
+GET | /{domain}/stats
 

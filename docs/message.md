@@ -8,7 +8,7 @@
 
 Method | Path
 --- | ---
-GET | /messages/{message}
+GET | /domains/{domain}/messages/{message}
 
 ### `send`
 
@@ -16,7 +16,7 @@ GET | /messages/{message}
 
 Method | Path
 --- | ---
-POST | /messages
+POST | /{domain}/messages
 
 ### `delete`
 
@@ -24,5 +24,5 @@ POST | /messages
 
 Method | Path
 --- | ---
-DELETE | /messages/{message}
+DELETE | /domains/{domain}/messages/{message}
 

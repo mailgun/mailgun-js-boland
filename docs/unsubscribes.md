@@ -12,7 +12,7 @@ Fetches the list of unsubscribes.
 
 Method | Path
 --- | ---
-GET | /unsubscribes
+GET | /{domain}/unsubscribes
 
 ### `info`
 
@@ -22,7 +22,7 @@ Retreives a single unsubscribe record.
 
 Method | Path
 --- | ---
-GET | /unsubscribes/{address}
+GET | /{domain}/unsubscribes/{address}
 
 ### `delete`
 
@@ -32,7 +32,7 @@ Removes an address from the unsubscribes table.
 
 Method | Path
 --- | ---
-DELETE | /unsubscribes/{address}
+DELETE | /{domain}/unsubscribes/{address}
 
 ### `create`
 
@@ -42,5 +42,5 @@ Adds address to unsubscribed table.
 
 Method | Path
 --- | ---
-POST | /unsubscribes
+POST | /{domain}/unsubscribes
 

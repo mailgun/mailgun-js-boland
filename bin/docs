@@ -69,10 +69,32 @@ function addAction (file, actionName, action) {
   fs.appendFileSync(file, '--- | ');
   fs.appendFileSync(file, '---\n');
   fs.appendFileSync(file, action.method + ' | ');
-  fs.appendFileSync(file, prettifyHref(action.href) + '\n\n');
+
+  // HACK append the domain to href
+  var realHref = appendDomainToAction(action.method, action.href);
+
+  fs.appendFileSync(file, prettifyHref(realHref) + '\n\n');
   addActionAttributes(file, action);
 
   checkAction(actionName, action);
+}
+
+function appendDomainToAction(method, href) {
+  var d = '/{domain}';
+
+  //filter out API calls that do not require a domain specified
+  if ((href.indexOf('/routes') >= 0)
+    || (href.indexOf('/lists') >= 0)
+    || (href.indexOf('/address') >= 0)
+    || (href.indexOf('/domains') >= 0 )) {
+    d = '';
+  }
+  else if ((href.indexOf('/messages') >= 0)
+    && (method === 'GET' || method === 'DELETE')) {
+    d = '/domains/{domain}';
+  }
+
+  return d.concat(href);
 }
 
 function getFunctionCall (actionName, action) {

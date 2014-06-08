@@ -12,7 +12,7 @@ Create a new campaign.
 
 Method | Path
 --- | ---
-POST | /campaigns
+POST | /{domain}/campaigns
 
 ### `list`
 
@@ -22,7 +22,7 @@ Returns a list of campaigns.
 
 Method | Path
 --- | ---
-GET | /campaigns
+GET | /{domain}/campaigns
 
 ### `info`
 
@@ -32,7 +32,7 @@ Get single campaign info.
 
 Method | Path
 --- | ---
-GET | /campaigns/{id}
+GET | /{domain}/campaigns/{id}
 
 ### `update`
 
@@ -42,7 +42,7 @@ Update campaign.
 
 Method | Path
 --- | ---
-PUT | /campaigns/{id}
+PUT | /{domain}/campaigns/{id}
 
 ### `delete`
 
@@ -52,5 +52,5 @@ Delete campaign.
 
 Method | Path
 --- | ---
-DELETE | /campaigns/{id}
+DELETE | /{domain}/campaigns/{id}
 

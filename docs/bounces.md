@@ -12,7 +12,7 @@ Fetches the list of bounces.
 
 Method | Path
 --- | ---
-GET | /bounces
+GET | /{domain}/bounces
 
 ### `info`
 
@@ -22,7 +22,7 @@ Fetches a single bounce event by a given email address.
 
 Method | Path
 --- | ---
-GET | /bounces/{address}
+GET | /{domain}/bounces/{address}
 
 ### `delete`
 
@@ -32,7 +32,7 @@ Clears a given bounce event.
 
 Method | Path
 --- | ---
-DELETE | /bounces/{address}
+DELETE | /{domain}/bounces/{address}
 
 ### `create`
 
@@ -42,5 +42,5 @@ Adds a permanent bounce to the bounces table. Updates the existing record if alr
 
 Method | Path
 --- | ---
-POST | /bounces
+POST | /{domain}/bounces
 

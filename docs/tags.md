@@ -12,5 +12,5 @@ Deletes all counters for particular tag and the tag itself.
 
 Method | Path
 --- | ---
-DELETE | /tags/{tag}
+DELETE | /{domain}/tags/{tag}
 
