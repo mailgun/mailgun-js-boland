@@ -914,6 +914,46 @@ module.exports = {
   },
 
   //
+  // EVENTS
+  //
+
+  'test mailgun.events().get() simple recipient query': function (done) {
+    var query = {
+      begin: 'Fri, 3 May 2013 09:00:00 -0000',
+      ascending: 'yes',
+      limit: 25,
+      pretty: 'yes',
+      recipient: 'mm@samples.mailgun.org'
+    };
+
+    mailgun.events().get(query, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  'test mailgun.events().get() simple event query': function (done) {
+    var query = {
+      event: 'rejected OR failed'
+    };
+
+    mailgun.events().get(query, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  'test mailgun.events().get() without any params': function (done) {
+    mailgun.events().get(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  //
   // GENERIC REST FUNCTIONS
   //
 
