@@ -247,6 +247,37 @@ module.exports = {
     });
   },
 
+  'test messages().send() with multiple tags': function (done) {
+    var msg = fixture.message;
+
+    msg['o:tag'] = ['tag1', 'tag2', 'tag3'];
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with multiple tags and normal attachment': function (done) {
+    var msg = fixture.message;
+    var filename = path.join(__dirname, '/fixture.json');
+
+    msg.attachment = filename;
+
+    msg['o:tag'] = ['tag1', 'tag2', 'tag3'];
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
   //
   // Domains
   //
