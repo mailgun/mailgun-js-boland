@@ -6,7 +6,6 @@ dump.rdb
 main.js
 
 # Additions for .npmignore only
-/test/
 /docs/
 /bin/
 /.npmignore
