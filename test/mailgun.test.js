@@ -88,7 +88,7 @@ module.exports = {
     var filepath = path.join(__dirname, filename);
     var file = fs.readFileSync(filepath);
 
-    msg.attachment = new Mailgun.Attachment(file, filename);
+    msg.attachment = new Mailgun.Attachment({data: file, filename: filename});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -105,7 +105,7 @@ module.exports = {
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
 
-    msg.attachment = new Mailgun.Attachment(filepath, 'my_custom_name.png');
+    msg.attachment = new Mailgun.Attachment({data: filepath, filename: 'my_custom_name.png'});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -185,7 +185,7 @@ module.exports = {
     var filepath = path.join(__dirname, filename);
     var file = fs.readFileSync(filepath);
 
-    msg.inline = new Mailgun.Attachment(file, filename);
+    msg.inline = new Mailgun.Attachment({data: file, filename: filename});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -202,7 +202,7 @@ module.exports = {
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
 
-    msg.inline = new Mailgun.Attachment(filepath, 'my_custom_name.png');
+    msg.inline = new Mailgun.Attachment({data: filepath, filename: 'my_custom_name.png'});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -268,6 +268,29 @@ module.exports = {
     msg.attachment = filename;
 
     msg['o:tag'] = ['tag1', 'tag2', 'tag3'];
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with attachment using Attachment object (stream)': function (done) {
+    var msg = fixture.message;
+
+    var filename = '/mailgun_logo.png';
+    var filepath = path.join(__dirname, filename);
+    var fileStream = fs.createReadStream(filepath);
+    var fileStat = fs.statSync(filepath);
+
+    msg.attachment = new Mailgun.Attachment({
+      data: fileStream,
+      filename: 'my_custom_name.png',
+      knownLength: fileStat.size,
+      contentType: 'image/png'});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);

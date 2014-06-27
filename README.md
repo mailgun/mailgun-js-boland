@@ -120,14 +120,26 @@ mailgun.messages().send(data, function (error, body) {
 });
 ```
 
-Finally we provide a `Mailgun.Attachment` class to add attachment and specify both the data source and filename.
-The first constructor argument can be either a `Buffer` or a `string` (file path).
+Finally we provide a `Mailgun.Attachment` class to add attachments with a bit more customization. The Attachment
+constructor takes an `options` object. The `options` parameters can ahve the following fields:
+* `data` - can be one of
+    * a string representing file path to the attachment
+    * a buffer of file data
+    * an instance of `Readable` which means it is a readable stream.
+* `filename` - the file name to be used for the attachment. Default is 'file'
+* `contentType` - the content type. Required for case of `Readable` data. Ex. `image/jpg`.
+* `knownLength` - the content length in bytes. Required for case of `Readable` data.
+
+If an attachment object does not satisfy those valid conditions it is ignored. Multiple attachments can be sent by
+passing an array in the `attachment` parameter. The array elements can be of any one of the valid types and each one
+will be handled appropriately.
+
 ```js
 var filename = '/mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
 var file = fs.readFileSync(filepath);
 
-var attch = new Mailgun.Attachment(file, filename);
+var attch = new Mailgun.Attachment({data: file, filename: filename});
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -142,9 +154,22 @@ mailgun.messages().send(data, function (error, body) {
 });
 ```
 
-If an attachment object is not of type `Buffer` or a `string` or a `Mailgun.Attachment` object with valid data it is
-ignored. Multiple attachments can be sent by passing an array in the `attachment` parameter. The array elements can
-be of any one of the valid types and each one will be handled appropriately.
+```js
+var filename = '/mailgun_logo.png';
+var filepath = path.join(__dirname, filename);
+var fileStream = fs.createReadStream(filepath);
+var fileStat = fs.statSync(filepath);
+
+msg.attachment = new Mailgun.Attachment({
+  data: fileStream,
+  filename: 'my_custom_name.png',
+  knownLength: fileStat.size,
+  contentType: 'image/png'});
+
+mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});
+```
 
 #### Creating mailing list members
 
