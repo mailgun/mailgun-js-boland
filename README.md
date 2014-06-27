@@ -85,7 +85,7 @@ Sending attachments can be done in a few ways. We can use the path to a file in 
 If the `attachment` parameter is of type `string` it is assumed to be the path to a file.
 
 ```js
-var filepath = path.join(__dirname, '/mailgun_logo.png');
+var filepath = path.join(__dirname, 'mailgun_logo.png');
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -104,7 +104,7 @@ We can pass a buffer (has to be a `Buffer` object) of the data. If a buffer is u
 generic filename "file".
 
 ```js
-var filepath = path.join(__dirname, '/mailgun_logo.png');
+var filepath = path.join(__dirname, 'mailgun_logo.png');
 var file = fs.readFileSync(filepath);
 
 var data = {
@@ -121,7 +121,7 @@ mailgun.messages().send(data, function (error, body) {
 ```
 
 Finally we provide a `Mailgun.Attachment` class to add attachments with a bit more customization. The Attachment
-constructor takes an `options` object. The `options` parameters can ahve the following fields:
+constructor takes an `options` object. The `options` parameters can have the following fields:
 * `data` - can be one of
     * a string representing file path to the attachment
     * a buffer of file data
@@ -135,7 +135,7 @@ passing an array in the `attachment` parameter. The array elements can be of any
 will be handled appropriately.
 
 ```js
-var filename = '/mailgun_logo.png';
+var filename = 'mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
 var file = fs.readFileSync(filepath);
 
@@ -155,7 +155,7 @@ mailgun.messages().send(data, function (error, body) {
 ```
 
 ```js
-var filename = '/mailgun_logo.png';
+var filename = 'mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
 var fileStream = fs.createReadStream(filepath);
 var fileStat = fs.statSync(filepath);
