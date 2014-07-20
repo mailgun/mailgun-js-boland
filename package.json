@@ -2,7 +2,7 @@
   "name": "mailgun-js",
   "description": "Simple Node.js helper module for Mailgun API",
   "keywords": ["email", "mailgun"],
-  "version": "0.5.1",
+  "version": "0.5.2",
   "homepage": "https://github.com/1lobby/mailgun-js",
   "license": "MIT",
   "repository": {
@@ -21,6 +21,7 @@
     "inflection": "~1.2.6",
     "path-proxy": "~1.0",
     "q": "~1.0.1",
+    "scmp": "~0.0.3",
     "debug": "~0.8.1"
   },
   "author": {
@@ -44,6 +45,9 @@
     },
     {
       "name": "Julien Faissolle"
+    },
+    {
+      "name": "AJ ONeal"
     }
   ],
   "devDependencies": {

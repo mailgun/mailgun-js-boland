@@ -228,6 +228,37 @@ mailgun.lists('mylist@mydomain.com').info().then(function (data) {
 
 The function passed as 2nd argument is optional and not needed if you don't care about the fail case.
 
+## Webhook validation
+
+The Mailgun object also has a helper function for validating Mailgun Webhook requests
+(as per the [mailgun docs for securing webhooks](http://documentation.mailgun.com/user_manual.html#securing-webhooks)).
+This code came from [this gist](https://gist.github.com/coolaj86/81a3b61353d2f0a2552c).
+
+Example usage:
+
+```js
+var Mailgun = require('mailgun-js');
+var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+
+function router(app) {
+  app.post('/webhooks/mailgun/*', function (req, res, next) {
+    var body = req.body;
+
+    if (!mailgun.validateWebhook(body.timestamp, body.token, body.signature)) {
+      console.error('Request came, but not from Mailgun');
+      res.send({ error: { message: 'Invalid signature. Are you even Mailgun?' } });
+      return;
+    }
+
+    next();
+  });
+
+  app.post('/webhooks/mailgun/catchall', function (req, res) {
+    // actually handle request here
+  });
+}
+```
+
 ## Tests
 
 To run the test suite you must first have a Mailgun account with a domain setup. Then create a file named _./test/auth.json_, which contains your credentials as JSON, for example:
