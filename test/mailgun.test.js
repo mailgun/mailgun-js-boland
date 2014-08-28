@@ -3,9 +3,7 @@ var fixture = require('./fixture.json');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var Mailgun = require('../lib/mailgun');
-
-var mailgun = new Mailgun({apiKey: auth.api_key, domain: auth.domain});
+var mailgun = require('../lib/mailgun')({apiKey: auth.api_key, domain: auth.domain});
 
 var routeId = -1;
 
@@ -88,7 +86,7 @@ module.exports = {
     var filepath = path.join(__dirname, filename);
     var file = fs.readFileSync(filepath);
 
-    msg.attachment = new Mailgun.Attachment({data: file, filename: filename});
+    msg.attachment = new mailgun.Attachment({data: file, filename: filename});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -105,7 +103,7 @@ module.exports = {
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
 
-    msg.attachment = new Mailgun.Attachment({data: filepath, filename: 'my_custom_name.png'});
+    msg.attachment = new mailgun.Attachment({data: filepath, filename: 'my_custom_name.png'});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -185,7 +183,7 @@ module.exports = {
     var filepath = path.join(__dirname, filename);
     var file = fs.readFileSync(filepath);
 
-    msg.inline = new Mailgun.Attachment({data: file, filename: filename});
+    msg.inline = new mailgun.Attachment({data: file, filename: filename});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -202,7 +200,7 @@ module.exports = {
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
 
-    msg.inline = new Mailgun.Attachment({data: filepath, filename: 'my_custom_name.png'});
+    msg.inline = new mailgun.Attachment({data: filepath, filename: 'my_custom_name.png'});
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -286,7 +284,7 @@ module.exports = {
     var fileStream = fs.createReadStream(filepath);
     var fileStat = fs.statSync(filepath);
 
-    msg.attachment = new Mailgun.Attachment({
+    msg.attachment = new mailgun.Attachment({
       data: fileStream,
       filename: 'my_custom_name.png',
       knownLength: fileStat.size,
@@ -1019,5 +1017,16 @@ module.exports = {
       assert.ok(body.items);
       done();
     });
+  },
+
+  //
+  // Constructor should be in instance
+  //
+
+  'instance constructor': function () {
+    var mg = new mailgun.Mailgun({apiKey: auth.api_key, domain: auth.domain});
+    assert.ok(mg);
+    assert.ok(mg instanceof mailgun.Mailgun);
+    assert.ok(mg instanceof mg.Mailgun);
   }
 };

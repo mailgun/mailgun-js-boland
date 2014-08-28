@@ -23,9 +23,7 @@ See the `/docs` folder for detailed documentation. For full usage examples see t
 ```js
 var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
 var domain = 'mydomain.mailgun.org';
-var Mailgun = require('mailgun-js');
-
-var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -135,11 +133,12 @@ passing an array in the `attachment` parameter. The array elements can be of any
 will be handled appropriately.
 
 ```js
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 var filename = 'mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
 var file = fs.readFileSync(filepath);
 
-var attch = new Mailgun.Attachment({data: file, filename: filename});
+var attch = new mailgun.Attachment({data: file, filename: filename});
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -155,12 +154,13 @@ mailgun.messages().send(data, function (error, body) {
 ```
 
 ```js
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 var filename = 'mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
 var fileStream = fs.createReadStream(filepath);
 var fileStat = fs.statSync(filepath);
 
-msg.attachment = new Mailgun.Attachment({
+msg.attachment = new mailgun.Attachment({
   data: fileStream,
   filename: 'my_custom_name.png',
   knownLength: fileStat.size,
@@ -237,8 +237,7 @@ This code came from [this gist](https://gist.github.com/coolaj86/81a3b61353d2f0a
 Example usage:
 
 ```js
-var Mailgun = require('mailgun-js');
-var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 function router(app) {
   app.post('/webhooks/mailgun/*', function (req, res, next) {
