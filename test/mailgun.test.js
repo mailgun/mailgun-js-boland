@@ -3,6 +3,10 @@ var fixture = require('./fixture.json');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
+var MailComposer = require("mailcomposer").MailComposer;
+
+var mailcomposer = new MailComposer();
+
 var mailgun = require('../lib/mailgun')({apiKey: auth.api_key, domain: auth.domain});
 
 var routeId = -1;
@@ -1028,5 +1032,36 @@ module.exports = {
     assert.ok(mg);
     assert.ok(mg instanceof mailgun.Mailgun);
     assert.ok(mg instanceof mg.Mailgun);
+  },
+
+  //
+  // Send MIME
+  //
+
+  'test sendMime()': function (done) {
+    mailcomposer.setMessageOption({
+      from: fixture.message.tfrom,
+      to: fixture.message.to,
+      subject: fixture.message.subject,
+      body: fixture.message.text,
+      html: '<b>' + fixture.message.text + '</b>'
+    });
+
+    mailcomposer.streamMessage();
+
+    mailcomposer.buildMessage(function (err, messageSource) {
+      var data = {
+        to: fixture.message.to,
+        message: messageSource
+      };
+
+      mailgun.messages().sendMime(data, function (err, body) {
+        assert.ifError(err);
+        assert.ok(body.id);
+        assert.ok(body.message);
+        assert(/Queued. Thank you./.test(body.message));
+        done();
+      });
+    });
   }
 };

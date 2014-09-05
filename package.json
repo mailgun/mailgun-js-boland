@@ -51,7 +51,8 @@
     }
   ],
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "mailcomposer": "0.2.12"
   },
   "scripts": {
     "test": "mocha"
