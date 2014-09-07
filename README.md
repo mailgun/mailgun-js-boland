@@ -23,9 +23,7 @@ See the `/docs` folder for detailed documentation. For full usage examples see t
 ```js
 var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
 var domain = 'mydomain.mailgun.org';
-var Mailgun = require('mailgun-js');
-
-var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -135,11 +133,12 @@ passing an array in the `attachment` parameter. The array elements can be of any
 will be handled appropriately.
 
 ```js
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 var filename = 'mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
 var file = fs.readFileSync(filepath);
 
-var attch = new Mailgun.Attachment({data: file, filename: filename});
+var attch = new mailgun.Attachment({data: file, filename: filename});
 
 var data = {
   from: 'Excited User <me@samples.mailgun.org>',
@@ -155,18 +154,76 @@ mailgun.messages().send(data, function (error, body) {
 ```
 
 ```js
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 var filename = 'mailgun_logo.png';
 var filepath = path.join(__dirname, filename);
 var fileStream = fs.createReadStream(filepath);
 var fileStat = fs.statSync(filepath);
 
-msg.attachment = new Mailgun.Attachment({
+msg.attachment = new mailgun.Attachment({
   data: fileStream,
   filename: 'my_custom_name.png',
   knownLength: fileStat.size,
   contentType: 'image/png'});
 
 mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});
+```
+
+#### Sending MIME messages
+
+Sending messages in MIME format can be accomplished using the `sendMime()` function of the `messages()` proxy object.
+The `data` parameter for the function has to have `to` and `message` properties. The `message` property can be a full
+file path to the MIME file, a stream of the file (that is a `Readable` object), or a string representation of the MIME
+message. To build a MIME string you can use the [Mail Composer] (https://www.npmjs.org/package/mailcomposer) library.
+Some examples:
+
+```js
+mailcomposer.setMessageOption({
+  from: 'you@samples.mailgun.org',
+  to: 'mm@samples.mailgun.org',
+  subject: 'Test email subject',
+  body: 'Test email text',
+  html: '<b> Test email text </b>'
+});
+
+mailcomposer.streamMessage();
+
+mailcomposer.buildMessage(function (err, messageSource) {
+
+  var data = {
+    to: fixture.message.to,
+    message: messageSource
+  };
+
+  mailgun.messages().sendMime(data, function (err, body) {
+    console.log(body);
+  });
+```
+
+```js
+var filepath = '/path/to/message.mime';
+
+var data = {
+  to: fixture.message.to,
+  message: filepath
+};
+
+mailgun.messages().sendMime(data, function (err, body) {
+  console.log(body);
+});
+```
+
+```js
+var filepath = '/path/to/message.mime';
+
+var data = {
+  to: fixture.message.to,
+  message: fs.createReadStream(filepath)
+};
+
+mailgun.messages().sendMime(data, function (err, body) {
   console.log(body);
 });
 ```
@@ -237,8 +294,7 @@ This code came from [this gist](https://gist.github.com/coolaj86/81a3b61353d2f0a
 Example usage:
 
 ```js
-var Mailgun = require('mailgun-js');
-var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 function router(app) {
   app.post('/webhooks/mailgun/*', function (req, res, next) {

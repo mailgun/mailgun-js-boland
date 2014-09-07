@@ -1,0 +1,27 @@
+To: mm@samples.mailgun.org
+Subject: Test email subject
+Content-Type: multipart/alternative;
+ boundary="----mailcomposer-?=_1-1410115176966"
+MIME-Version: 1.0
+
+------mailcomposer-?=_1-1410115176966
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Test email text
+To: mm@samples.mailgun.org
+To: mm@samples.mailgun.org
+Subject: Test email subject
+Subject: Test email subject
+Content-Type: multipart/alternative;
+ boundary="----mailcomposer-?=_1-1410115176966"
+Content-Type: multipart/alternative;
+ boundary="----mailcomposer-?=_2-1410115176970"
+MIME-Version: 1.0
+
+------mailcomposer-?=_2-1410115176970
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<b>Test email text</b>
+------mailcomposer-?=_2-1410115176970--
