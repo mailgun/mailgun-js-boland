@@ -444,9 +444,9 @@ module.exports = {
     });
   },
 
-//
-// Unsubscribes
-//
+  //
+  // Unsubscribes
+  //
 
   'test unsubscribes().create() missing address': function (done) {
     mailgun.unsubscribes().create({}, function (err, body) {
@@ -1040,7 +1040,7 @@ module.exports = {
 
   'test sendMime()': function (done) {
     mailcomposer.setMessageOption({
-      from: fixture.message.tfrom,
+      from: fixture.message.from,
       to: fixture.message.to,
       subject: fixture.message.subject,
       body: fixture.message.text,
@@ -1050,6 +1050,7 @@ module.exports = {
     mailcomposer.streamMessage();
 
     mailcomposer.buildMessage(function (err, messageSource) {
+
       var data = {
         to: fixture.message.to,
         message: messageSource
@@ -1062,6 +1063,40 @@ module.exports = {
         assert(/Queued. Thank you./.test(body.message));
         done();
       });
+    });
+  },
+
+  'test sendMime() with file path': function (done) {
+    var filePath = path.join(__dirname, '/message.eml');
+
+    var data = {
+      to: fixture.message.to,
+      message: filePath
+    };
+
+    mailgun.messages().sendMime(data, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test sendMime() with file stream': function (done) {
+    var filePath = path.join(__dirname, '/message.eml');
+
+    var data = {
+      to: fixture.message.to,
+      message: fs.createReadStream(filePath)
+    };
+
+    mailgun.messages().sendMime(data, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
     });
   }
 };
