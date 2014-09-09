@@ -10,9 +10,6 @@ Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
 Please see [Mailgun Documentation](http://documentation.mailgun.net) for full Mailgun API reference.
 
-Currently we implement the `send message` (non-MIME) API and the `Domains`, `Routes`, `Campaigns`, `Mailing Lists`, `Unsubscribes`, `Stats`, and `Bounces` API's. These would be the most common
-and practical API's to be programmatically used. Others would be easy to add if needed.
-
 This module works by providing proxy objects for interacting with different resources through the Mailgun API.
 Most methods take a `data` parameter, which is a Javascript object that would contain the arguments for the Mailgun API.
 All methods take a final parameter callback with two parameters: `error`, and `body`.

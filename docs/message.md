@@ -18,6 +18,14 @@ Method | Path
 --- | ---
 POST | /{domain}/messages
 
+### `sendMime`
+
+`mailgun.messages().sendMime({attributes}, {callback});`
+
+Method | Path
+--- | ---
+POST | /{domain}/messages.mime
+
 ### `delete`
 
 `mailgun.messages({message}).delete({callback});`
