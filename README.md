@@ -15,6 +15,8 @@ Most methods take a `data` parameter, which is a Javascript object that would co
 All methods take a final parameter callback with two parameters: `error`, and `body`.
 We try to parse the `body` into a javascript object, and return it to the callback as such for easier use and inspection by the client.
 If there was an error a new `Error` object will be passed to the callback in the `error` parameter.
+If the error originated from the (Mailgun) server, the response code will be available in the `statusCode` property
+of the `error` object passed in the callback.
 See the `/docs` folder for detailed documentation. For full usage examples see the `/test` folder.
 
 ```js

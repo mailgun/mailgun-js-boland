@@ -1098,5 +1098,19 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
+  },
+
+  //
+  // ERROR
+  //
+
+  'server error should have status code': function (done) {
+
+    mailgun.domains('testdomain@test123.com').info(function (err, body) {
+      assert.ok(err);
+      assert.ok(err.statusCode);
+      assert.equal(404, err.statusCode);
+      done();
+    });
   }
 };
