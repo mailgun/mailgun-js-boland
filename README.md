@@ -179,9 +179,8 @@ message. To build a MIME string you can use the [Mail Composer] (https://www.npm
 Some examples:
 
 ```js
-var mailgunApiKey = nconf.get("MAILGUN");
-var domain = 'cintric.com';
-var mailgun = require('mailgun-js')({ apiKey: mailgunApiKey, domain: domain });
+var domain = 'mydomain.mailgun.org';
+var mailgun = require('mailgun-js')({ apiKey: "YOUR API KEY", domain: domain });
 var mailcomposer = new MailComposer();
     
 mailcomposer.setMessageOption({
