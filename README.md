@@ -179,6 +179,11 @@ message. To build a MIME string you can use the [Mail Composer] (https://www.npm
 Some examples:
 
 ```js
+var mailgunApiKey = nconf.get("MAILGUN");
+var domain = 'cintric.com';
+var mailgun = require('mailgun-js')({ apiKey: mailgunApiKey, domain: domain });
+var mailcomposer = new MailComposer();
+    
 mailcomposer.setMessageOption({
   from: 'you@samples.mailgun.org',
   to: 'mm@samples.mailgun.org',
@@ -187,19 +192,22 @@ mailcomposer.setMessageOption({
   html: '<b> Test email text </b>'
 });
 
-mailcomposer.streamMessage();
+mailcomposer.buildMessage(function(mailBuildError, messageSource) {
 
-mailcomposer.buildMessage(function (err, messageSource) {
+    var dataToSend = {
+        to: args.email,
+        message: messageSource
+    };
 
-  var data = {
-    to: fixture.message.to,
-    message: messageSource
-  };
-
-  mailgun.messages().sendMime(data, function (err, body) {
-    console.log(body);
-  });
+    mailgun.messages().sendMime(dataToSend, function (sendError, body) {
+        if (sendError) {
+            console.log(sendError);
+            return;
+        } 
+    });
+});
 ```
+#### Referencing MIME file
 
 ```js
 var filepath = '/path/to/message.mime';
