@@ -194,7 +194,7 @@ mailcomposer.setMessageOption({
 mailcomposer.buildMessage(function(mailBuildError, messageSource) {
 
     var dataToSend = {
-        to: args.email,
+        to: 'mm@samples.mailgun.org',
         message: messageSource
     };
 
