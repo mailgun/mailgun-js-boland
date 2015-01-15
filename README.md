@@ -2,6 +2,10 @@
 
 Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
+[![NPM](https://nodei.co/npm/mailgun-js.png?downloads=true&stars=true)](https://nodei.co/npm/mailgun-js/)
+
+[![NPM](https://nodei.co/npm-dl/mailgun-js.png)](https://nodei.co/npm/mailgun-js/)
+
 ## Installation
 
 `npm install mailgun-js`
@@ -71,6 +75,15 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
   console.log(body);
 });
 ```
+
+#### Options
+
+`Mailgun` object constructor options:
+
+* `apiKey` - Your Mailgun API KEY
+* `domain` - Your Mailgun Domain
+* `mute` - Set to `true` if you wish to mute the console error logs in `validateWebhook()` function
+* `proxy` - The proxy URI in format `http[s]://[auth@]host:port`. ex: `'http://proxy.example.com:8080'`
 
 #### Attachments
 

@@ -1,5 +1,6 @@
 var auth = require('./auth.json');
 var fixture = require('./fixture.json');
+var clone = require('clone');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
@@ -30,7 +31,19 @@ module.exports = {
   },
 
   'test messages().send()': function (done) {
-    mailgun.messages().send(fixture.message, function (err, body) {
+    var msg = clone(fixture.message);
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with recipient vars': function (done) {
+    var msg = clone(fixture.message_recipient_vars);
+    mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
       assert.ok(body.id);
       assert.ok(body.message);
@@ -40,7 +53,7 @@ module.exports = {
   },
 
   'test messages().send() with invalid attachment should go ok': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     msg.attachment = 123;
 
     mailgun.messages().send(msg, function (err, body) {
@@ -53,7 +66,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using filename': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/mailgun_logo.png');
     msg.attachment = filename;
 
@@ -67,7 +80,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using file buffer': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename);
@@ -84,7 +97,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using Attachment object (Buffer)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -102,7 +115,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using Attachment object (file)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -119,7 +132,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple attachments': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename2);
@@ -136,7 +149,7 @@ module.exports = {
   },
 
   'test messages().send() with invalid inline attachment should go ok': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     msg.inline = 123;
 
     mailgun.messages().send(msg, function (err, body) {
@@ -149,7 +162,7 @@ module.exports = {
   },
 
   'test messages().send() with inline attachment using filename': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/mailgun_logo.png');
 
     msg.inline = filename;
@@ -164,7 +177,7 @@ module.exports = {
   },
 
   'test messages().send() with inline attachment using file buffer': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename);
@@ -181,7 +194,7 @@ module.exports = {
   },
 
   'test messages().send() with inline attachment using Attachment object (Buffer)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -199,7 +212,7 @@ module.exports = {
   },
 
   'test messages().send() with inline attachment using Attachment object (file)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -216,7 +229,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple inline attachments': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename2);
@@ -233,7 +246,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple inline and normal attachments': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
 
@@ -250,7 +263,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple tags': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     msg['o:tag'] = ['tag1', 'tag2', 'tag3'];
 
@@ -264,7 +277,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple tags and normal attachment': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
 
     msg.attachment = filename;
@@ -281,7 +294,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using Attachment object (stream)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -292,7 +305,8 @@ module.exports = {
       data: fileStream,
       filename: 'my_custom_name.png',
       knownLength: fileStat.size,
-      contentType: 'image/png'});
+      contentType: 'image/png'
+    });
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -316,7 +330,7 @@ module.exports = {
   },
 
   'test domains().create() invalid missing smtp password': function (done) {
-    mailgun.domains().create({ name: fixture.new_domain.name }, function (err, body) {
+    mailgun.domains().create({name: fixture.new_domain.name}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'smtp_password'/.test(err.message));
       done();
@@ -371,7 +385,7 @@ module.exports = {
   },
 
   'test domains().credentials().create() missing password': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials().create({ login: fixture.credentials.login }, function (err, body) {
+    mailgun.domains(fixture.existing_domain.name).credentials().create({login: fixture.credentials.login}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'password'/.test(err.message));
       done();
@@ -379,7 +393,10 @@ module.exports = {
   },
 
   'test domains().credentials().create() invalid login type': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials().create({ login: 123, password: 'test' }, function (err, body) {
+    mailgun.domains(fixture.existing_domain.name).credentials().create({
+      login: 123,
+      password: 'test'
+    }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
@@ -387,7 +404,10 @@ module.exports = {
   },
 
   'test domains().credentials().create() invalid password type': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials().create({ login: fixture.credentials.login, password: 123 }, function (err, body) {
+    mailgun.domains(fixture.existing_domain.name).credentials().create({
+      login: fixture.credentials.login,
+      password: 123
+    }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
@@ -395,7 +415,10 @@ module.exports = {
   },
 
   'test domains().credentials().create()': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials().create({ login: fixture.credentials.login, password: fixture.credentials.password }, function (err, body) {
+    mailgun.domains(fixture.existing_domain.name).credentials().create({
+      login: fixture.credentials.login,
+      password: fixture.credentials.password
+    }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
@@ -411,7 +434,7 @@ module.exports = {
   },
 
   'test domains().credentials().update() invalid password type': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({ password: 123 }, function (err, body) {
+    mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({password: 123}, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
@@ -419,7 +442,7 @@ module.exports = {
   },
 
   'test domains().credentials().update()': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({ password: fixture.credentials.password }, function (err, body) {
+    mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({password: fixture.credentials.password}, function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
@@ -687,7 +710,7 @@ module.exports = {
   'test lists().update()': function (done) {
     var name = 'Test List Updated';
     var desc = 'My updated test mailing list';
-    mailgun.lists(fixture.mailingList.address).update({ name: name, description: desc }, function (err, body) {
+    mailgun.lists(fixture.mailingList.address).update({name: name, description: desc}, function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       assert.equal(fixture.mailingList.address, body.list.address);
@@ -799,16 +822,16 @@ module.exports = {
     var members = [
       {
         address: 'Alice <alice@example.com>',
-        vars: { age: 26 }
+        vars: {age: 26}
       },
       {
         name: 'Bob',
         address: 'bob@example.com',
-        vars: { age: 34 }
+        vars: {age: 34}
       }
     ];
 
-    mailgun.lists(fixture.mailingList.address).members().add({ members: members }, function (err, body) {
+    mailgun.lists(fixture.mailingList.address).members().add({members: members}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'subscribed'/.test(err.message));
       done();
@@ -819,16 +842,19 @@ module.exports = {
     var members = [
       {
         address: 'Alice <alice@example.com>',
-        vars: { age: 26 }
+        vars: {age: 26}
       },
       {
         name: 'Bob',
         address: 'bob@example.com',
-        vars: { age: 34 }
+        vars: {age: 34}
       }
     ];
 
-    mailgun.lists(fixture.mailingList.address).members().add({ members: members, subscribed: true }, function (err, body) {
+    mailgun.lists(fixture.mailingList.address).members().add({
+      members: members,
+      subscribed: true
+    }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.list);
       assert.ok(body.list.members_count >= 0);
@@ -940,7 +966,7 @@ module.exports = {
   },
 
   'test mailgun.stats().list() with one argument': function (done) {
-    mailgun.stats().list({ event: 'delivered' }, function (err, body) {
+    mailgun.stats().list({event: 'delivered'}, function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
@@ -949,7 +975,7 @@ module.exports = {
   },
 
   'test mailgun.stats().list() with arguments': function (done) {
-    mailgun.stats().list({ event: ['sent', 'delivered'] }, function (err, body) {
+    mailgun.stats().list({event: ['sent', 'delivered']}, function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
@@ -1015,7 +1041,7 @@ module.exports = {
 
   'test mailgun.get()': function (done) {
     var path = '/' + auth.domain + '/stats';
-    mailgun.get(path, { event: ['sent', 'delivered'] }, function (err, body) {
+    mailgun.get(path, {event: ['sent', 'delivered']}, function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
