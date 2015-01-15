@@ -5,6 +5,25 @@
     "subject": "Test email subject",
     "text": "Test email text"
   },
+  "message_recipient_vars": {
+    "to": [
+      "bob@samples.mailgun.org",
+      "alice@samples.mailgun.org"
+    ],
+    "from": "you@samples.mailgun.org",
+    "subject": "Hey, %recipient.first%",
+    "text": "Test email text. Your ID: %recipient.id%",
+    "recipient-variables": {
+      "bob@companyx.com": {
+        "first": "Bob",
+        "id": 1
+      },
+      "alice@samples.mailgun.org": {
+        "first": "Alice",
+        "id": 2
+      }
+    }
+  },
   "route": {
     "description": "Sample test route",
     "expression": "match_recipient('.*@sandbox77047.mailgun.org')",
