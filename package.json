@@ -52,6 +52,7 @@
     }
   ],
   "devDependencies": {
+    "clone": "~0.2.0",
     "mocha": "*",
     "mailcomposer": "0.2.12"
   },

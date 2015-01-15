@@ -1,5 +1,6 @@
 var auth = require('./auth.json');
 var fixture = require('./fixture.json');
+var clone = require('clone');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
@@ -30,7 +31,8 @@ module.exports = {
   },
 
   'test messages().send()': function (done) {
-    mailgun.messages().send(fixture.message, function (err, body) {
+    var msg = clone(fixture.message);
+    mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
       assert.ok(body.id);
       assert.ok(body.message);
@@ -40,7 +42,8 @@ module.exports = {
   },
 
   'test messages().send() with recipient vars': function (done) {
-    mailgun.messages().send(fixture.message_recipient_vars, function (err, body) {
+    var msg = clone(fixture.message_recipient_vars);
+    mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
       assert.ok(body.id);
       assert.ok(body.message);
@@ -50,7 +53,7 @@ module.exports = {
   },
 
   'test messages().send() with invalid attachment should go ok': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     msg.attachment = 123;
 
     mailgun.messages().send(msg, function (err, body) {
@@ -63,7 +66,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using filename': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/mailgun_logo.png');
     msg.attachment = filename;
 
@@ -77,7 +80,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using file buffer': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename);
@@ -94,7 +97,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using Attachment object (Buffer)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -112,7 +115,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using Attachment object (file)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -129,7 +132,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple attachments': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename2);
@@ -146,7 +149,7 @@ module.exports = {
   },
 
   'test messages().send() with invalid inline attachment should go ok': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     msg.inline = 123;
 
     mailgun.messages().send(msg, function (err, body) {
@@ -159,7 +162,7 @@ module.exports = {
   },
 
   'test messages().send() with inline attachment using filename': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/mailgun_logo.png');
 
     msg.inline = filename;
@@ -174,7 +177,7 @@ module.exports = {
   },
 
   'test messages().send() with inline attachment using file buffer': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename);
@@ -191,7 +194,7 @@ module.exports = {
   },
 
   'test messages().send() with inline attachment using Attachment object (Buffer)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -209,7 +212,7 @@ module.exports = {
   },
 
   'test messages().send() with inline attachment using Attachment object (file)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
@@ -226,7 +229,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple inline attachments': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
     var file = fs.readFileSync(filename2);
@@ -243,7 +246,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple inline and normal attachments': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
 
@@ -260,7 +263,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple tags': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     msg['o:tag'] = ['tag1', 'tag2', 'tag3'];
 
@@ -274,7 +277,7 @@ module.exports = {
   },
 
   'test messages().send() with multiple tags and normal attachment': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
 
     msg.attachment = filename;
@@ -291,7 +294,7 @@ module.exports = {
   },
 
   'test messages().send() with attachment using Attachment object (stream)': function (done) {
-    var msg = fixture.message;
+    var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
