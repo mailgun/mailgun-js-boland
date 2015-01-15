@@ -2,6 +2,10 @@
 
 Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
+[![NPM](https://nodei.co/npm/mailgun-js.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/mailgun-js/)
+
+[![NPM](https://nodei.co/npm-dl/mailgun-js.png)](https://nodei.co/npm/mailgun-js/)
+
 ## Installation
 
 `npm install mailgun-js`
