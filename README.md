@@ -12,7 +12,7 @@ Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
 ## Usage overview
 
-Please see [Mailgun Documentation](http://documentation.mailgun.net) for full Mailgun API reference.
+Please see [Mailgun Documentation](https://documentation.mailgun.com) for full Mailgun API reference.
 
 This module works by providing proxy objects for interacting with different resources through the Mailgun API.
 Most methods take a `data` parameter, which is a Javascript object that would contain the arguments for the Mailgun API.
