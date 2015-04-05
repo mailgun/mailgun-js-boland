@@ -317,6 +317,35 @@ module.exports = {
     });
   },
 
+  'test messages().send() with custom data': function (done) {
+    var msg = clone(fixture.message);
+
+    msg['v:whatever'] = 123;
+    msg['v:test'] = true;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
+  'test messages().send() with custom data as object': function (done) {
+    var msg = clone(fixture.message);
+
+    msg['v:my-custom-data'] = {whatever: 123, test: true};
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
   //
   // Domains
   //
