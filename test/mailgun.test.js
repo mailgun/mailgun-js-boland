@@ -543,14 +543,13 @@ module.exports = {
   'test unsubscribes().list()': function (done) {
     mailgun.unsubscribes().list(function (err, body) {
       assert.ifError(err);
-      assert.ok(body.total_count);
       assert.ok(body.items);
       done();
     });
   },
 
   'test unsubscribes().info()': function (done) {
-    mailgun.unsubscribes('me@test.com').info(function (err, body) {
+    mailgun.unsubscribes(fixture.unsubscribe.address).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
@@ -596,7 +595,6 @@ module.exports = {
   'test bounces().list()': function (done) {
     mailgun.bounces().list(function (err, body) {
       assert.ifError(err);
-      assert.ok(body.total_count >= 0);
       assert.ok(body.items);
       done();
     });
@@ -606,7 +604,7 @@ module.exports = {
     mailgun.bounces(fixture.bounce.address).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
-      assert.ok(body.bounce.address);
+      assert.ok(body.address);
       done();
     });
   },
