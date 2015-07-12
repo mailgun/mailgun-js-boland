@@ -84,7 +84,7 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 * `domain` - Your Mailgun Domain
 * `mute` - Set to `true` if you wish to mute the console error logs in `validateWebhook()` function
 * `proxy` - The proxy URI in format `http[s]://[auth@]host:port`. ex: `'http://proxy.example.com:8080'`
-* `timeout` - Request timeout in milliseconds, throws error { [Error: socket hang up] code: 'ECONNRESET' }
+* `timeout` - Request timeout in milliseconds
 
 #### Attachments
 
