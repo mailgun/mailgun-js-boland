@@ -4,9 +4,7 @@ var clone = require('clone');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var MailComposer = require("mailcomposer").MailComposer;
-
-var mailcomposer = new MailComposer();
+var mailcomposer = require("mailcomposer");
 
 var mailgun = require('../lib/mailgun')({apiKey: auth.api_key, domain: auth.domain});
 
@@ -926,7 +924,7 @@ module.exports = {
   'test campaigns().list() with invalid `limit` param': function (done) {
     mailgun.campaigns().list({limit: "foo"}, function (err, body) {
       assert.ok(err);
-      assert(/'limit' parameter is not an integer/.test(err.message));
+      assert(/Invalid parameter type./.test(err.message));
       done();
     });
   },
@@ -934,7 +932,7 @@ module.exports = {
   'test campaigns().list() with invalid `skip` param': function (done) {
     mailgun.campaigns().list({skip: "bar"}, function (err, body) {
       assert.ok(err);
-      assert(/'skip' parameter is not an integer/.test(err.message));
+      assert(/Invalid parameter type./.test(err.message));
       done();
     });
   },
@@ -1092,7 +1090,7 @@ module.exports = {
   //
 
   'test sendMime()': function (done) {
-    mailcomposer.setMessageOption({
+    var mail = mailcomposer({
       from: fixture.message.from,
       to: fixture.message.to,
       subject: fixture.message.subject,
@@ -1100,13 +1098,11 @@ module.exports = {
       html: '<b>' + fixture.message.text + '</b>'
     });
 
-    mailcomposer.streamMessage();
-
-    mailcomposer.buildMessage(function (err, messageSource) {
+    mail.build(function (err, message) {
 
       var data = {
         to: fixture.message.to,
-        message: messageSource
+        message: message.toString('ascii')
       };
 
       mailgun.messages().sendMime(data, function (err, body) {

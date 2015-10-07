@@ -195,9 +195,9 @@ Some examples:
 ```js
 var domain = 'mydomain.mailgun.org';
 var mailgun = require('mailgun-js')({ apiKey: "YOUR API KEY", domain: domain });
-var mailcomposer = new MailComposer();
+var mailcomposer = require('mailcomposer');
     
-mailcomposer.setMessageOption({
+var mail = mailcomposer({
   from: 'you@samples.mailgun.org',
   to: 'mm@samples.mailgun.org',
   subject: 'Test email subject',
@@ -205,11 +205,11 @@ mailcomposer.setMessageOption({
   html: '<b> Test email text </b>'
 });
 
-mailcomposer.buildMessage(function(mailBuildError, messageSource) {
+mail.build(function(mailBuildError, message) {
 
     var dataToSend = {
         to: 'mm@samples.mailgun.org',
-        message: messageSource
+        message: message.toString('ascii')
     };
 
     mailgun.messages().sendMime(dataToSend, function (sendError, body) {

@@ -2,7 +2,7 @@
   "name": "mailgun-js",
   "description": "Simple Node.js helper module for Mailgun API",
   "keywords": ["email", "mailgun"],
-  "version": "0.7.1",
+  "version": "0.7.2",
   "homepage": "https://github.com/1lobby/mailgun-js",
   "license": "MIT",
   "repository": {
@@ -53,8 +53,8 @@
   ],
   "devDependencies": {
     "clone": "~0.2.0",
-    "mocha": "*",
-    "mailcomposer": "0.2.12"
+    "mocha": "~2.0.0",
+    "mailcomposer": "~1.0.0"
   },
   "scripts": {
     "test": "mocha"
