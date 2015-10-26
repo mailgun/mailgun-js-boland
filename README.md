@@ -85,6 +85,10 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 * `mute` - Set to `true` if you wish to mute the console error logs in `validateWebhook()` function
 * `proxy` - The proxy URI in format `http[s]://[auth@]host:port`. ex: `'http://proxy.example.com:8080'`
 * `timeout` - Request timeout in milliseconds
+* `host` - the mailgun host (default: 'api.mailgun.net')
+* `protocol` - the mailgun protocol (default: 'https:', possible values: 'http:' or 'https:')
+* `port` - the mailgun port (default: '443')
+* `endpoint` - the mailgun host (default: '/v3')
 
 #### Attachments
 
@@ -196,7 +200,7 @@ Some examples:
 var domain = 'mydomain.mailgun.org';
 var mailgun = require('mailgun-js')({ apiKey: "YOUR API KEY", domain: domain });
 var mailcomposer = require('mailcomposer');
-    
+
 var mail = mailcomposer({
   from: 'you@samples.mailgun.org',
   to: 'mm@samples.mailgun.org',
@@ -216,7 +220,7 @@ mail.build(function(mailBuildError, message) {
         if (sendError) {
             console.log(sendError);
             return;
-        } 
+        }
     });
 });
 ```
