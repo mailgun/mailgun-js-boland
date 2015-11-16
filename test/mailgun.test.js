@@ -77,6 +77,21 @@ module.exports = {
     });
   },
 
+  'test messages().send() with attachment using filename with important flag': function (done) {
+    var msg = clone(fixture.message);
+    msg.important = true;
+    var filename = path.join(__dirname, '/mailgun_logo.png');
+    msg.attachment = filename;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
   'test messages().send() with attachment using file buffer': function (done) {
     var msg = clone(fixture.message);
 
@@ -672,7 +687,7 @@ module.exports = {
     mailgun.routes(routeId).update({
       description: 'test new route update',
       expression: 'match_recipient(".*@samples.mailgun.org")',
-      action: ['forward("http://myhost.com/messages/")', "stop()"]
+      action: ['forward("http://myhost.com/messages/")', 'stop()']
     }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);

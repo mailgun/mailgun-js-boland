@@ -2,7 +2,7 @@
   "name": "mailgun-js",
   "description": "Simple Node.js helper module for Mailgun API",
   "keywords": ["email", "mailgun"],
-  "version": "0.7.4",
+  "version": "0.7.5",
   "homepage": "https://github.com/1lobby/mailgun-js",
   "license": "MIT",
   "repository": {
@@ -17,13 +17,13 @@
   },
   "main": "./lib/mailgun.js",
   "dependencies": {
-    "form-data": "~0.2.0",
-    "inflection": "~1.5.3",
-    "path-proxy": "~1.0",
-    "proxy-agent": "~1.1.0",
-    "q": "~1.1.2",
+    "form-data": "~1.0.0-rc3",
+    "inflection": "~1.7.2",
+    "path-proxy": "~1.0.0",
+    "proxy-agent": "~2.0.0",
+    "q": "~1.4.0",
     "scmp": "~1.0.0",
-    "debug": "~2.1.1"
+    "debug": "~2.2.0"
   },
   "author": {
     "name": "Bojan Djurkovic <bojan@onelobby.com>"
@@ -52,9 +52,9 @@
     }
   ],
   "devDependencies": {
-    "clone": "~0.2.0",
-    "mocha": "~2.0.0",
-    "mailcomposer": "~1.0.0"
+    "clone": "~1.0.0",
+    "mocha": "~2.3.4",
+    "mailcomposer": "~2.1.0"
   },
   "scripts": {
     "test": "mocha"
