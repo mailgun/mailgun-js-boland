@@ -1176,5 +1176,26 @@ module.exports = {
       assert.equal(404, err.statusCode);
       done();
     });
+  },
+
+  //
+  // RETRY
+  //
+
+  'messages().send() should work with retry option': function (done) {
+    var mg = new mailgun.Mailgun({
+      apiKey: auth.api_key,
+      domain: auth.domain,
+      retry: 3
+    });
+
+    var msg = clone(fixture.message);
+    mg.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
   }
 };
