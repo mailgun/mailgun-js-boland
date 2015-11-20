@@ -1197,5 +1197,23 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
+  },
+
+  'messages().send() should retry when request fails': function (done) {
+    process.env.DEBUG_MAILGUN_FORCE_RETRY = true;
+    var mg = new mailgun.Mailgun({
+      apiKey: auth.api_key,
+      domain: auth.domain,
+      retry: 3
+    });
+
+    var msg = clone(fixture.message);
+    mg.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
   }
 };
