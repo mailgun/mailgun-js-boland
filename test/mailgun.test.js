@@ -5,6 +5,7 @@ var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
 var mailcomposer = require("mailcomposer");
+var request = require("request");
 
 var mailgun = require('../lib/mailgun')({apiKey: auth.api_key, domain: auth.domain});
 
@@ -296,6 +297,22 @@ module.exports = {
     msg.attachment = filename;
 
     msg['o:tag'] = ['tag1', 'tag2', 'tag3'];
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+  
+  'test messages().send() with attachment using stream': function (done) {
+    var msg = clone(fixture.message);
+
+    var file = request("https://www.google.ca/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
+
+    msg.attachment = file;
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
