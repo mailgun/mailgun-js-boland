@@ -89,6 +89,9 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 * `protocol` - the mailgun protocol (default: 'https:', possible values: 'http:' or 'https:')
 * `port` - the mailgun port (default: '443')
 * `endpoint` - the mailgun host (default: '/v3')
+* `retry` - the number of **total attempts** to do when performing requests. Default is `1`. 
+That is, we will try an operation only once with no retries on error.
+          
 
 #### Attachments
 

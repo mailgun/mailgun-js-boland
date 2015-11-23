@@ -5,7 +5,7 @@
     "email",
     "mailgun"
   ],
-  "version": "0.7.6",
+  "version": "0.7.7",
   "homepage": "https://github.com/1lobby/mailgun-js",
   "license": "MIT",
   "repository": {
@@ -20,6 +20,7 @@
   },
   "main": "./lib/mailgun.js",
   "dependencies": {
+    "async": "~1.5.0",
     "form-data": "~1.0.0-rc3",
     "inflection": "~1.7.2",
     "path-proxy": "~1.0.0",
@@ -31,29 +32,6 @@
   "author": {
     "name": "Bojan Djurkovic <bojan@onelobby.com>"
   },
-  "contributors": [
-    {
-      "name": "Bojan Djurkovic"
-    },
-    {
-      "name": "Adam Magaluk"
-    },
-    {
-      "name": "Bill Johnston"
-    },
-    {
-      "name": "Jamie Curtis"
-    },
-    {
-      "name": "Serhiy Oplakanets"
-    },
-    {
-      "name": "Julien Faissolle"
-    },
-    {
-      "name": "AJ ONeal"
-    }
-  ],
   "devDependencies": {
     "clone": "~1.0.0",
     "mailcomposer": "~2.1.0",
