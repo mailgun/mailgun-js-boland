@@ -138,6 +138,25 @@ mailgun.messages().send(data, function (error, body) {
 });
 ```
 
+We can also pass in a stream of the data. This is useful if you're attaching a file from the internet.
+
+```js
+var request = require('request');
+var file = request("https://www.google.ca/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
+
+var data = {
+  from: 'Excited User <me@samples.mailgun.org>',
+  to: 'serobnic@mail.ru',
+  subject: 'Hello',
+  text: 'Testing some Mailgun awesomness!',
+  attachment: file
+};
+
+mailgun.messages().send(data, function (error, body) {
+  console.log(body);
+});
+```
+
 Finally we provide a `Mailgun.Attachment` class to add attachments with a bit more customization. The Attachment
 constructor takes an `options` object. The `options` parameters can have the following fields:
 * `data` - can be one of
