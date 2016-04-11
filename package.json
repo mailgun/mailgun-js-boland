@@ -6,14 +6,14 @@
     "mailgun"
   ],
   "version": "0.7.7",
-  "homepage": "https://github.com/1lobby/mailgun-js",
+  "homepage": "https://github.com/bojand/mailgun-js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/1lobby/mailgun-js.git"
+    "url": "git://github.com/bojand/mailgun-js.git"
   },
   "bugs": {
-    "url": "http://github.com/1lobby/mailgun-js/issues"
+    "url": "http://github.com/bojand/mailgun-js/issues"
   },
   "engines": {
     "node": ">= 0.8.0"
