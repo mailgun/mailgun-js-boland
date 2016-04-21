@@ -93,6 +93,22 @@ module.exports = {
     });
   },
 
+  'test messages().send() with attachment using filename and undefined v: var': function (done) {
+    var msg = clone(fixture.message);
+    var filename = path.join(__dirname, '/mailgun_logo.png');
+    msg.attachment = filename;
+
+    msg['v:someFoo'] = undefined;
+
+    mailgun.messages().send(msg, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.id);
+      assert.ok(body.message);
+      assert(/Queued. Thank you./.test(body.message));
+      done();
+    });
+  },
+
   'test messages().send() with attachment using file buffer': function (done) {
     var msg = clone(fixture.message);
 
@@ -306,7 +322,7 @@ module.exports = {
       done();
     });
   },
-  
+
   'test messages().send() with attachment using stream': function (done) {
     var msg = clone(fixture.message);
 
