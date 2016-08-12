@@ -1,0 +1,15 @@
+{
+  "gitbook": ">=3.0.0",
+  "title": "Mailgun-js",
+  "root": "./docs",
+  "structure": {
+    "summary": "summary.md",
+    "readme": "readme.md"
+  },
+  "plugins": ["prism", "-highlight", "github"],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/bojand/mailgun-js"
+    }
+  }
+}
