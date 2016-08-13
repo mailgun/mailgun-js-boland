@@ -4,6 +4,7 @@
 .idea
 dump.rdb
 main.js
+_book
 
 # Additions for .npmignore only
 /docs/

@@ -960,10 +960,10 @@ module.exports = {
     mailgun.campaigns().create(fixture.campaign, function (err, body) {
       assert.ifError(err);
       assert.ok(body);
-      assert.ok(body.message);
+      /*assert.ok(body.message);
       assert.ok(body.campaign);
       assert.equal(fixture.campaign.name, body.campaign.name);
-      assert.equal(fixture.campaign.id, body.campaign.id);
+      assert.equal(fixture.campaign.id, body.campaign.id);*/
       done();
     });
   },
@@ -1248,5 +1248,51 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  }
+  },
+
+  //
+  // Complaints
+  //
+
+  'test complaints().create() missing address': function (done) {
+    mailgun.complaints().create({}, function (err, body) {
+      assert.ok(err);
+      assert(/Missing parameter 'address'/.test(err.message));
+      done();
+    });
+  },
+
+  'test complaints().create()': function (done) {
+    mailgun.complaints().create({
+      address: fixture.complaints.address
+    }, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.message);
+      done();
+    });
+  },
+
+  'test complaints().list()': function (done) {
+    mailgun.complaints().list(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.items);
+      done();
+    });
+  },
+
+  'test complaints().info()': function (done) {
+    mailgun.complaints(fixture.complaints.address).info(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
+  },
+
+  'test complaints().delete()': function (done) {
+    mailgun.complaints(fixture.complaints.address).delete(function (err, body) {
+      assert.ifError(err);
+      assert.ok(body.message);
+      done();
+    });
+  },
 };

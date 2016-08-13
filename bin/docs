@@ -37,7 +37,7 @@ function getName(name) {
 
 function createFile (resourceName) {
   var fileName = getName(resourceName),
-      file     = path.join(__dirname, '../docs/' + fileName + '.md');
+      file     = path.join(__dirname, '../docs/api/' + fileName + '.md');
 
   fs.writeFileSync(file, '');
 

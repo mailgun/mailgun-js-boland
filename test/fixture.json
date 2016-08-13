@@ -56,5 +56,8 @@
     "name": "My test campaign",
     "id": "my_unique_campaign_id",
     "newName": "my_new_campaign_name"
+  },
+  "complaints": {
+    "address": "testcomplaint@faketest.com"
   }
 }
