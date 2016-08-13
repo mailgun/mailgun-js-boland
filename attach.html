@@ -1,0 +1,619 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>Attachments · Mailgun-js</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="generic.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Guide</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="attach.html">
+            
+                <a href="attach.html">
+            
+                    
+                    Attachments
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="generic.html">
+            
+                <a href="generic.html">
+            
+                    
+                    Generic Requests
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="promises.html">
+            
+                <a href="promises.html">
+            
+                    
+                    Promises
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="webhook.html">
+            
+                <a href="webhook.html">
+            
+                    
+                    Webhook Validation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="tests.html">
+            
+                <a href="tests.html">
+            
+                    
+                    Tests
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">API Reference</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="api/message.html">
+            
+                <a href="api/message.html">
+            
+                    
+                    Message
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="api/domain.html">
+            
+                <a href="api/domain.html">
+            
+                    
+                    Domain
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="api/credentials.html">
+            
+                <a href="api/credentials.html">
+            
+                    
+                    Credentials
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="api/complaints.html">
+            
+                <a href="api/complaints.html">
+            
+                    
+                    Complaints
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="api/campaign.html">
+            
+                <a href="api/campaign.html">
+            
+                    
+                    Campaigns
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="api/events.html">
+            
+                <a href="api/events.html">
+            
+                    
+                    Events
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="api/stats.html">
+            
+                <a href="api/stats.html">
+            
+                    
+                    Stats
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="api/tags.html">
+            
+                <a href="api/tags.html">
+            
+                    
+                    Tags
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="api/bounces.html">
+            
+                <a href="api/bounces.html">
+            
+                    
+                    Bounces
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="api/unsubscribes.html">
+            
+                <a href="api/unsubscribes.html">
+            
+                    
+                    Unsubscribes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="api/routes.html">
+            
+                <a href="api/routes.html">
+            
+                    
+                    Routes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.12" data-path="api/list.html">
+            
+                <a href="api/list.html">
+            
+                    
+                    Mailing Lists
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.13" data-path="api/members.html">
+            
+                <a href="api/members.html">
+            
+                    
+                    Mailing List Members
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Attachments</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="attachments">Attachments</h3><p>Attachments can be sent using either the <code>attachment</code> or <code>inline</code> parameters. <code>inline</code> parameter can be use to send an
+attachment with <code>inline</code> disposition. It can be used to send inline images. Both types are supported with same mechanisms
+as described, we will just use <code>attachment</code> parameter in the documentation below but same stands for <code>inline</code>.</p><p>Sending attachments can be done in a few ways. We can use the path to a file in the <code>attachment</code> parameter.
+If the <code>attachment</code> parameter is of type <code>string</code> it is assumed to be the path to a file.</p><pre><code class="lang-js"><span class="token keyword">var</span> filepath <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">&apos;mailgun_logo.png&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+  from<span class="token punctuation">:</span> <span class="token string">&apos;Excited User &lt;me@samples.mailgun.org&gt;&apos;</span><span class="token punctuation">,</span>
+  to<span class="token punctuation">:</span> <span class="token string">&apos;serobnic@mail.ru&apos;</span><span class="token punctuation">,</span>
+  subject<span class="token punctuation">:</span> <span class="token string">&apos;Hello&apos;</span><span class="token punctuation">,</span>
+  text<span class="token punctuation">:</span> <span class="token string">&apos;Testing some Mailgun awesomness!&apos;</span><span class="token punctuation">,</span>
+  attachment<span class="token punctuation">:</span> filepath
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>We can pass a buffer (has to be a <code>Buffer</code> object) of the data. If a buffer is used the data will be attached using a
+generic filename &quot;file&quot;.</p><pre><code class="lang-js"><span class="token keyword">var</span> filepath <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">&apos;mailgun_logo.png&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> file <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span>filepath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+  from<span class="token punctuation">:</span> <span class="token string">&apos;Excited User &lt;me@samples.mailgun.org&gt;&apos;</span><span class="token punctuation">,</span>
+  to<span class="token punctuation">:</span> <span class="token string">&apos;serobnic@mail.ru&apos;</span><span class="token punctuation">,</span>
+  subject<span class="token punctuation">:</span> <span class="token string">&apos;Hello&apos;</span><span class="token punctuation">,</span>
+  text<span class="token punctuation">:</span> <span class="token string">&apos;Testing some Mailgun awesomness!&apos;</span><span class="token punctuation">,</span>
+  attachment<span class="token punctuation">:</span> file
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>We can also pass in a stream of the data. This is useful if you&apos;re attaching a file from the internet.</p><pre><code class="lang-js"><span class="token keyword">var</span> request <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;request&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> file <span class="token operator">=</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token string">&quot;https://www.google.ca/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+  from<span class="token punctuation">:</span> <span class="token string">&apos;Excited User &lt;me@samples.mailgun.org&gt;&apos;</span><span class="token punctuation">,</span>
+  to<span class="token punctuation">:</span> <span class="token string">&apos;serobnic@mail.ru&apos;</span><span class="token punctuation">,</span>
+  subject<span class="token punctuation">:</span> <span class="token string">&apos;Hello&apos;</span><span class="token punctuation">,</span>
+  text<span class="token punctuation">:</span> <span class="token string">&apos;Testing some Mailgun awesomness!&apos;</span><span class="token punctuation">,</span>
+  attachment<span class="token punctuation">:</span> file
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Finally we provide a <code>Mailgun.Attachment</code> class to add attachments with a bit more customization. The Attachment
+constructor takes an <code>options</code> object. The <code>options</code> parameters can have the following fields:</p><ul><li><p><code>data</code> - can be one of</p><ul><li>a string representing file path to the attachment
+</li>
+<li>a buffer of file data
+</li>
+<li>an instance of <code>Readable</code> which means it is a readable stream.
+</li></ul>
+</li>
+<li><p><code>filename</code> - the file name to be used for the attachment. Default is &apos;file&apos;</p></li>
+<li><code>contentType</code> - the content type. Required for case of <code>Readable</code> data. Ex. <code>image/jpg</code>.
+</li>
+<li><code>knownLength</code> - the content length in bytes. Required for case of <code>Readable</code> data.
+</li></ul>
+<p>If an attachment object does not satisfy those valid conditions it is ignored. Multiple attachments can be sent by
+passing an array in the <code>attachment</code> parameter. The array elements can be of any one of the valid types and each one
+will be handled appropriately.</p><pre><code class="lang-js"><span class="token keyword">var</span> mailgun <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mailgun-js&apos;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">{</span>apiKey<span class="token punctuation">:</span> api_key<span class="token punctuation">,</span> domain<span class="token punctuation">:</span> domain<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> filename <span class="token operator">=</span> <span class="token string">&apos;mailgun_logo.png&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> filepath <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> filename<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> file <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span>filepath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> attch <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mailgun<span class="token punctuation">.</span>Attachment</span><span class="token punctuation">(</span><span class="token punctuation">{</span>data<span class="token punctuation">:</span> file<span class="token punctuation">,</span> filename<span class="token punctuation">:</span> filename<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+  from<span class="token punctuation">:</span> <span class="token string">&apos;Excited User &lt;me@samples.mailgun.org&gt;&apos;</span><span class="token punctuation">,</span>
+  to<span class="token punctuation">:</span> <span class="token string">&apos;serobnic@mail.ru&apos;</span><span class="token punctuation">,</span>
+  subject<span class="token punctuation">:</span> <span class="token string">&apos;Hello&apos;</span><span class="token punctuation">,</span>
+  text<span class="token punctuation">:</span> <span class="token string">&apos;Testing some Mailgun awesomness!&apos;</span><span class="token punctuation">,</span>
+  attachment<span class="token punctuation">:</span> attch
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="lang-js"><span class="token keyword">var</span> mailgun <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mailgun-js&apos;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">{</span>apiKey<span class="token punctuation">:</span> api_key<span class="token punctuation">,</span> domain<span class="token punctuation">:</span> domain<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> filename <span class="token operator">=</span> <span class="token string">&apos;mailgun_logo.png&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> filepath <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> filename<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> fileStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span>filepath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> fileStat <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">statSync</span><span class="token punctuation">(</span>filepath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+msg<span class="token punctuation">.</span>attachment <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mailgun<span class="token punctuation">.</span>Attachment</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  data<span class="token punctuation">:</span> fileStream<span class="token punctuation">,</span>
+  filename<span class="token punctuation">:</span> <span class="token string">&apos;my_custom_name.png&apos;</span><span class="token punctuation">,</span>
+  knownLength<span class="token punctuation">:</span> fileStat<span class="token punctuation">.</span>size<span class="token punctuation">,</span>
+  contentType<span class="token punctuation">:</span> <span class="token string">&apos;image/png&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 id="sending-mime-messages-">Sending MIME messages <a id="mime"></a></h4><p>Sending messages in MIME format can be accomplished using the <code>sendMime()</code> function of the <code>messages()</code> proxy object.
+The <code>data</code> parameter for the function has to have <code>to</code> and <code>message</code> properties. The <code>message</code> property can be a full
+file path to the MIME file, a stream of the file (that is a <code>Readable</code> object), or a string representation of the MIME
+message. To build a MIME string you can use the [Mail Composer] (<a href="https://www.npmjs.org/package/mailcomposer" target="_blank">https://www.npmjs.org/package/mailcomposer</a>) library.
+Some examples:</p><pre><code class="lang-js"><span class="token keyword">var</span> domain <span class="token operator">=</span> <span class="token string">&apos;mydomain.mailgun.org&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> mailgun <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mailgun-js&apos;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">{</span> apiKey<span class="token punctuation">:</span> <span class="token string">&quot;YOUR API KEY&quot;</span><span class="token punctuation">,</span> domain<span class="token punctuation">:</span> domain <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> mailcomposer <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mailcomposer&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> mail <span class="token operator">=</span> <span class="token function">mailcomposer</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  from<span class="token punctuation">:</span> <span class="token string">&apos;you@samples.mailgun.org&apos;</span><span class="token punctuation">,</span>
+  to<span class="token punctuation">:</span> <span class="token string">&apos;mm@samples.mailgun.org&apos;</span><span class="token punctuation">,</span>
+  subject<span class="token punctuation">:</span> <span class="token string">&apos;Test email subject&apos;</span><span class="token punctuation">,</span>
+  body<span class="token punctuation">:</span> <span class="token string">&apos;Test email text&apos;</span><span class="token punctuation">,</span>
+  html<span class="token punctuation">:</span> <span class="token string">&apos;&lt;b&gt; Test email text &lt;/b&gt;&apos;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+mail<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>mailBuildError<span class="token punctuation">,</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">var</span> dataToSend <span class="token operator">=</span> <span class="token punctuation">{</span>
+        to<span class="token punctuation">:</span> <span class="token string">&apos;mm@samples.mailgun.org&apos;</span><span class="token punctuation">,</span>
+        message<span class="token punctuation">:</span> message<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token string">&apos;ascii&apos;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sendMime</span><span class="token punctuation">(</span>dataToSend<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>sendError<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>sendError<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>sendError<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 id="referencing-mime-file">Referencing MIME file</h4><pre><code class="lang-js"><span class="token keyword">var</span> filepath <span class="token operator">=</span> <span class="token string">&apos;/path/to/message.mime&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+  to<span class="token punctuation">:</span> fixture<span class="token punctuation">.</span>message<span class="token punctuation">.</span>to<span class="token punctuation">,</span>
+  message<span class="token punctuation">:</span> filepath
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sendMime</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="lang-js"><span class="token keyword">var</span> filepath <span class="token operator">=</span> <span class="token string">&apos;/path/to/message.mime&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+  to<span class="token punctuation">:</span> fixture<span class="token punctuation">.</span>message<span class="token punctuation">.</span>to<span class="token punctuation">,</span>
+  message<span class="token punctuation">:</span> fs<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span>filepath<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sendMime</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="generic.html" class="navigation navigation-next " aria-label="Next page: Generic Requests">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Attachments","level":"1.2","depth":1,"next":{"title":"Generic Requests","level":"1.3","depth":1,"path":"generic.md","ref":"generic.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"readme.md","ref":"readme.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","github"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/bojand/mailgun-js"},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"readme.md","glossary":"GLOSSARY.md","summary":"summary.md"},"variables":{},"title":"Mailgun-js","gitbook":">=3.0.0"},"file":{"path":"attach.md","mtime":"2016-08-12T11:31:34.000Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-13T00:03:40.875Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
