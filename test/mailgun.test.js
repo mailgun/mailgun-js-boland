@@ -1122,6 +1122,17 @@ module.exports = {
     });
   },
 
+  'test mailgun.get() using promises': function (done) {
+    var path = '/' + auth.domain + '/stats';
+    mailgun.get(path, {event: ['sent', 'delivered']}).then(function(body) {
+      assert.ok(body.total_count);
+      assert.ok(body.items);
+      done();
+    }).catch(function(err) {
+      assert.ifError(err);
+    });
+  },
+
   //
   // Constructor should be in instance
   //
@@ -1294,5 +1305,5 @@ module.exports = {
       assert.ok(body.message);
       done();
     });
-  },
+  }
 };
