@@ -960,10 +960,10 @@ module.exports = {
     mailgun.campaigns().create(fixture.campaign, function (err, body) {
       assert.ifError(err);
       assert.ok(body);
-      /*assert.ok(body.message);
-      assert.ok(body.campaign);
-      assert.equal(fixture.campaign.name, body.campaign.name);
-      assert.equal(fixture.campaign.id, body.campaign.id);*/
+      // assert.ok(body.message);
+      // assert.ok(body.campaign);
+      // assert.equal(fixture.campaign.name, body.campaign.name);
+      // assert.equal(fixture.campaign.id, body.campaign.id);
       done();
     });
   },
@@ -1130,6 +1130,18 @@ module.exports = {
       done();
     }).catch(function(err) {
       assert.ifError(err);
+      done()
+    });
+  },
+
+  'test mailgun.get() using promises 2': function (done) {
+    var mg = new mailgun.Mailgun({apiKey: auth.public_api_key, domain: auth.domain})
+    mg.get('/address/validate', { address: 'testmg@gmail.com' }).then(body => {
+      assert.ok(body);
+      done();
+    }).catch(err => {
+      assert.ifError(err);
+      done()
     });
   },
 
