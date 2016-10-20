@@ -4,6 +4,6 @@
 
 3) Does the action work when you manually perform request against mailgun using curl (or other means)?
 
-3) Sample source code or steps to reproduce
+4) Sample source code or steps to reproduce
 
 (Write description of your issue here, stack traces from errors and code that reproduces the issue are helpful)
