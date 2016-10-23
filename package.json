@@ -20,8 +20,8 @@
   },
   "main": "./lib/mailgun.js",
   "dependencies": {
-    "async": "~2.0.1",
-    "form-data": "~1.0.0-rc3",
+    "async": "~2.1.2",
+    "form-data": "~2.1.1",
     "inflection": "~1.10.0",
     "path-proxy": "~1.0.0",
     "proxy-agent": "~2.0.0",
