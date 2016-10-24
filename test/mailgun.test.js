@@ -413,15 +413,16 @@ module.exports = {
   },
 
   'test domains().create() ': function (done) {
-    mailgun.domains().create(fixture.new_domain, function (err, body) {
-      assert.ifError(err);
-      assert.ok(body.message);
-      assert(/Domain has been created/.test(body.message));
-      assert.ok(body.domain);
-      assert.equal(fixture.new_domain.name, body.domain.name);
-      assert.equal(fixture.new_domain.smtp_password, body.domain.smtp_password);
-      done();
-    });
+    this.skip();
+    // mailgun.domains().create(fixture.new_domain, function (err, body) {
+    //   assert.ifError(err);
+    //   assert.ok(body.message);
+    //   assert(/Domain has been created/.test(body.message));
+    //   assert.ok(body.domain);
+    //   assert.equal(fixture.new_domain.name, body.domain.name);
+    //   assert.equal(fixture.new_domain.smtp_password, body.domain.smtp_password);
+    //   done();
+    // });
   },
 
   'test domains().list()': function (done) {
@@ -533,13 +534,14 @@ module.exports = {
   },
 
   'test domains().delete()': function (done) {
-    var domain = fixture.new_domain.name;
-    mailgun.domains(domain).delete(function (err, body) {
-      assert.ifError(err);
-      assert.ok(body.message);
-      assert(/Domain has been deleted/.test(body.message));
-      done();
-    });
+    this.skip();
+    // var domain = fixture.new_domain.name;
+    // mailgun.domains(domain).delete(function (err, body) {
+    //   assert.ifError(err);
+    //   assert.ok(body.message);
+    //   assert(/Domain has been deleted/.test(body.message));
+    //   done();
+    // });
   },
 
   //
