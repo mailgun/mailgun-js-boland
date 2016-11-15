@@ -227,7 +227,7 @@ var mail = mailcomposer({
   from: 'you@samples.mailgun.org',
   to: 'mm@samples.mailgun.org',
   subject: 'Test email subject',
-  body: 'Test email text',
+  text: 'Test email text',
   html: '<b> Test email text </b>'
 });
 
