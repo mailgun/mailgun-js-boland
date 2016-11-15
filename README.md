@@ -25,7 +25,7 @@ See the `/docs` folder for detailed documentation. For full usage examples see t
 
 ```js
 var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
-var domain = 'mydomain.mailgun.org';
+var domain = 'www.mydomain.com';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 var data = {
@@ -89,9 +89,9 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 * `protocol` - the mailgun protocol (default: 'https:', possible values: 'http:' or 'https:')
 * `port` - the mailgun port (default: '443')
 * `endpoint` - the mailgun host (default: '/v3')
-* `retry` - the number of **total attempts** to do when performing requests. Default is `1`. 
+* `retry` - the number of **total attempts** to do when performing requests. Default is `1`.
 That is, we will try an operation only once with no retries on error.
-          
+
 
 #### Attachments
 
