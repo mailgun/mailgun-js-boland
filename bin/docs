@@ -3,7 +3,7 @@
 var assert     = require('assert'),
     fs         = require('fs'),
     Mailgun    = require('../lib/mailgun'),
-    mailgun    = new Mailgun({}),
+    mailgun    = new Mailgun({apiKey: 'asdf'}),
     inflection = require('inflection'),
     path       = require('path'),
     resources  = require('../lib/schema').definitions,
