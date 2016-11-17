@@ -219,7 +219,7 @@ message. To build a MIME string you can use the [Mail Composer] (https://www.npm
 Some examples:
 
 ```js
-var domain = 'mydomain.mailgun.org';
+var domain = 'mydomain.org';
 var mailgun = require('mailgun-js')({ apiKey: "YOUR API KEY", domain: domain });
 var mailcomposer = require('mailcomposer');
 

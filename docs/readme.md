@@ -24,7 +24,7 @@ of the `error` object passed in the callback.
 
 ```js
 var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
-var domain = 'mydomain.mailgun.org';
+var domain = 'www.mydomain.com';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 var data = {

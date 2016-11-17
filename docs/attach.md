@@ -124,7 +124,7 @@ message. To build a MIME string you can use the [Mail Composer] (https://www.npm
 Some examples:
 
 ```js
-var domain = 'mydomain.mailgun.org';
+var domain = 'www.mydomain.com';
 var mailgun = require('mailgun-js')({ apiKey: "YOUR API KEY", domain: domain });
 var mailcomposer = require('mailcomposer');
 
@@ -132,7 +132,7 @@ var mail = mailcomposer({
   from: 'you@samples.mailgun.org',
   to: 'mm@samples.mailgun.org',
   subject: 'Test email subject',
-  body: 'Test email text',
+  text: 'Test email text',
   html: '<b> Test email text </b>'
 });
 
