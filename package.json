@@ -21,13 +21,14 @@
   "main": "./lib/mailgun.js",
   "dependencies": {
     "async": "~2.1.2",
+    "debug": "~2.2.0",
     "form-data": "~2.1.1",
     "inflection": "~1.10.0",
+    "is-stream": "^1.1.0",
     "path-proxy": "~1.0.0",
     "proxy-agent": "~2.0.0",
     "q": "~1.4.0",
-    "tsscmp": "~1.0.0",
-    "debug": "~2.2.0"
+    "tsscmp": "~1.0.0"
   },
   "author": {
     "name": "Bojan Djurkovic <bojan@onelobby.com>"
