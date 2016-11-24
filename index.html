@@ -388,13 +388,13 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="mailgunjs">mailgun.js</h1><p>Simple Node.js module for <a href="http://www.mailgun.com" target="_blank">Mailgun</a>.</p><p><a href="https://nodei.co/npm/mailgun-js/" target="_blank"><img alt="NPM" src="https://nodei.co/npm/mailgun-js.png?downloads=true&amp;stars=true"></a></p><p><a href="https://nodei.co/npm/mailgun-js/" target="_blank"><img alt="NPM" src="https://nodei.co/npm-dl/mailgun-js.png"></a></p><h2 id="installation-">Installation <a id="install"></a></h2><p><code>npm install mailgun-js</code></p><h2 id="usage-overview-">Usage overview <a id="overview"></a></h2><p>Please see <a href="https://documentation.mailgun.com" target="_blank">Mailgun Documentation</a> for full Mailgun API reference.</p><p>This module works by providing proxy objects for interacting with different resources through the Mailgun API.
-Most methods take a <code>data</code> parameter, which is a Javascript object that would contain the arguments for the Mailgun API.
-All methods take a final parameter callback with two parameters: <code>error</code>, and <code>body</code>.
-We try to parse the <code>body</code> into a javascript object, and return it to the callback as such for easier use and inspection by the client.
-If there was an error a new <code>Error</code> object will be passed to the callback in the <code>error</code> parameter.
-If the error originated from the (Mailgun) server, the response code will be available in the <code>statusCode</code> property
-of the <code>error</code> object passed in the callback.</p><pre><code class="lang-js"><span class="token keyword">var</span> api_key <span class="token operator">=</span> <span class="token string">&apos;key-XXXXXXXXXXXXXXXXXXXXXXX&apos;</span><span class="token punctuation">;</span>
+                                <h1 id="mailgunjs">mailgun.js</h1><p>Simple Node.js module for <a href="http://www.mailgun.com" target="_blank">Mailgun</a>.</p><p><a href="https://nodei.co/npm/mailgun-js/" target="_blank"><img alt="NPM" src="https://nodei.co/npm/mailgun-js.png?downloads=true&amp;stars=true"></a></p><p><a href="https://nodei.co/npm/mailgun-js/" target="_blank"><img alt="NPM" src="https://nodei.co/npm-dl/mailgun-js.png"></a></p><h2 id="installation-">Installation <a id="install"></a></h2><p><code class="language-">npm install mailgun-js</code></p><h2 id="usage-overview-">Usage overview <a id="overview"></a></h2><p>Please see <a href="https://documentation.mailgun.com" target="_blank">Mailgun Documentation</a> for full Mailgun API reference.</p><p>This module works by providing proxy objects for interacting with different resources through the Mailgun API.
+Most methods take a <code class="language-">data</code> parameter, which is a Javascript object that would contain the arguments for the Mailgun API.
+All methods take a final parameter callback with two parameters: <code class="language-">error</code>, and <code class="language-">body</code>.
+We try to parse the <code class="language-">body</code> into a javascript object, and return it to the callback as such for easier use and inspection by the client.
+If there was an error a new <code class="language-">Error</code> object will be passed to the callback in the <code class="language-">error</code> parameter.
+If the error originated from the (Mailgun) server, the response code will be available in the <code class="language-">statusCode</code> property
+of the <code class="language-">error</code> object passed in the callback.</p><pre class="language-"><code class="lang-js language-"><span class="token keyword">var</span> api_key <span class="token operator">=</span> <span class="token string">&apos;key-XXXXXXXXXXXXXXXXXXXXXXX&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">var</span> domain <span class="token operator">=</span> <span class="token string">&apos;www.mydomain.com&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">var</span> mailgun <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mailgun-js&apos;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">{</span>apiKey<span class="token punctuation">:</span> api_key<span class="token punctuation">,</span> domain<span class="token punctuation">:</span> domain<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -408,9 +408,9 @@ of the <code>error</code> object passed in the callback.</p><pre><code class="la
 mailgun<span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>Messages stored using the Mailgun <code>store()</code> action can be retrieved using <code>messages(<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>message_key</span><span class="token punctuation">&gt;</span></span>).info()</code> function.
-Optionally the MIME representation of the message can be retrieved if <code>MIME</code> argument is passed in and set to <code>true</code>.</p><p>Something more elaborate. Get mailing list info, create a member and get mailing list members and update member.
-Notice that the proxy objects can be reused.</p><pre><code class="lang-js"><span class="token keyword">var</span> list <span class="token operator">=</span> mailgun<span class="token punctuation">.</span><span class="token function">lists</span><span class="token punctuation">(</span><span class="token string">&apos;mylist@mycompany.com&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>Messages stored using the Mailgun <code class="language-">store()</code> action can be retrieved using <code class="language-">messages(<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>message_key</span><span class="token punctuation">&gt;</span></span>).info()</code> function.
+Optionally the MIME representation of the message can be retrieved if <code class="language-">MIME</code> argument is passed in and set to <code class="language-">true</code>.</p><p>Something more elaborate. Get mailing list info, create a member and get mailing list members and update member.
+Notice that the proxy objects can be reused.</p><pre class="language-"><code class="lang-js language-"><span class="token keyword">var</span> list <span class="token operator">=</span> mailgun<span class="token punctuation">.</span><span class="token function">lists</span><span class="token punctuation">(</span><span class="token string">&apos;mylist@mycompany.com&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 list<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token comment" spellcheck="true">// `data` is mailing list info</span>
@@ -437,30 +437,30 @@ list<span class="token punctuation">.</span><span class="token function">members
 list<span class="token punctuation">.</span><span class="token function">members</span><span class="token punctuation">(</span><span class="token string">&apos;bob@gmail.com&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&apos;Foo Bar&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h4 id="options-">Options <a id="options"></a></h4><p><code>Mailgun</code> object constructor options:</p><ul><li><code>apiKey</code> - Your Mailgun API KEY
+<h4 id="options-">Options <a id="options"></a></h4><p><code class="language-">Mailgun</code> object constructor options:</p><ul><li><code class="language-">apiKey</code> - Your Mailgun API KEY
 </li>
-<li><code>domain</code> - Your Mailgun Domain
+<li><code class="language-">domain</code> - Your Mailgun Domain
 </li>
-<li><code>mute</code> - Set to <code>true</code> if you wish to mute the console error logs in <code>validateWebhook()</code> function
+<li><code class="language-">mute</code> - Set to <code class="language-">true</code> if you wish to mute the console error logs in <code class="language-">validateWebhook()</code> function
 </li>
-<li><code>proxy</code> - The proxy URI in format <code>http[s]://[auth@]host:port</code>. ex: <code>&apos;http://proxy.example.com:8080&apos;</code>
+<li><code class="language-">proxy</code> - The proxy URI in format <code class="language-">http[s]://[auth@]host:port</code>. ex: <code class="language-">&apos;http://proxy.example.com:8080&apos;</code>
 </li>
-<li><code>timeout</code> - Request timeout in milliseconds
+<li><code class="language-">timeout</code> - Request timeout in milliseconds
 </li>
-<li><code>host</code> - the mailgun host (default: &apos;api.mailgun.net&apos;)
+<li><code class="language-">host</code> - the mailgun host (default: &apos;api.mailgun.net&apos;)
 </li>
-<li><code>protocol</code> - the mailgun protocol (default: &apos;https:&apos;, possible values: &apos;http:&apos; or &apos;https:&apos;)
+<li><code class="language-">protocol</code> - the mailgun protocol (default: &apos;https:&apos;, possible values: &apos;http:&apos; or &apos;https:&apos;)
 </li>
-<li><code>port</code> - the mailgun port (default: &apos;443&apos;)
+<li><code class="language-">port</code> - the mailgun port (default: &apos;443&apos;)
 </li>
-<li><code>endpoint</code> - the mailgun host (default: &apos;/v3&apos;)
+<li><code class="language-">endpoint</code> - the mailgun host (default: &apos;/v3&apos;)
 </li>
-<li><code>retry</code> - the number of <strong>total attempts</strong> to do when performing requests. Default is <code>1</code>.
+<li><code class="language-">retry</code> - the number of <strong>total attempts</strong> to do when performing requests. Default is <code class="language-">1</code>.
 That is, we will try an operation only once with no retries on error.
 </li></ul>
-<h4 id="creating-mailing-list-members-">Creating mailing list members <a id="members"></a></h4><p><code>members().create({data})</code> will create a mailing list member with <code>data</code>. Mailgun also offers a resource for creating
-members in bulk. Doing a <code>POST</code> to <code>/lists/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>address</span><span class="token punctuation">&gt;</span></span>/members.json</code> adds multiple members, up to 1,000 per call,
-to a Mailing List. This can be accomplished using <code>members().add()</code>.</p><pre><code class="lang-js"><span class="token keyword">var</span> members <span class="token operator">=</span> <span class="token punctuation">[</span>
+<h4 id="creating-mailing-list-members-">Creating mailing list members <a id="members"></a></h4><p><code class="language-">members().create({data})</code> will create a mailing list member with <code class="language-">data</code>. Mailgun also offers a resource for creating
+members in bulk. Doing a <code class="language-">POST</code> to <code class="language-">/lists/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>address</span><span class="token punctuation">&gt;</span></span>/members.json</code> adds multiple members, up to 1,000 per call,
+to a Mailing List. This can be accomplished using <code class="language-">members().add()</code>.</p><pre class="language-"><code class="lang-js language-"><span class="token keyword">var</span> members <span class="token operator">=</span> <span class="token punctuation">[</span>
   <span class="token punctuation">{</span>
     address<span class="token punctuation">:</span> <span class="token string">&apos;Alice &lt;alice@example.com&gt;&apos;</span><span class="token punctuation">,</span>
     vars<span class="token punctuation">:</span> <span class="token punctuation">{</span> age<span class="token punctuation">:</span> <span class="token number">26</span> <span class="token punctuation">}</span>
@@ -476,7 +476,7 @@ mailgun<span class="token punctuation">.</span><span class="token function">list
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <h4 id="batch-sending--recipient-variables-">Batch sending &amp; recipient variables <a id="batch"></a></h4><p>Example code to perform <a href="https://documentation.mailgun.com/user_manual.html#batch-sending" target="_blank">batch sending</a> with
-recipient variables:</p><pre><code class="lang-js">recipientVars <span class="token operator">=</span> <span class="token punctuation">{</span>
+recipient variables:</p><pre class="language-"><code class="lang-js language-">recipientVars <span class="token operator">=</span> <span class="token punctuation">{</span>
   <span class="token string">&apos;bob@companyx.com&apos;</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
     first<span class="token punctuation">:</span> <span class="token string">&apos;Bob&apos;</span><span class="token punctuation">,</span>
     id<span class="token punctuation">:</span> <span class="token number">1</span>
@@ -538,7 +538,7 @@ The general design and some code was heavily inspired by <a href="https://github
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Attachments","level":"1.2","depth":1,"path":"attach.md","ref":"attach.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","github"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/bojand/mailgun-js"},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"readme.md","glossary":"GLOSSARY.md","summary":"summary.md"},"variables":{},"title":"Mailgun-js","gitbook":">=3.0.0"},"file":{"path":"readme.md","mtime":"2016-11-17T00:05:13.000Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-17T00:12:54.969Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Attachments","level":"1.2","depth":1,"path":"attach.md","ref":"attach.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","github"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/bojand/mailgun-js"},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"readme.md","glossary":"GLOSSARY.md","summary":"summary.md"},"variables":{},"title":"Mailgun-js","gitbook":">=3.0.0"},"file":{"path":"readme.md","mtime":"2016-11-17T00:15:55.000Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-24T00:52:34.862Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

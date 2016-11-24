@@ -390,7 +390,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="message">message</h1><p>This API allows you to send, access, and delete mesages programmatically.</p><h2 id="actions">Actions</h2><h3 id="info"><code>info</code></h3><p>Returns a single message in JSON format. To get full MIME message set MIME to true</p><p><code>mailgun.messages({message}).info({callback});</code></p><table>
+                                <h1 id="message">message</h1><p>This API allows you to send, access, and delete mesages programmatically.</p><h2 id="actions">Actions</h2><h3 id="info"><code class="language-">info</code></h3><p>Returns a single message in JSON format. To get full MIME message set MIME to true</p><p><code class="language-">mailgun.messages({message}).info({callback});</code></p><table>
 <thead>
 <tr><th>Method</th>
 <th>Path</th>
@@ -399,7 +399,7 @@
 <td>/domains/{domain}/messages/{message}</td>
 </tr></tbody></table>
 
-<h3 id="send"><code>send</code></h3><p>Sends a message by assembling it from the components.</p><p><code>mailgun.messages().send({attributes}, {callback});</code></p><table>
+<h3 id="send"><code class="language-">send</code></h3><p>Sends a message by assembling it from the components.</p><p><code class="language-">mailgun.messages().send({attributes}, {callback});</code></p><table>
 <thead>
 <tr><th>Method</th>
 <th>Path</th>
@@ -408,7 +408,7 @@
 <td>/{domain}/messages</td>
 </tr></tbody></table>
 
-<h3 id="sendmime"><code>sendMime</code></h3><p>Sends a message in MIME format.</p><p><code>mailgun.messages().sendMime({attributes}, {callback});</code></p><table>
+<h3 id="sendmime"><code class="language-">sendMime</code></h3><p>Sends a message in MIME format.</p><p><code class="language-">mailgun.messages().sendMime({attributes}, {callback});</code></p><table>
 <thead>
 <tr><th>Method</th>
 <th>Path</th>
@@ -417,7 +417,7 @@
 <td>/{domain}/messages.mime</td>
 </tr></tbody></table>
 
-<h3 id="delete"><code>delete</code></h3><p>To delete an inbound message that has been stored via the store() action.</p><p><code>mailgun.messages({message}).delete({callback});</code></p><table>
+<h3 id="delete"><code class="language-">delete</code></h3><p>To delete an inbound message that has been stored via the store() action.</p><p><code class="language-">mailgun.messages({message}).delete({callback});</code></p><table>
 <thead>
 <tr><th>Method</th>
 <th>Path</th>
@@ -469,7 +469,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Message","level":"2.1","depth":1,"next":{"title":"Domain","level":"2.2","depth":1,"path":"api/domain.md","ref":"api/domain.md","articles":[]},"previous":{"title":"Tests","level":"1.6","depth":1,"path":"tests.md","ref":"tests.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","github"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/bojand/mailgun-js"},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"readme.md","glossary":"GLOSSARY.md","summary":"summary.md"},"variables":{},"title":"Mailgun-js","gitbook":">=3.0.0"},"file":{"path":"api/message.md","mtime":"2016-11-17T00:12:36.000Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-17T00:12:54.969Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Message","level":"2.1","depth":1,"next":{"title":"Domain","level":"2.2","depth":1,"path":"api/domain.md","ref":"api/domain.md","articles":[]},"previous":{"title":"Tests","level":"1.6","depth":1,"path":"tests.md","ref":"tests.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","github"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"github":{"url":"https://github.com/bojand/mailgun-js"},"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"readme.md","glossary":"GLOSSARY.md","summary":"summary.md"},"variables":{},"title":"Mailgun-js","gitbook":">=3.0.0"},"file":{"path":"api/message.md","mtime":"2016-11-24T00:52:13.000Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-24T00:52:34.862Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

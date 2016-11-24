@@ -1,0 +1,9 @@
+*.orig
+.idea
+.DS_Store
+node_modules
+dump.rdb
+npm-debug.log
+main.js
+/test/auth.json
+_book
