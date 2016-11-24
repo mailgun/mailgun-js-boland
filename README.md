@@ -162,10 +162,10 @@ constructor takes an `options` object. The `options` parameters can have the fol
 * `data` - can be one of
     * a string representing file path to the attachment
     * a buffer of file data
-    * an instance of `Readable` which means it is a readable stream.
+    * an instance of `Stream` which means it is a readable stream.
 * `filename` - the file name to be used for the attachment. Default is 'file'
-* `contentType` - the content type. Required for case of `Readable` data. Ex. `image/jpg`.
-* `knownLength` - the content length in bytes. Required for case of `Readable` data.
+* `contentType` - the content type. Required for case of `Stream` data. Ex. `image/jpg`.
+* `knownLength` - the content length in bytes. Required for case of `Stream` data.
 
 If an attachment object does not satisfy those valid conditions it is ignored. Multiple attachments can be sent by
 passing an array in the `attachment` parameter. The array elements can be of any one of the valid types and each one
@@ -214,7 +214,7 @@ mailgun.messages().send(data, function (error, body) {
 
 Sending messages in MIME format can be accomplished using the `sendMime()` function of the `messages()` proxy object.
 The `data` parameter for the function has to have `to` and `message` properties. The `message` property can be a full
-file path to the MIME file, a stream of the file (that is a `Readable` object), or a string representation of the MIME
+file path to the MIME file, a stream of the file, or a string representation of the MIME
 message. To build a MIME string you can use the [Mail Composer] (https://www.npmjs.org/package/mailcomposer) library.
 Some examples:
 
