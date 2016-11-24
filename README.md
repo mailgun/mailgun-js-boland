@@ -164,7 +164,7 @@ constructor takes an `options` object. The `options` parameters can have the fol
     * a buffer of file data
     * an instance of `Stream` which means it is a readable stream.
 * `filename` - the file name to be used for the attachment. Default is 'file'
-* `contentType` - the content type. Required for case of `Stream` data. Ex. `image/jpg`.
+* `contentType` - the content type. Required for case of `Stream` data. Ex. `image/jpeg`.
 * `knownLength` - the content length in bytes. Required for case of `Stream` data.
 
 If an attachment object does not satisfy those valid conditions it is ignored. Multiple attachments can be sent by
