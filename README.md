@@ -40,6 +40,8 @@ mailgun.messages().send(data, function (error, body) {
 });
 ```
 
+Note that the `to` field is required and should contain all recipients ("TO", "CC" and "BCC") of the message (see https://documentation.mailgun.com/api-sending.html#sending). Additionally `cc` and `bcc` fields can be specified. Recipients in those fields will be addressed as such.
+
 Messages stored using the Mailgun `store()` action can be retrieved using `messages(<message_key>).info()` function.
 Optionally the MIME representation of the message can be retrieved if `MIME` argument is passed in and set to `true`.
 
