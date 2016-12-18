@@ -1,24 +1,24 @@
 {
   "message": {
-    "to": "mm@samples.mailgun.org",
-    "from": "you@samples.mailgun.org",
+    "to": "mailgunjstest+send@gmail.com",
+    "from": "mailgunjstest+recv1@gmail.com",
     "subject": "Test email subject",
     "text": "Test email text"
   },
   "message_recipient_vars": {
     "to": [
-      "bob@samples.mailgun.org",
-      "alice@samples.mailgun.org"
+      "mailgunjstest+recv1@gmail.com",
+      "mailgunjstest+recv2@gmail.com"
     ],
-    "from": "you@samples.mailgun.org",
+    "from": "mailgunjstest+send@gmail.com",
     "subject": "Hey, %recipient.first%",
     "text": "Test email text. Your ID: %recipient.id%",
     "recipient-variables": {
-      "bob@companyx.com": {
+      "mailgunjstest+recv1@gmail.com": {
         "first": "Bob",
         "id": 1
       },
-      "alice@samples.mailgun.org": {
+      "mailgunjstest+recv2@gmail.com": {
         "first": "Alice",
         "id": 2
       }

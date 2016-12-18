@@ -1188,6 +1188,33 @@ module.exports = {
     });
   },
 
+  'test sendMime() with to field as array': function (done) {
+    var mail = mailcomposer({
+      from: fixture.message.from,
+      to: fixture.message.to,
+      subject: fixture.message.subject,
+      body: fixture.message.text,
+      html: '<b>' + fixture.message.text + '</b>'
+    });
+
+    mail.build(function (err, message) {
+
+      var data = {
+        to: fixture.message_recipient_vars.to,
+        message: message.toString('ascii')
+      };
+
+      mailgun.messages().sendMime(data, function (err, body) {
+        assert.ifError(err);
+        assert.ok(body.id);
+        assert.ok(body.message);
+        assert(/Queued. Thank you./.test(body.message));
+        done();
+      });
+    });
+  },
+
+
   'test sendMime() with file path': function (done) {
     var filePath = path.join(__dirname, '/message.eml');
 
