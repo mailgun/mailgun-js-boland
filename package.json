@@ -26,8 +26,8 @@
     "inflection": "~1.10.0",
     "is-stream": "^1.1.0",
     "path-proxy": "~1.0.0",
+    "promisify-call": "^1.0.0",
     "proxy-agent": "~2.0.0",
-    "q": "~1.4.0",
     "tsscmp": "~1.0.0"
   },
   "author": {
@@ -47,5 +47,8 @@
     "docs:build": "npm run docs:api && npm run docs:prepare && npm run docs:clean && gitbook build",
     "docs:watch": "npm run docs:api && npm run docs:prepare && gitbook serve",
     "docs:publish": "npm run docs:build && cd _book && git init && git commit --allow-empty -m 'Update docs' && git checkout -b gh-pages && git add . && git commit -am 'Update docs' && git push https://github.com/bojand/mailgun-js.git gh-pages --force"
+  },
+  "directories": {
+    "test": "test"
   }
 }
