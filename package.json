@@ -16,7 +16,7 @@
     "url": "http://github.com/bojand/mailgun-js/issues"
   },
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">=6.9"
   },
   "main": "./lib/mailgun.js",
   "dependencies": {
@@ -26,7 +26,7 @@
     "inflection": "~1.10.0",
     "is-stream": "^1.1.0",
     "path-proxy": "~1.0.0",
-    "promisify-call": "^1.0.0",
+    "promisify-call": "^2.0.2",
     "proxy-agent": "~2.0.0",
     "tsscmp": "~1.0.0"
   },
