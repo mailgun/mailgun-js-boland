@@ -83,7 +83,7 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 `Mailgun` object constructor options:
 
 * `apiKey` - Your Mailgun API KEY
-* `domain` - Your Mailgun Domain
+* `domain` - Your Mailgun Domain (Please note: domain field is MY-DOMAIN-NAME.com, not https://api.mailgun.net/v3/MY-DOMAIN-NAME.com)
 * `mute` - Set to `true` if you wish to mute the console error logs in `validateWebhook()` function
 * `proxy` - The proxy URI in format `http[s]://[auth@]host:port`. ex: `'http://proxy.example.com:8080'`
 * `timeout` - Request timeout in milliseconds
