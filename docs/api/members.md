@@ -14,6 +14,16 @@ Method | Path
 --- | ---
 GET | /lists/{address}/members
 
+### `page`
+
+Paginate over list members in the given mailing list
+
+`mailgun.lists({address}).members().pages().page({callback});`
+
+Method | Path
+--- | ---
+GET | /lists/{address}/members/pages
+
 ### `info`
 
 Retrieves a mailing list member.
