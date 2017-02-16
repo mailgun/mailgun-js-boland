@@ -843,6 +843,15 @@ module.exports = {
     });
   },
 
+  'test lists().members().pages().page()': function (done) {
+    mailgun.lists(fixture.mailingList.address).members().pages().page({page: 'first'}, function (err, body) {
+      assert.ifError(err);
+      assert.ok(Array.isArray(body.items));
+      assert.ok(typeof body.paging === 'object');
+      done();
+    });
+  },
+
   'test lists.members().info()': function (done) {
     var data = {
       subscribed: true,
