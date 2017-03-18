@@ -916,8 +916,9 @@ module.exports = {
     ];
 
     mailgun.lists(fixture.mailingList.address).members().add({members: members}, function (err, body) {
-      assert.ok(err);
-      assert(/Missing parameter 'upsert'/.test(err.message));
+      assert.ifError(err);
+      assert.ok(body.list);
+      assert.ok(body.list.members_count >= 0);
       done();
     });
   },
