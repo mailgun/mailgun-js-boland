@@ -902,7 +902,7 @@ module.exports = {
     });
   },
 
-  'test lists().members().add() without subscribed': function (done) {
+  'test lists().members().add() without upsert': function (done) {
     var members = [
       {
         address: 'Alice <alice@example.com>',
@@ -916,8 +916,9 @@ module.exports = {
     ];
 
     mailgun.lists(fixture.mailingList.address).members().add({members: members}, function (err, body) {
-      assert.ok(err);
-      assert(/Missing parameter 'subscribed'/.test(err.message));
+      assert.ifError(err);
+      assert.ok(body.list);
+      assert.ok(body.list.members_count >= 0);
       done();
     });
   },
@@ -937,7 +938,7 @@ module.exports = {
 
     mailgun.lists(fixture.mailingList.address).members().add({
       members: members,
-      subscribed: true
+      upsert: true
     }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.list);
