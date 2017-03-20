@@ -14,7 +14,7 @@ var routeId = -1;
 module.exports = {
 
   beforeEach: function (done) {
-    setTimeout(done, 400);
+    setTimeout(done, 500);
   },
 
   //
