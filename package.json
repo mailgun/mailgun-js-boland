@@ -41,7 +41,6 @@
   },
   "scripts": {
     "test": "mocha",
-    "debugtest": "mocha --debug-brk $npm_package_options_mocha",
     "docs:api": "./bin/docs",
     "docs:clean": "rm -rf _book",
     "docs:prepare": "gitbook install",
