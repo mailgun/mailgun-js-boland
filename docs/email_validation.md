@@ -1,6 +1,7 @@
 ## Email Addresses validation
 
-Please check Mailgun [email validation documentation](https://documentation.mailgun.com/api-email-validation.html) for responses details.
+These routes require Mailgun public API key.
+Please check Mailgun [email validation documentation](https://documentation.mailgun.com/api-email-validation.html) for more responses details.
 
 ### Validate one Email Address
 
