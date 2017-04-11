@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mailgun-js - Simple Node.js helper module for Mailgun API</title>
+  <meta name="description" content="Simple Node.js helper module for Mailgun API">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+</head>
+<body>
+  <div id="app"></div>
+</body>
+<script>
+  window.$docsify = {
+    repo: 'https://github.com/bojand/mailgun-js',
+    name: 'mailgun-js',
+    auto2top: true,
+    executeScript: true,
+    loadSidebar: true,
+    subMaxLevel: 1,
+    maxLevel: 0,
+    themeColor: '#4b6cb7',
+    markdown: {
+      smartypants: true,
+      renderer: {
+        tablerow: function (content) {
+          const re = /\\<\/td>\n<td>/gi
+          if (content.indexOf('\\</td>\n<td>') >= 0) {
+            content = content.replace(re, '</br>')
+          }
+          return '<tr>\n' + content + '</tr>\n';
+        }
+      }
+    }
+  }
+</script>
+<script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+</html>
