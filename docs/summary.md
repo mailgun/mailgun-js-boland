@@ -24,3 +24,4 @@
 * [Routes](api/routes.md)
 * [Mailing Lists](api/list.md)
 * [Mailing List Members](api/members.md)
+* [Email Addresses Validation](api/email_validation.md)

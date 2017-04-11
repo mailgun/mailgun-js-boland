@@ -1356,5 +1356,27 @@ module.exports = {
       assert.ok(body.message);
       done();
     });
+  },
+
+  //
+  // Email Adresses Validation
+  //
+
+  'test mailgun.validate() should validate one email address': function (done) {
+    var mg = new mailgun.Mailgun({apiKey: auth.api_key, publicApiKey: auth.public_api_key, domain: auth.domain})
+    mg.validate('test@gmail.com', function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
+  },
+
+  'test mailgun.parse() should parse list of email addresses': function (done) {
+    var mg = new mailgun.Mailgun({apiKey: auth.api_key, publicApiKey: auth.public_api_key, domain: auth.domain})
+    mg.parse([ 'testmg@gmail.com' ], function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
   }
 };
