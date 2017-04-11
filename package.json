@@ -20,10 +20,10 @@
   },
   "main": "./lib/mailgun.js",
   "dependencies": {
-    "async": "~2.1.2",
-    "debug": "~2.2.0",
+    "async": "~2.3.0",
+    "debug": "~2.6.0",
     "form-data": "~2.1.1",
-    "inflection": "~1.10.0",
+    "inflection": "~1.12.0",
     "is-stream": "^1.1.0",
     "path-proxy": "~1.0.0",
     "promisify-call": "^2.0.2",
@@ -34,9 +34,9 @@
     "name": "Bojan Djurkovic <bojan@onelobby.com>"
   },
   "devDependencies": {
-    "clone": "~1.0.0",
+    "clone": "~2.1.0",
     "mailcomposer": "~2.1.0",
-    "mocha": "~3.0.2",
+    "mocha": "~3.2.0",
     "request": "^2.67.0"
   },
   "scripts": {
