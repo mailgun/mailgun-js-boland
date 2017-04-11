@@ -5,7 +5,7 @@
     "email",
     "mailgun"
   ],
-  "version": "0.9.1",
+  "version": "0.10.1",
   "homepage": "https://github.com/bojand/mailgun-js",
   "license": "MIT",
   "repository": {
