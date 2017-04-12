@@ -432,6 +432,6 @@ The general design and some code was heavily inspired by [node-heroku-client](ht
 
 ## License
 
-Copyright 2012, 2013, 2014 OneLobby
+Copyright (c) 2012 - 2017 OneLobby and Bojan D.
 
 Licensed under the MIT License.

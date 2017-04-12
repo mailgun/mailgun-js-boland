@@ -31,7 +31,7 @@
     "tsscmp": "~1.0.0"
   },
   "author": {
-    "name": "Bojan Djurkovic <bojan@onelobby.com>"
+    "name": "Bojan Djurkovic <dbojan@gmail.com>"
   },
   "devDependencies": {
     "clone": "~2.1.0",
