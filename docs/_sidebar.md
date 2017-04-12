@@ -1,6 +1,7 @@
 - Guide
   - [Introduction](/README)
   - [Attachments](/attach)
+  - [Batch Sending](/batch)
   - [Generic Requests](/generic)
   - [Promises](/promises)
   - [Webhook Validation](/webhook)
