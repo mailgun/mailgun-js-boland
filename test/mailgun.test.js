@@ -1074,7 +1074,6 @@ module.exports = {
 
   'test mailgun.tags().list()': function (done) {
     mailgun.tags().list(function (err, body) {
-      console.dir(body, {depth: 5, colors: true})
       assert.ifError(err);
       assert.ok(body);
       done();
@@ -1083,7 +1082,6 @@ module.exports = {
 
   'test mailgun.tags().info()': function (done) {
     mailgun.tags('tag1').info(function (err, body) {
-      console.dir(body, {depth: 5, colors: true})
       assert.ifError(err);
       assert.ok(body);
       done();
