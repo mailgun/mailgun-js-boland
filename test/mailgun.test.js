@@ -1072,8 +1072,26 @@ module.exports = {
   // TAGS
   //
 
+  'test mailgun.tags().list()': function (done) {
+    mailgun.tags().list(function (err, body) {
+      console.dir(body, {depth: 5, colors: true})
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
+  },
+
+  'test mailgun.tags().info()': function (done) {
+    mailgun.tags('tag1').info(function (err, body) {
+      console.dir(body, {depth: 5, colors: true})
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
+  },
+
   'test mailgun.tags().delete()': function (done) {
-    mailgun.tags('newsletter').delete(function (err, body) {
+    mailgun.tags('tag1').delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
