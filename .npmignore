@@ -7,6 +7,7 @@ main.js
 _book
 
 # Additions for .npmignore only
+test
 /docs/
 /bin/
 /.npmignore
