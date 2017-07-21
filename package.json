@@ -37,7 +37,8 @@
     "clone": "~2.1.0",
     "mailcomposer": "~2.1.0",
     "mocha": "~3.4.0",
-    "request": "^2.67.0"
+    "request": "^2.67.0",
+    "standard": "^10.0.2"
   },
   "scripts": {
     "test": "mocha",
