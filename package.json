@@ -20,14 +20,14 @@
   },
   "main": "./lib/mailgun.js",
   "dependencies": {
-    "async": "~2.4.0",
+    "async": "~2.5.0",
     "debug": "~2.6.0",
-    "form-data": "~2.1.1",
+    "form-data": "~2.2.0",
     "inflection": "~1.12.0",
     "is-stream": "^1.1.0",
     "path-proxy": "~1.0.0",
     "promisify-call": "^2.0.2",
-    "proxy-agent": "~2.0.0",
+    "proxy-agent": "~2.1.0",
     "tsscmp": "~1.0.0"
   },
   "author": {
