@@ -1,11 +1,15 @@
 ## Email Addresses validation
 
-These routes require Mailgun public API key.
 Please check Mailgun [email validation documentation](https://documentation.mailgun.com/api-email-validation.html) for more responses details.
 
 ### Validate one Email Address
 
+**mailgun.validate(address, private, options, fn)**
+
 Checks if email is valid.
+
+- `private` - wether it's private validate
+- `options` - any additional options
 
 Example usage:
 
@@ -20,6 +24,11 @@ mailgun.validate('test@mail.com', function (err, body) {
 ```
 
 ### Parse Email Addresses list
+
+**mailgun.parse(address, private, options, fn)**
+
+- `private` - wether it's private validate
+- `options` - any additional options
 
 Parses list of email addresses and returns two lists: 
   - parsed email addresses

@@ -7,29 +7,28 @@ var path = require('path');
 var mailcomposer = require("mailcomposer");
 var request = require("request");
 
-var mailgun = require('../lib/mailgun')({apiKey: auth.api_key, domain: auth.domain});
+var mailgun = require('../lib/mailgun')({ apiKey: auth.api_key, domain: auth.domain });
 
 var routeId = -1;
 
-module.exports = {
-
-  beforeEach: function (done) {
+describe('mailgun-js', function () {
+  beforeEach(function (done) {
     setTimeout(done, 500);
-  },
+  });
 
   //
   // Messages
   //
 
-  'test messages.send() invalid "from"': function (done) {
-    mailgun.messages().send({to: fixture.message.to}, function (err, body) {
+  it('test messages.send() invalid "from"', function (done) {
+    mailgun.messages().send({ to: fixture.message.to }, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'from'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test messages().send()': function (done) {
+  it('test messages().send()', function (done) {
     var msg = clone(fixture.message);
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -38,9 +37,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with recipient vars': function (done) {
+  it('test messages().send() with recipient vars', function (done) {
     var msg = clone(fixture.message_recipient_vars);
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -49,9 +48,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with invalid attachment should go ok': function (done) {
+  it('test messages().send() with invalid attachment should go ok', function (done) {
     var msg = clone(fixture.message);
     msg.attachment = 123;
 
@@ -62,9 +61,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with attachment using filename': function (done) {
+  it('test messages().send() with attachment using filename', function (done) {
     var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/mailgun_logo.png');
     msg.attachment = filename;
@@ -76,9 +75,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with attachment using filename with important flag': function (done) {
+  it('test messages().send() with attachment using filename with important flag', function (done) {
     var msg = clone(fixture.message);
     msg.important = true;
     var filename = path.join(__dirname, '/mailgun_logo.png');
@@ -91,9 +90,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with attachment using filename and undefined v: var': function (done) {
+  it('test messages().send() with attachment using filename and undefined v: var', function (done) {
     var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/mailgun_logo.png');
     msg.attachment = filename;
@@ -107,9 +106,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with attachment using file buffer': function (done) {
+  it('test messages().send() with attachment using file buffer', function (done) {
     var msg = clone(fixture.message);
 
     var filename = path.join(__dirname, '/mailgun_logo.png');
@@ -124,16 +123,16 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with attachment using Attachment object (Buffer)': function (done) {
+  it('test messages().send() with attachment using Attachment object (Buffer)', function (done) {
     var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
     var file = fs.readFileSync(filepath);
 
-    msg.attachment = new mailgun.Attachment({data: file, filename: filename});
+    msg.attachment = new mailgun.Attachment({ data: file, filename: filename });
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -142,15 +141,15 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with attachment using Attachment object (file)': function (done) {
+  it('test messages().send() with attachment using Attachment object (file)', function (done) {
     var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
 
-    msg.attachment = new mailgun.Attachment({data: filepath, filename: 'my_custom_name.png'});
+    msg.attachment = new mailgun.Attachment({ data: filepath, filename: 'my_custom_name.png' });
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -159,9 +158,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with multiple attachments': function (done) {
+  it('test messages().send() with multiple attachments', function (done) {
     var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
@@ -176,9 +175,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with invalid inline attachment should go ok': function (done) {
+  it('test messages().send() with invalid inline attachment should go ok', function (done) {
     var msg = clone(fixture.message);
     msg.inline = 123;
 
@@ -189,9 +188,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with inline attachment using filename': function (done) {
+  it('test messages().send() with inline attachment using filename', function (done) {
     var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/mailgun_logo.png');
 
@@ -204,9 +203,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with inline attachment using file buffer': function (done) {
+  it('test messages().send() with inline attachment using file buffer', function (done) {
     var msg = clone(fixture.message);
 
     var filename = path.join(__dirname, '/mailgun_logo.png');
@@ -221,16 +220,16 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with inline attachment using Attachment object (Buffer)': function (done) {
+  it('test messages().send() with inline attachment using Attachment object (Buffer)', function (done) {
     var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
     var file = fs.readFileSync(filepath);
 
-    msg.inline = new mailgun.Attachment({data: file, filename: filename});
+    msg.inline = new mailgun.Attachment({ data: file, filename: filename });
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -239,15 +238,15 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with inline attachment using Attachment object (file)': function (done) {
+  it('test messages().send() with inline attachment using Attachment object (file)', function (done) {
     var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
     var filepath = path.join(__dirname, filename);
 
-    msg.inline = new mailgun.Attachment({data: filepath, filename: 'my_custom_name.png'});
+    msg.inline = new mailgun.Attachment({ data: filepath, filename: 'my_custom_name.png' });
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -256,9 +255,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with multiple inline attachments': function (done) {
+  it('test messages().send() with multiple inline attachments', function (done) {
     var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
@@ -273,9 +272,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with multiple inline and normal attachments': function (done) {
+  it('test messages().send() with multiple inline and normal attachments', function (done) {
     var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
     var filename2 = path.join(__dirname, '/mailgun_logo.png');
@@ -290,9 +289,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with multiple tags': function (done) {
+  it('test messages().send() with multiple tags', function (done) {
     var msg = clone(fixture.message);
 
     msg['o:tag'] = ['tag1', 'tag2', 'tag3'];
@@ -304,9 +303,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with multiple tags and normal attachment': function (done) {
+  it('test messages().send() with multiple tags and normal attachment', function (done) {
     var msg = clone(fixture.message);
     var filename = path.join(__dirname, '/fixture.json');
 
@@ -321,9 +320,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with attachment using stream': function (done) {
+  it('test messages().send() with attachment using stream', function (done) {
     var msg = clone(fixture.message);
 
     var file = request("https://www.google.ca/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
@@ -337,9 +336,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with attachment using Attachment object (stream)': function (done) {
+  it('test messages().send() with attachment using Attachment object (stream)', function (done) {
     var msg = clone(fixture.message);
 
     var filename = '/mailgun_logo.png';
@@ -361,9 +360,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with custom data': function (done) {
+  it('test messages().send() with custom data', function (done) {
     var msg = clone(fixture.message);
 
     msg['v:whatever'] = 123;
@@ -376,12 +375,12 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test messages().send() with custom data as object': function (done) {
+  it('test messages().send() with custom data as object', function (done) {
     var msg = clone(fixture.message);
 
-    msg['v:my-custom-data'] = {whatever: 123, test: true};
+    msg['v:my-custom-data'] = { whatever: 123, test: true };
 
     mailgun.messages().send(msg, function (err, body) {
       assert.ifError(err);
@@ -390,29 +389,29 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
   //
   // Domains
   //
 
-  'test domains().create() invalid missing address': function (done) {
+  it('test domains().create() invalid missing address', function (done) {
     mailgun.domains().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'name'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test domains().create() invalid missing smtp password': function (done) {
-    mailgun.domains().create({name: fixture.new_domain.name}, function (err, body) {
+  it('test domains().create() invalid missing smtp password', function (done) {
+    mailgun.domains().create({ name: fixture.new_domain.name }, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'smtp_password'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test domains().create() ': function (done) {
+  it('test domains().create() ', function (done) {
     this.skip();
     // mailgun.domains().create(fixture.new_domain, function (err, body) {
     //   assert.ifError(err);
@@ -423,63 +422,63 @@ module.exports = {
     //   assert.equal(fixture.new_domain.smtp_password, body.domain.smtp_password);
     //   done();
     // });
-  },
+  });
 
-  'test domains().list()': function (done) {
+  it('test domains().list()', function (done) {
     mailgun.domains().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test domains().info()': function (done) {
+  it('test domains().info()', function (done) {
     mailgun.domains(fixture.existing_domain.name).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body.domain);
       assert.equal(fixture.existing_domain.name, body.domain.name);
       done();
     });
-  },
+  });
 
-  'test domains().credentials().list()': function (done) {
+  it('test domains().credentials().list()', function (done) {
     mailgun.domains(fixture.existing_domain.name).credentials().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test domains().credentials().create() missing login': function (done) {
+  it('test domains().credentials().create() missing login', function (done) {
     mailgun.domains(fixture.existing_domain.name).credentials().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'login'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test domains().credentials().create() missing password': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials().create({login: fixture.credentials.login}, function (err, body) {
+  it('test domains().credentials().create() missing password', function (done) {
+    mailgun.domains(fixture.existing_domain.name).credentials().create({ login: fixture.credentials.login }, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'password'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test domains().credentials().create() invalid login type': function (done) {
+  it('test domains().credentials().create() invalid login type', function (done) {
     mailgun.domains(fixture.existing_domain.name).credentials().create({
       login: 123,
-      password: 'test'
+      password: 'password'
     }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test domains().credentials().create() invalid password type': function (done) {
+  it('test domains().credentials().create() invalid password type', function (done) {
     mailgun.domains(fixture.existing_domain.name).credentials().create({
       login: fixture.credentials.login,
       password: 123
@@ -488,9 +487,9 @@ module.exports = {
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test domains().credentials().create()': function (done) {
+  it('test domains().credentials().create()', function (done) {
     mailgun.domains(fixture.existing_domain.name).credentials().create({
       login: fixture.credentials.login,
       password: fixture.credentials.password
@@ -499,41 +498,41 @@ module.exports = {
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
-  'test domains().credentials().update() missing password': function (done) {
+  it('test domains().credentials().update() missing password', function (done) {
     mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'password'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test domains().credentials().update() invalid password type': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({password: 123}, function (err, body) {
+  it('test domains().credentials().update() invalid password type', function (done) {
+    mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({ password: 123 }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test domains().credentials().update()': function (done) {
-    mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({password: fixture.credentials.password}, function (err, body) {
+  it('test domains().credentials().update()', function (done) {
+    mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).update({ password: fixture.credentials.password }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
-  'test domains().credentials().delete()': function (done) {
+  it('test domains().credentials().delete()', function (done) {
     mailgun.domains(fixture.existing_domain.name).credentials(fixture.credentials.login).delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
-  'test domains().delete()': function (done) {
+  it('test domains().delete()', function (done) {
     this.skip();
     // var domain = fixture.new_domain.name;
     // mailgun.domains(domain).delete(function (err, body) {
@@ -542,142 +541,142 @@ module.exports = {
     //   assert(/Domain has been deleted/.test(body.message));
     //   done();
     // });
-  },
+  });
 
   //
   // Unsubscribes
   //
 
-  'test unsubscribes().create() missing address': function (done) {
+  it('test unsubscribes().create() missing address', function (done) {
     mailgun.unsubscribes().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'address'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test unsubscribes().create() missing tag': function (done) {
-    mailgun.unsubscribes().create({address: fixture.unsubscribe.address}, function (err, body) {
+  it('test unsubscribes().create() missing tag', function (done) {
+    mailgun.unsubscribes().create({ address: fixture.unsubscribe.address }, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'tag'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test unsubscribes().create() invalid address type': function (done) {
-    mailgun.unsubscribes().create({address: 123, tag: fixture.unsubscribe.tag}, function (err, body) {
+  it('test unsubscribes().create() invalid address type', function (done) {
+    mailgun.unsubscribes().create({ address: 123, tag: fixture.unsubscribe.tag }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test unsubscribes().create() invalid tag type': function (done) {
-    mailgun.unsubscribes().create({address: fixture.unsubscribe.address, tag: 10}, function (err, body) {
+  it('test unsubscribes().create() invalid tag type', function (done) {
+    mailgun.unsubscribes().create({ address: fixture.unsubscribe.address, tag: 10 }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test unsubscribes().create()': function (done) {
+  it('test unsubscribes().create()', function (done) {
     mailgun.unsubscribes().create(fixture.unsubscribe, function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
-  'test unsubscribes().list()': function (done) {
+  it('test unsubscribes().list()', function (done) {
     mailgun.unsubscribes().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test unsubscribes().info()': function (done) {
+  it('test unsubscribes().info()', function (done) {
     mailgun.unsubscribes(fixture.unsubscribe.address).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
-  'test unsubscribes().delete()': function (done) {
+  it('test unsubscribes().delete()', function (done) {
     mailgun.unsubscribes(fixture.unsubscribe.address).delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
   //
   // Bounces
   //
 
-  'test bounces().create() missing address': function (done) {
+  it('test bounces().create() missing address', function (done) {
     mailgun.bounces().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'address'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test bounces().create() invalid address type': function (done) {
-    mailgun.bounces().create({address: 123}, function (err, body) {
+  it('test bounces().create() invalid address type', function (done) {
+    mailgun.bounces().create({ address: 123 }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test bounces().create()': function (done) {
+  it('test bounces().create()', function (done) {
     mailgun.bounces().create(fixture.bounce, function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
-  'test bounces().list()': function (done) {
+  it('test bounces().list()', function (done) {
     mailgun.bounces().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test bounces().info()': function (done) {
+  it('test bounces().info()', function (done) {
     mailgun.bounces(fixture.bounce.address).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       assert.ok(body.address);
       done();
     });
-  },
+  });
 
-  'test bounces().delete()': function (done) {
+  it('test bounces().delete()', function (done) {
     mailgun.bounces(fixture.bounce.address).delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
   //
   // Routes
   //
 
-  'test routes().create() invalid missing expression': function (done) {
+  it('test routes().create() invalid missing expression', function (done) {
     mailgun.routes().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'expression'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test routes().create()': function (done) {
+  it('test routes().create()', function (done) {
     mailgun.routes().create(fixture.route, function (err, body) {
       assert.ifError(err);
       assert.ok(body);
@@ -685,29 +684,29 @@ module.exports = {
       routeId = body.route.id;
       done();
     });
-  },
+  });
 
-  'test routes().list()': function (done) {
+  it('test routes().list()', function (done) {
     mailgun.routes().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count >= 0);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test routes().info()': function (done) {
+  it('test routes().info()', function (done) {
     mailgun.routes(routeId).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body.route);
       assert.equal(routeId, body.route.id);
       done();
     });
-  },
+  });
 
-  'test routes().update() with one action argument': function (done) {
+  it('test routes().update() with one action argument', function (done) {
     mailgun.routes(routeId).update({
-      description: 'test new route update',
+      description: 'new route update',
       expression: 'match_recipient(".*@samples.mailgun.org")',
       action: 'forward("http://myhost.com/messages/")'
     }, function (err, body) {
@@ -716,9 +715,9 @@ module.exports = {
       assert.equal(routeId, body.id);
       done();
     });
-  },
+  });
 
-  'test routes().update() with two action arguments': function (done) {
+  it('test routes().update() with two action arguments', function (done) {
     mailgun.routes(routeId).update({
       description: 'test new route update',
       expression: 'match_recipient(".*@samples.mailgun.org")',
@@ -729,29 +728,29 @@ module.exports = {
       assert.equal(routeId, body.id);
       done();
     });
-  },
+  });
 
-  'test routes().delete()': function (done) {
+  it('test routes().delete()', function (done) {
     mailgun.routes(routeId).delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
   //
   // Mailing lists
   //
 
-  'test lists().create() invalid missing address': function (done) {
+  it('test lists().create() invalid missing address', function (done) {
     mailgun.lists().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'address'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test lists.create()': function (done) {
+  it('test lists.create()', function (done) {
     mailgun.lists().create(fixture.mailingList, function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
@@ -761,18 +760,18 @@ module.exports = {
       assert.equal(fixture.mailingList.description, body.list.description);
       done();
     });
-  },
+  });
 
-  'test lists.list()': function (done) {
+  it('test lists.list()', function (done) {
     mailgun.lists().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test lists().info()': function (done) {
+  it('test lists().info()', function (done) {
     mailgun.lists(fixture.mailingList.address).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body.list);
@@ -780,12 +779,12 @@ module.exports = {
       assert.ok(body.list.name);
       done();
     });
-  },
+  });
 
-  'test lists().update()': function (done) {
-    var name = 'Test List Updated';
+  it('test lists().update()', function (done) {
+    var name = 'List Updated';
     var desc = 'My updated test mailing list';
-    mailgun.lists(fixture.mailingList.address).update({name: name, description: desc}, function (err, body) {
+    mailgun.lists(fixture.mailingList.address).update({ name: name, description: desc }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       assert.equal(fixture.mailingList.address, body.list.address);
@@ -793,30 +792,30 @@ module.exports = {
       assert.equal(desc, body.list.description);
       done();
     });
-  },
+  });
 
-  'test lists().members().create() no member address': function (done) {
+  it('test lists().members().create() no member address', function (done) {
     mailgun.lists(fixture.mailingList.address).members().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'address'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test lists().members().create() invalid address type': function (done) {
-    mailgun.lists(fixture.mailingList.address).members().create({address: 1234}, function (err, body) {
+  it('test lists().members().create() invalid address type', function (done) {
+    mailgun.lists(fixture.mailingList.address).members().create({ address: 1234 }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test lists().members().create()': function (done) {
+  it('test lists().members().create()', function (done) {
     var data = {
       subscribed: true,
       address: 'bob@gmail.com',
       name: 'Bob Bar',
-      vars: {age: 26}
+      vars: { age: 26 }
     };
 
     mailgun.lists(fixture.mailingList.address).members().create(data, function (err, body) {
@@ -832,32 +831,32 @@ module.exports = {
       assert.equal(data.vars.age, body.member.vars.age);
       done();
     });
-  },
+  });
 
-  'test lists().members().list()': function (done) {
+  it('test lists().members().list()', function (done) {
     mailgun.lists(fixture.mailingList.address).members().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count >= 0);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test lists().members().pages().page()': function (done) {
-    mailgun.lists(fixture.mailingList.address).members().pages().page({page: 'first'}, function (err, body) {
+  it('test lists().members().pages().page()', function (done) {
+    mailgun.lists(fixture.mailingList.address).members().pages().page({ page: 'first' }, function (err, body) {
       assert.ifError(err);
       assert.ok(Array.isArray(body.items));
       assert.ok(typeof body.paging === 'object');
       done();
     });
-  },
+  });
 
-  'test lists.members().info()': function (done) {
+  it('test lists.members().info()', function (done) {
     var data = {
       subscribed: true,
       address: 'bob@gmail.com',
       name: 'Bob Bar',
-      vars: {age: 26}
+      vars: { age: 26 }
     };
 
     mailgun.lists(fixture.mailingList.address).members('bob@gmail.com').info(function (err, body) {
@@ -870,14 +869,14 @@ module.exports = {
       assert.equal(data.vars.age, body.member.vars.age);
       done();
     });
-  },
+  });
 
-  'test lists().members().update()': function (done) {
+  it('test lists().members().update()', function (done) {
     var data = {
       subscribed: false,
       address: 'foo@gmail.com',
       name: 'Foo Bar',
-      vars: {age: 36}
+      vars: { age: 36 }
     };
 
     mailgun.lists(fixture.mailingList.address).members('bob@gmail.com').update(data, function (err, body) {
@@ -891,48 +890,46 @@ module.exports = {
       assert.equal(data.vars.age, body.member.vars.age);
       done();
     });
-  },
+  });
 
-  'test lists().members().delete()': function (done) {
+  it('test lists().members().delete()', function (done) {
     var address = 'foo@gmail.com';
     mailgun.lists(fixture.mailingList.address).members(address).delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
-  'test lists().members().add() without upsert': function (done) {
-    var members = [
-      {
+  it('test lists().members().add() without upsert', function (done) {
+    var members = [{
         address: 'Alice <alice@example.com>',
-        vars: {age: 26}
+        vars: { age: 26 }
       },
       {
         name: 'Bob',
         address: 'bob@example.com',
-        vars: {age: 34}
+        vars: { age: 34 }
       }
     ];
 
-    mailgun.lists(fixture.mailingList.address).members().add({members: members}, function (err, body) {
+    mailgun.lists(fixture.mailingList.address).members().add({ members: members }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.list);
       assert.ok(body.list.members_count >= 0);
       done();
     });
-  },
+  });
 
-  'test lists().members().add()': function (done) {
-    var members = [
-      {
+  it('test lists().members().add()', function (done) {
+    var members = [{
         address: 'Alice <alice@example.com>',
-        vars: {age: 26}
+        vars: { age: 26 }
       },
       {
         name: 'Bob',
         address: 'bob@example.com',
-        vars: {age: 34}
+        vars: { age: 34 }
       }
     ];
 
@@ -945,30 +942,30 @@ module.exports = {
       assert.ok(body.list.members_count >= 0);
       done();
     });
-  },
+  });
 
-  'test lists().delete()': function (done) {
+  it('test lists().delete()', function (done) {
     mailgun.lists(fixture.mailingList.address).delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
   //
   // Campaigns
   //
 
-  'test campaigns().create() invalid missing address': function (done) {
+  it('test campaigns().create() invalid missing address', function (done) {
     mailgun.campaigns().create({}, function (err) {
       assert.ok(err);
       assert(/Missing parameter 'name'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test campaigns().create()': function (done) {
+  it('test campaigns().create()', function (done) {
     mailgun.campaigns().create(fixture.campaign, function (err, body) {
       assert.ifError(err);
       assert.ok(body);
@@ -978,26 +975,26 @@ module.exports = {
       // assert.equal(fixture.campaign.id, body.campaign.id);
       done();
     });
-  },
+  });
 
 
-  'test campaigns().list() with invalid `limit` param': function (done) {
-    mailgun.campaigns().list({limit: "foo"}, function (err, body) {
+  it('test campaigns().list() with invalid `limit` param', function (done) {
+    mailgun.campaigns().list({ limit: "foo" }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test campaigns().list() with invalid `skip` param': function (done) {
-    mailgun.campaigns().list({skip: "bar"}, function (err, body) {
+  it('test campaigns().list() with invalid `skip` param', function (done) {
+    mailgun.campaigns().list({ skip: "bar" }, function (err, body) {
       assert.ok(err);
       assert(/Invalid parameter type./.test(err.message));
       done();
     });
-  },
+  });
 
-  'test campaigns().list()': function (done) {
+  it('test campaigns().list()', function (done) {
     mailgun.campaigns().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
@@ -1005,9 +1002,9 @@ module.exports = {
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test campaigns().info()': function (done) {
+  it('test campaigns().info()', function (done) {
     mailgun.campaigns(fixture.campaign.id).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
@@ -1015,10 +1012,10 @@ module.exports = {
       assert.equal(fixture.campaign.name, body.name);
       done();
     });
-  },
+  });
 
-  'test campaigns().update()': function (done) {
-    mailgun.campaigns(fixture.campaign.id).update({name: fixture.campaign.newName}, function (err, body) {
+  it('test campaigns().update()', function (done) {
+    mailgun.campaigns(fixture.campaign.id).update({ name: fixture.campaign.newName }, function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       assert.ok(body.message);
@@ -1026,81 +1023,81 @@ module.exports = {
       assert.equal(fixture.campaign.newName, body.campaign.name);
       done();
     });
-  },
+  });
 
-  'test campaigns().delete()': function (done) {
+  it('test campaigns().delete()', function (done) {
     mailgun.campaigns(fixture.campaign.id).delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
   //
   // STATS
   //
 
-  'test mailgun.stats().list()': function (done) {
+  it('test mailgun.stats().list()', function (done) {
     mailgun.stats().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test mailgun.stats().list() with one argument': function (done) {
-    mailgun.stats().list({event: 'delivered'}, function (err, body) {
+  it('test mailgun.stats().list() with one argument', function (done) {
+    mailgun.stats().list({ event: 'delivered' }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test mailgun.stats().list() with arguments': function (done) {
-    mailgun.stats().list({event: ['sent', 'delivered']}, function (err, body) {
+  it('test mailgun.stats().list() with arguments', function (done) {
+    mailgun.stats().list({ event: ['sent', 'delivered'] }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
   //
   // TAGS
   //
 
-  'test mailgun.tags().list()': function (done) {
+  it('test mailgun.tags().list()', function (done) {
     mailgun.tags().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
-  'test mailgun.tags().info()': function (done) {
+  it('test mailgun.tags().info()', function (done) {
     mailgun.tags('tag1').info(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
-  'test mailgun.tags().delete()': function (done) {
+  it('test mailgun.tags().delete()', function (done) {
     mailgun.tags('tag1').delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
   //
   // EVENTS
   //
 
-  'test mailgun.events().get() simple recipient query': function (done) {
+  it('test mailgun.events().get() simple recipient query', function (done) {
     var query = {
       begin: 'Fri, 3 May 2013 09:00:00 -0000',
       ascending: 'yes',
@@ -1114,9 +1111,9 @@ module.exports = {
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test mailgun.events().get() simple event query': function (done) {
+  it('test mailgun.events().get() simple event query', function (done) {
     var query = {
       event: 'rejected OR failed'
     };
@@ -1126,69 +1123,69 @@ module.exports = {
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test mailgun.events().get() without any params': function (done) {
+  it('test mailgun.events().get() without any params', function (done) {
     mailgun.events().get(function (err, body) {
       assert.ifError(err);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
   //
   // GENERIC REST FUNCTIONS
   //
 
-  'test mailgun.get()': function (done) {
+  it('test mailgun.get()', function (done) {
     var path = '/' + auth.domain + '/stats';
-    mailgun.get(path, {event: ['sent', 'delivered']}, function (err, body) {
+    mailgun.get(path, { event: ['sent', 'delivered'] }, function (err, body) {
       assert.ifError(err);
       assert.ok(body.total_count);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test mailgun.get() using promises': function (done) {
+  it('test mailgun.get() using promises', function (done) {
     var path = '/' + auth.domain + '/stats';
-    mailgun.get(path, {event: ['sent', 'delivered']}).then(function(body) {
+    mailgun.get(path, { event: ['sent', 'delivered'] }).then(function (body) {
       assert.ok(body.total_count);
       assert.ok(body.items);
       done();
-    }).catch(function(err) {
+    }).catch(function (err) {
       assert.ifError(err);
       done()
     });
-  },
+  });
 
-  'test mailgun.get() using promises 2': function (done) {
-    var mg = new mailgun.Mailgun({apiKey: auth.public_api_key, domain: auth.domain})
-    mg.get('/address/validate', { address: 'testmg@gmail.com' }).then(body => {
+  it('test mailgun.get() using promises 2', function (done) {
+    var mg = new mailgun.Mailgun({ apiKey: auth.public_api_key, domain: auth.domain })
+    mg.get('/address/validate', { address: 'emailtestmg@gmail.com' }).then(body => {
       assert.ok(body);
       done();
     }).catch(err => {
       assert.ifError(err);
       done()
     });
-  },
+  });
 
   //
   // Constructor should be in instance
   //
 
-  'instance constructor': function () {
-    var mg = new mailgun.Mailgun({apiKey: auth.api_key, domain: auth.domain});
+  it('instance constructor', function () {
+    var mg = new mailgun.Mailgun({ apiKey: auth.api_key, domain: auth.domain });
     assert.ok(mg);
     assert.ok(mg instanceof mailgun.Mailgun);
     assert.ok(mg instanceof mg.Mailgun);
-  },
+  });
 
   //
   // Send MIME
   //
 
-  'test sendMime()': function (done) {
+  it('test sendMime()', function (done) {
     var mail = mailcomposer({
       from: fixture.message.from,
       to: fixture.message.to,
@@ -1198,7 +1195,6 @@ module.exports = {
     });
 
     mail.build(function (err, message) {
-
       var data = {
         to: fixture.message.to,
         message: message.toString('ascii')
@@ -1212,9 +1208,9 @@ module.exports = {
         done();
       });
     });
-  },
+  });
 
-  'test sendMime() with to field as array': function (done) {
+  it('test sendMime() with to field as array', function (done) {
     var mail = mailcomposer({
       from: fixture.message.from,
       to: fixture.message.to,
@@ -1224,7 +1220,6 @@ module.exports = {
     });
 
     mail.build(function (err, message) {
-
       var data = {
         to: fixture.message_recipient_vars.to,
         message: message.toString('ascii')
@@ -1238,10 +1233,10 @@ module.exports = {
         done();
       });
     });
-  },
+  });
 
 
-  'test sendMime() with file path': function (done) {
+  it('test sendMime() with file path', function (done) {
     var filePath = path.join(__dirname, '/message.eml');
 
     var data = {
@@ -1256,9 +1251,9 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
-  'test sendMime() with file stream': function (done) {
+  it('test sendMime() with file stream', function (done) {
     var filePath = path.join(__dirname, '/message.eml');
 
     var data = {
@@ -1273,74 +1268,73 @@ module.exports = {
       assert(/Queued. Thank you./.test(body.message));
       done();
     });
-  },
+  });
 
   //
   // ERROR
   //
 
-  'server error should have status code': function (done) {
-
-    mailgun.domains('testdomain@test123.com').info(function (err, body) {
+  it('server error should have status code', function (done) {
+    mailgun.domains('domaintest@test123.com').info(function (err, body) {
       assert.ok(err);
       assert.ok(err.statusCode);
       assert.equal(404, err.statusCode);
       done();
     });
-  },
+  });
 
   //
   // RETRY
   //
 
-  'messages().send() should work with retry option': function (done) {
-    var mg = new mailgun.Mailgun({
-      apiKey: auth.api_key,
-      domain: auth.domain,
-      retry: 3
+  if ('messages().send() should work with retry option', function (done) {
+      var mg = new mailgun.Mailgun({
+        apiKey: auth.api_key,
+        domain: auth.domain,
+        retry: 3
+      });
+
+      var msg = clone(fixture.message);
+      mg.messages().send(msg, function (err, body) {
+        assert.ifError(err);
+        assert.ok(body.id);
+        assert.ok(body.message);
+        assert(/Queued. Thank you./.test(body.message));
+        done();
+      });
     });
 
-    var msg = clone(fixture.message);
-    mg.messages().send(msg, function (err, body) {
-      assert.ifError(err);
-      assert.ok(body.id);
-      assert.ok(body.message);
-      assert(/Queued. Thank you./.test(body.message));
-      done();
-    });
-  },
+  if ('messages().send() should retry when request fails', function (done) {
+      process.env.DEBUG_MAILGUN_FORCE_RETRY = true;
+      var mg = new mailgun.Mailgun({
+        apiKey: auth.api_key,
+        domain: auth.domain,
+        retry: 3
+      });
 
-  'messages().send() should retry when request fails': function (done) {
-    process.env.DEBUG_MAILGUN_FORCE_RETRY = true;
-    var mg = new mailgun.Mailgun({
-      apiKey: auth.api_key,
-      domain: auth.domain,
-      retry: 3
+      var msg = clone(fixture.message);
+      mg.messages().send(msg, function (err, body) {
+        assert.ifError(err);
+        assert.ok(body.id);
+        assert.ok(body.message);
+        assert(/Queued. Thank you./.test(body.message));
+        done();
+      });
     });
-
-    var msg = clone(fixture.message);
-    mg.messages().send(msg, function (err, body) {
-      assert.ifError(err);
-      assert.ok(body.id);
-      assert.ok(body.message);
-      assert(/Queued. Thank you./.test(body.message));
-      done();
-    });
-  },
 
   //
   // Complaints
   //
 
-  'test complaints().create() missing address': function (done) {
+  it('test complaints().create() missing address', function (done) {
     mailgun.complaints().create({}, function (err, body) {
       assert.ok(err);
       assert(/Missing parameter 'address'/.test(err.message));
       done();
     });
-  },
+  });
 
-  'test complaints().create()': function (done) {
+  it('test complaints().create()', function (done) {
     mailgun.complaints().create({
       address: fixture.complaints.address
     }, function (err, body) {
@@ -1348,51 +1342,88 @@ module.exports = {
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
-  'test complaints().list()': function (done) {
+  it('test complaints().list()', function (done) {
     mailgun.complaints().list(function (err, body) {
       assert.ifError(err);
       assert.ok(body.items);
       done();
     });
-  },
+  });
 
-  'test complaints().info()': function (done) {
+  it('test complaints().info()', function (done) {
     mailgun.complaints(fixture.complaints.address).info(function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
-  'test complaints().delete()': function (done) {
+  it('test complaints().delete()', function (done) {
     mailgun.complaints(fixture.complaints.address).delete(function (err, body) {
       assert.ifError(err);
       assert.ok(body.message);
       done();
     });
-  },
+  });
 
   //
   // Email Adresses Validation
   //
 
-  'test mailgun.validate() should validate one email address': function (done) {
+  it('test mailgun.validate() should validate one email address', function (done) {
     var mg = new mailgun.Mailgun({apiKey: auth.api_key, publicApiKey: auth.public_api_key, domain: auth.domain})
-    mg.validate('test@gmail.com', function (err, body) {
+    mg.validate('raboof@gmail.com', function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  },
+  });
 
-  'test mailgun.parse() should parse list of email addresses': function (done) {
+  it('test mailgun.validate() should validate one email address using private option', function (done) {
     var mg = new mailgun.Mailgun({apiKey: auth.api_key, publicApiKey: auth.public_api_key, domain: auth.domain})
-    mg.parse([ 'testmg@gmail.com' ], function (err, body) {
+    mg.validate('raboof@gmail.com', true, function (err, body) {
       assert.ifError(err);
       assert.ok(body);
       done();
     });
-  }
-};
+  });
+
+  it('test mailgun.parse() should parse list of email addresses', function (done) {
+    var mg = new mailgun.Mailgun({apiKey: auth.api_key, publicApiKey: auth.public_api_key, domain: auth.domain})
+    mg.parse(['raboof@gmail.com'], function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
+  });
+
+  it('test mailgun.parse() should parse list of email addresses with an option', function (done) {
+    var mg = new mailgun.Mailgun({apiKey: auth.api_key, publicApiKey: auth.public_api_key, domain: auth.domain})
+    mg.parse(['raboof@gmail.com'], { syntax_only: false }, function (err, body) {
+      console.dir(body, {depth: 3, colors: true})
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
+  });
+
+  it('test mailgun.parse() should private parse list of email addresses with an option', function (done) {
+    var mg = new mailgun.Mailgun({apiKey: auth.api_key, publicApiKey: auth.public_api_key, domain: auth.domain})
+    mg.parse(['raboof@gmail.com'], true, { syntax_only: false }, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
+  });
+
+  it('test mailgun.parse() should parse list of email addresses using private option', function (done) {
+    var mg = new mailgun.Mailgun({apiKey: auth.api_key, publicApiKey: auth.public_api_key, domain: auth.domain})
+    mg.parse(['raboof@gmail.com'], true, function (err, body) {
+      assert.ifError(err);
+      assert.ok(body);
+      done();
+    });
+  });
+});
