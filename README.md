@@ -322,7 +322,7 @@ mailgun.get('/samples.mailgun.org/stats', { event: ['sent', 'delivered'] }, func
 
 ## Promises
 
-Module works with Node-style callbacks, but also implements promises with the [Q](http://github.com/kriskowal/q) library.
+Module works with Node-style callbacks, but also implements promises with the [promisify-call](https://www.npmjs.com/package/promisify-call) library.
 
 ```js
 mailgun.lists('mylist@mydomain.com').info().then(function (data) {
