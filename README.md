@@ -35,7 +35,7 @@ var data = {
   from: 'Excited User <me@samples.mailgun.org>',
   to: 'serobnic@mail.ru',
   subject: 'Hello',
-  text: 'Testing some Mailgun awesomness!'
+  text: 'Testing some Mailgun awesomeness!'
 };
 
 mailgun.messages().send(data, function (error, body) {
