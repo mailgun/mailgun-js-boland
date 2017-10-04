@@ -2,9 +2,13 @@
 
 Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
+[![npm version](https://img.shields.io/npm/v/mailgun-js.svg?style=flat-square)](https://www.npmjs.com/package/mailgun-js)
+[![License](https://img.shields.io/github/license/bojand/mailgun-js.svg?style=flat-square)](https://raw.githubusercontent.com/bojand/mailgun-js/master/LICENSE.txt)
+<!---
 [![NPM](https://nodei.co/npm/mailgun-js.png?downloads=true&stars=true)](https://nodei.co/npm/mailgun-js/)
 
 [![NPM](https://nodei.co/npm-dl/mailgun-js.png)](https://nodei.co/npm/mailgun-js/)
+-->
 
 ## Installation
 
