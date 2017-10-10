@@ -21,8 +21,8 @@
   "main": "./lib/mailgun.js",
   "dependencies": {
     "async": "~2.5.0",
-    "debug": "~2.6.0",
-    "form-data": "~2.2.0",
+    "debug": "~3.1.0",
+    "form-data": "~2.3.0",
     "inflection": "~1.12.0",
     "is-stream": "^1.1.0",
     "path-proxy": "~1.0.0",
@@ -35,8 +35,8 @@
   },
   "devDependencies": {
     "clone": "~2.1.0",
-    "mailcomposer": "~2.1.0",
-    "mocha": "~3.4.0",
+    "nodemailer": "~4.1.0",
+    "mocha": "~4.0.0",
     "request": "^2.67.0"
   },
   "scripts": {
