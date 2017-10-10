@@ -4,7 +4,7 @@ var clone = require('clone');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var mailcomposer = require("mailcomposer");
+const MailComposer = require('nodemailer/lib/mail-composer')
 var request = require("request");
 
 var mailgun = require('../lib/mailgun')({ apiKey: auth.api_key, domain: auth.domain });
@@ -1163,15 +1163,19 @@ describe('mailgun-js', function () {
 
   describe('Send MIME', function () {
     it('test sendMime()', function (done) {
-      var mail = mailcomposer({
+      var mailOptions = {
         from: fixture.message.from,
         to: fixture.message.to,
         subject: fixture.message.subject,
         body: fixture.message.text,
         html: '<b>' + fixture.message.text + '</b>'
-      });
+      };
 
-      mail.build(function (err, message) {
+      var mail = new MailComposer(mailOptions)
+
+      mail.compile().build((err, message) => {
+        assert.ifError(err);
+
         var data = {
           to: fixture.message.to,
           message: message.toString('ascii')
@@ -1188,15 +1192,19 @@ describe('mailgun-js', function () {
     });
 
     it('test sendMime() with to field as array', function (done) {
-      var mail = mailcomposer({
+      var mailOptions = {
         from: fixture.message.from,
         to: fixture.message.to,
         subject: fixture.message.subject,
         body: fixture.message.text,
         html: '<b>' + fixture.message.text + '</b>'
-      });
+      };
 
-      mail.build(function (err, message) {
+      var mail = new MailComposer(mailOptions)
+
+      mail.compile().build((err, message) => {
+        assert.ifError(err);
+
         var data = {
           to: fixture.message_recipient_vars.to,
           message: message.toString('ascii')

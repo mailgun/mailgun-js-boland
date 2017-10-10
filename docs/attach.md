@@ -120,35 +120,37 @@ mailgun.messages().send(data, function (error, body) {
 Sending messages in MIME format can be accomplished using the `sendMime()` function of the `messages()` proxy object.
 The `data` parameter for the function has to have `to` and `message` properties. The `message` property can be a full
 file path to the MIME file, a stream of the file (that is a `Stream` object), or a string representation of the MIME
-message. To build a MIME string you can use the [Mail Composer] (https://www.npmjs.org/package/mailcomposer) library.
+message. To build a MIME string you can use the [nodemailer] (https://www.npmjs.org/package/nodemailer) library.
 Some examples:
 
 ```js
 var domain = 'www.mydomain.com';
 var mailgun = require('mailgun-js')({ apiKey: "YOUR API KEY", domain: domain });
-var mailcomposer = require('mailcomposer');
+var MailComposer = require('nodemailer/lib/mail-composer');
 
-var mail = mailcomposer({
+var mailOptions = {
   from: 'you@samples.mailgun.org',
   to: 'mm@samples.mailgun.org',
-  subject: 'Test email subject',
-  text: 'Test email text',
-  html: '<b> Test email text </b>'
-});
+  subject: 'Hello testing mailgun',
+  text: 'testing message for mailgun'
+};
 
-mail.build(function(mailBuildError, message) {
+var mail = new MailComposer(mailOptions);
 
-    var dataToSend = {
-        to: 'mm@samples.mailgun.org',
-        message: message.toString('ascii')
-    };
+mail.compile().build((err, message) => {
+  var dataToSend = {
+    to: 'mm@samples.mailgun.org',
+    message: message.toString('ascii')
+  };
 
-    mailgun.messages().sendMime(dataToSend, function (sendError, body) {
-        if (sendError) {
-            console.log(sendError);
-            return;
-        }
-    });
+  mailgun.messages().sendMime(dataToSend, (err, body) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+
+    console.log(body);
+  });
 });
 ```
 #### Referencing MIME file
