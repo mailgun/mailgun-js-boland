@@ -131,8 +131,8 @@ var MailComposer = require('nodemailer/lib/mail-composer');
 var mailOptions = {
   from: 'you@samples.mailgun.org',
   to: 'mm@samples.mailgun.org',
-  subject: 'Hello testing mailgun',
-  text: 'testing message for mailgun'
+  subject: 'Test email subject',
+  text: 'Test email text'
 };
 
 var mail = new MailComposer(mailOptions);
