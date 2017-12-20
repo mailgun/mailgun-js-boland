@@ -2,7 +2,7 @@
 
 Please check Mailgun [email validation documentation](https://documentation.mailgun.com/api-email-validation.html) for more responses details.
 
-### Validate one Email Address
+### Validate Email Address
 
 **mailgun.validate(address, private, options, fn)**
 

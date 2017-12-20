@@ -374,9 +374,14 @@ function router(app) {
 These routes require Mailgun public API key.
 Please check Mailgun [email validation documentation](https://documentation.mailgun.com/api-email-validation.html) for more responses details.
 
-### Validate one Email Address
+### Validate Email Address
+
+**mailgun.validate(address, private, options, fn)**
 
 Checks if email is valid.
+
+- `private` - wether it's private validate
+- `options` - any additional options
 
 Example usage:
 
