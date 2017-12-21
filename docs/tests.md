@@ -1,12 +1,12 @@
 ## Tests <a id="tests"></a>
 
-To run the test suite you must first have a Mailgun account with a domain setup. Then create a file named _./test/auth.json_, which contains your credentials as JSON, for example:
+To run the test suite you must first have a Mailgun account with a domain setup. Then create a file named _./test/data/auth.json_, which contains your credentials as JSON, for example:
 
 ```json
-{ "api_key": "key-XXXXXXXXXXXXXXXXXXXXXXX", "domain": "mydomain.mailgun.org" }
+{ "api_key": "key-XXXXXXXXXXXXXXXXXXXXXXX", "public_api_key": "pubkey-XXXXXXXXXXXXXXXXXXXXXXX", "domain": "mydomain.mailgun.org" }
 ```
 
-You should edit _./test/fixture.json_ and modify the data to match your context.
+You should edit _./test/data/fixture.json_ and modify the data to match your context.
 
 Then install the dev dependencies and execute the test suite:
 

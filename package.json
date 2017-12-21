@@ -20,7 +20,7 @@
   },
   "main": "./lib/mailgun.js",
   "dependencies": {
-    "async": "~2.5.0",
+    "async": "~2.6.0",
     "debug": "~3.1.0",
     "form-data": "~2.3.0",
     "inflection": "~1.12.0",
@@ -35,12 +35,16 @@
   },
   "devDependencies": {
     "clone": "~2.1.0",
-    "nodemailer": "~4.1.0",
     "mocha": "~4.0.0",
-    "request": "^2.67.0"
+    "nodemailer": "~4.4.1",
+    "request": "^2.67.0",
+    "standard": "^10.0.3"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "npm run lint && npm run mocha",
+    "mocha": "mocha --ui exports --slow 1500ms --timeout 10000ms --reporter spec",
+    "lint": "standard lib/**/*.js && standard --env mocha test/**/*.js",
+    "lint:fix": "standard --fix lib/**/*.js && standard --env mocha --fix test/**/*.js",
     "docs": "./bin/docs"
   },
   "directories": {
