@@ -49,5 +49,11 @@
   },
   "directories": {
     "test": "test"
+  },
+  "standard": {
+    "env": {
+      "node": true,
+      "mocha": true
+    }
   }
 }
