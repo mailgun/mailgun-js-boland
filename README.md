@@ -221,7 +221,7 @@ mailgun.messages().send(data, function (error, body) {
 Sending messages in MIME format can be accomplished using the `sendMime()` function of the `messages()` proxy object.
 The `data` parameter for the function has to have `to` and `message` properties. The `message` property can be a full
 file path to the MIME file, a stream of the file, or a string representation of the MIME
-message. To build a MIME string you can use the [nodemailer] (https://www.npmjs.org/package/nodemailer) library.
+message. To build a MIME string you can use the [nodemailer](https://www.npmjs.org/package/nodemailer) library.
 Some examples:
 
 ```js
