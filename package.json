@@ -16,7 +16,7 @@
     "url": "http://github.com/bojand/mailgun-js/issues"
   },
   "engines": {
-    "node": ">=4.0"
+    "node": ">=6.0.0"
   },
   "main": "./lib/mailgun.js",
   "dependencies": {
