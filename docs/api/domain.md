@@ -44,3 +44,13 @@ Method | Path
 --- | ---
 DELETE | /domains/{domain}
 
+### `verify`
+
+Verifies and returns a single domain, including credentials and DNS records.
+
+`mailgun.domains({domain}).verify().verify({attributes}, {callback});`
+
+Method | Path
+--- | ---
+PUT | /domains/{domain}/verify
+

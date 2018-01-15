@@ -1,6 +1,6 @@
 # list
 
-You can programmatically work with mailing lists and mailing list memebers using Mailgun Mailing List API.
+You can programmatically work with mailing lists and mailing list members using Mailgun Mailing List API.
 
 ## Actions
 
