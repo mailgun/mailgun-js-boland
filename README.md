@@ -79,6 +79,10 @@ list.members().list(function (err, members) {
 list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
   console.log(body);
 });
+
+list.members('bob@gmail.com').delete(function (err, data) {
+  console.log(data);
+});
 ```
 
 #### Options
