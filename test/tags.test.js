@@ -20,7 +20,7 @@ describe('Tags', () => {
   })
 
   it('test mailgun.tags().info()', (done) => {
-    mailgun.tags('tag2').info((err, body) => {
+    mailgun.tags('tag1').info((err, body) => {
       assert.ifError(err)
       assert.ok(body)
       done()
@@ -28,7 +28,7 @@ describe('Tags', () => {
   })
 
   it('test mailgun.tags().stats().info()', (done) => {
-    mailgun.tags('tag2').stats().info({
+    mailgun.tags('tag1').stats().info({
       event: ['accepted', 'delivered', 'opened', 'clicked']
     }, (err, body) => {
       assert.ifError(err)
@@ -38,7 +38,7 @@ describe('Tags', () => {
   })
 
   it('test mailgun.tags().aggregates().countries().list()', (done) => {
-    mailgun.tags('tag2').stats().aggregates().countries().list((err, body) => {
+    mailgun.tags('tag1').stats().aggregates().countries().list((err, body) => {
       assert.ifError(err)
       assert.ok(body)
       assert.ok(body.countries)
@@ -47,7 +47,7 @@ describe('Tags', () => {
   })
 
   it('test mailgun.tags().aggregates().providers().list()', (done) => {
-    mailgun.tags('tag2').stats().aggregates().providers().list((err, body) => {
+    mailgun.tags('tag1').stats().aggregates().providers().list((err, body) => {
       assert.ifError(err)
       assert.ok(body)
       assert.ok(body.providers)
@@ -56,7 +56,7 @@ describe('Tags', () => {
   })
 
   it('test mailgun.tags().aggregates().devices().list()', (done) => {
-    mailgun.tags('tag2').stats().aggregates().devices().list((err, body) => {
+    mailgun.tags('tag1').stats().aggregates().devices().list((err, body) => {
       assert.ifError(err)
       assert.ok(body)
       assert.ok(body.devices)
