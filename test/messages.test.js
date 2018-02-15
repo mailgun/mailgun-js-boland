@@ -449,5 +449,48 @@ describe('Messages', () => {
         done()
       })
     })
+
+    it('messages().send() should work with retry option as an object', (done) => {
+      const mg = new mailgun.Mailgun({
+        'apiKey': auth.api_key,
+        'domain': auth.domain,
+        'retry': {
+          'times': 3,
+          'interval': 100
+        }
+      })
+
+      const msg = clone(fixture.message)
+
+      mg.messages().send(msg, (err, body) => {
+        assert.ifError(err)
+        assert.ok(body.id)
+        assert.ok(body.message)
+        assert(/Queued. Thank you./.test(body.message))
+        done()
+      })
+    })
+
+    it('messages().send() should retry when request fails with a delay of 100 ms between attempts', (done) => {
+      process.env.DEBUG_MAILGUN_FORCE_RETRY = true
+      const mg = new mailgun.Mailgun({
+        'apiKey': auth.api_key,
+        'domain': auth.domain,
+        'retry': {
+          'times': 3,
+          'interval': 100
+        }
+      })
+
+      const msg = clone(fixture.message)
+
+      mg.messages().send(msg, (err, body) => {
+        assert.ifError(err)
+        assert.ok(body.id)
+        assert.ok(body.message)
+        assert(/Queued. Thank you./.test(body.message))
+        done()
+      })
+    })
   })
 })
