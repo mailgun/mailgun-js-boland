@@ -15,6 +15,8 @@ Simple Node.js module for [Mailgun](http://www.mailgun.com).
 
 ## Usage overview
 
+This is a simple Node.js module for interacting with the [Mailgun](http://www.mailgun.com) API. This module is intended to be used within Node.js environment and **not** from the browser. For browser use the [mailgun.js](https://github.com/mailgun/mailgun-js) module.
+
 Please see [Mailgun Documentation](https://documentation.mailgun.com) for full Mailgun API reference.
 
 This module works by providing proxy objects for interacting with different resources through the Mailgun API.
