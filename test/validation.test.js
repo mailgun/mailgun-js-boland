@@ -63,10 +63,6 @@ describe('Email Validation', () => {
     mg.parse(['raboof@gmail.com'], {
       'syntax_only': false
     }, (err, body) => {
-      console.dir(body, {
-        'depth': 3,
-        'colors': true
-      })
       assert.ifError(err)
       assert.ok(body)
       done()

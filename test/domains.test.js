@@ -181,4 +181,46 @@ describe('Domains', () => {
       done()
     })
   })
+
+  it('test domains().tracking().into()', (done) => {
+    mailgun.domains(fixture.existing_domain.name).tracking().info((err, body) => {
+      assert.ifError(err)
+      assert.ok(body)
+      assert.ok(body.tracking)
+      done()
+    })
+  })
+
+  it('test domains().tracking().open().update()', (done) => {
+    mailgun.domains(fixture.existing_domain.name).tracking().open().update({ active: 'no' }, (err, body) => {
+      assert.ifError(err)
+      assert.ok(body)
+      assert.ok(body.open)
+      done()
+    })
+  })
+
+  it('test domains().tracking().click().update()', (done) => {
+    mailgun.domains(fixture.existing_domain.name).tracking().click().update({ active: false }, (err, body) => {
+      assert.ifError(err)
+      assert.ok(body)
+      assert.ok(body.click)
+      done()
+    })
+  })
+
+  it('test domains().tracking().unsubscribe().update()', (done) => {
+    const data = {
+      active: false,
+      html_footer: '<div>text</div>',
+      text_footer: 'text'
+    }
+
+    mailgun.domains(fixture.existing_domain.name).tracking().unsubscribe().update(data, (err, body) => {
+      assert.ifError(err)
+      assert.ok(body)
+      assert.ok(body.unsubscribe)
+      done()
+    })
+  })
 })
