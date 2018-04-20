@@ -27,7 +27,7 @@
     "is-stream": "^1.1.0",
     "path-proxy": "~1.0.0",
     "promisify-call": "^2.0.2",
-    "proxy-agent": "~2.1.0",
+    "proxy-agent": "~3.0.0",
     "tsscmp": "~1.0.0"
   },
   "author": {
@@ -35,10 +35,10 @@
   },
   "devDependencies": {
     "clone": "~2.1.0",
-    "mocha": "~4.0.0",
-    "nodemailer": "~4.4.1",
-    "request": "^2.67.0",
-    "standard": "^10.0.3"
+    "mocha": "~5.1.1",
+    "nodemailer": "~4.6.4",
+    "request": "^2.85.0",
+    "standard": "^11.0.0"
   },
   "scripts": {
     "test": "npm run lint && npm run mocha",
