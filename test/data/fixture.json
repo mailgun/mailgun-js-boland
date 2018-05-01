@@ -49,6 +49,10 @@
     "address": "me@test.mailgun.org",
     "tag": "*"
   },
+  "unsubscribe2": {
+    "address": "me2@test.mailgun.org",
+    "tag": ["some_tag"]
+  },
   "bounce": {
     "address": "me@test.mailgun.org"
   },
