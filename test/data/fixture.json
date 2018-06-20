@@ -35,8 +35,7 @@
     "description": "Mailgun developers list"
   },
   "new_domain": {
-    "name": "mgjsunits1234.mailgun.org",
-    "smtp_password": "testpassword1"
+    "name": "mgjsunits1234.mailgun.org"
   },
   "existing_domain": {
     "name": "sandbox77047.mailgun.org"

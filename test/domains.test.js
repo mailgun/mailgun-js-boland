@@ -20,16 +20,6 @@ describe('Domains', () => {
     })
   })
 
-  it('test domains().create() invalid missing smtp password', (done) => {
-    mailgun.domains().create({
-      'name': fixture.new_domain.name
-    }, (err) => {
-      assert.ok(err)
-      assert(/Missing parameter 'smtp_password'/.test(err.message))
-      done()
-    })
-  })
-
   it.skip('test domains().create() ', () => {
     // mailgun.domains().create(fixture.new_domain, function (err, body) {
     //   assert.ifError(err);
