@@ -380,6 +380,25 @@ describe('Messages', () => {
     })
   })
 
+  it('test messages().send() with attachment using Attachment object (stream) and only filename', (done) => {
+    const msg = clone(fixture.message)
+
+    const file = request('https://www.google.ca/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png')
+
+    msg.attachment = new mailgun.Attachment({
+      'data': file,
+      'filename': 'my_custom_name.png'
+    })
+
+    mailgun.messages().send(msg, (err, body) => {
+      assert.ifError(err)
+      assert.ok(body.id)
+      assert.ok(body.message)
+      assert(/Queued. Thank you./.test(body.message))
+      done()
+    })
+  })
+
   it('test messages().send() with custom data', (done) => {
     const msg = clone(fixture.message)
 
