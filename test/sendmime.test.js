@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const MailComposer = require('nodemailer/lib/mail-composer')
 
-const mailgun = require('../lib/mailgun')({
+const mailgun = require('../')({
   'apiKey': auth.api_key,
   'domain': auth.domain
 })

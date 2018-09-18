@@ -2,7 +2,7 @@
 
 var assert     = require('assert'),
     fs         = require('fs'),
-    Mailgun    = require('../lib/mailgun'),
+    Mailgun    = require('../'),
     mailgun    = new Mailgun({apiKey: 'asdf'}),
     inflection = require('inflection'),
     path       = require('path'),
@@ -225,6 +225,6 @@ function addAttribute (file, attributeName, attribute) {
 
 function checkAction (actionName, action) {
   var functionToTest = getFunctionCall(actionName, action).replace(/{.*}/g, '').slice(0, -3)
-  assert.equal(eval('typeof ' + functionToTest), 'function', functionToTest + ' is not a Function');
+  assert.strictEqual(eval('typeof ' + functionToTest), 'function', functionToTest + ' is not a Function');
   process.stdout.write(' ' + String.fromCharCode(0x2713));
 }

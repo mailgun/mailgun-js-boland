@@ -27,18 +27,18 @@
     "is-stream": "^1.1.0",
     "path-proxy": "~1.0.0",
     "promisify-call": "^2.0.2",
-    "proxy-agent": "~3.0.0",
-    "tsscmp": "~1.0.0"
+    "proxy-agent": "^3.0.3",
+    "tsscmp": "^1.0.6"
   },
   "author": {
     "name": "Bojan Djurkovic <dbojan@gmail.com>"
   },
   "devDependencies": {
-    "clone": "~2.1.0",
+    "clone": "^2.1.2",
     "mocha": "~5.2.0",
-    "nodemailer": "^4.6.7",
-    "request": "^2.87.0",
-    "standard": "^11.0.0"
+    "nodemailer": "^4.6.8",
+    "request": "^2.88.0",
+    "standard": "^12.0.0"
   },
   "scripts": {
     "test": "npm run lint && npm run mocha",

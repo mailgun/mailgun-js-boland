@@ -2,7 +2,7 @@ const auth = require('./data/auth.json')
 const fixture = require('./data/fixture.json')
 const assert = require('assert')
 
-const mailgun = require('../lib/mailgun')({
+const mailgun = require('../')({
   'apiKey': auth.api_key,
   'domain': auth.domain
 })
@@ -26,8 +26,8 @@ describe('Domains', () => {
     //   assert.ok(body.message);
     //   assert(/Domain has been created/.test(body.message));
     //   assert.ok(body.domain);
-    //   assert.equal(fixture.new_domain.name, body.domain.name);
-    //   assert.equal(fixture.new_domain.smtp_password, body.domain.smtp_password);
+    //   assert.strictEqual(fixture.new_domain.name, body.domain.name);
+    //   assert.strictEqual(fixture.new_domain.smtp_password, body.domain.smtp_password);
     //   done();
     // });
   })
@@ -45,7 +45,7 @@ describe('Domains', () => {
     mailgun.domains(fixture.existing_domain.name).info((err, body) => {
       assert.ifError(err)
       assert.ok(body.domain)
-      assert.equal(fixture.existing_domain.name, body.domain.name)
+      assert.strictEqual(fixture.existing_domain.name, body.domain.name)
       done()
     })
   })
@@ -167,7 +167,7 @@ describe('Domains', () => {
     mailgun.domains('domaintest@test123.com').info((err) => {
       assert.ok(err)
       assert.ok(err.statusCode)
-      assert.equal(404, err.statusCode)
+      assert.strictEqual(404, err.statusCode)
       done()
     })
   })

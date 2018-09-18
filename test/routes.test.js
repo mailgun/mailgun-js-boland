@@ -2,7 +2,7 @@ const auth = require('./data/auth.json')
 const fixture = require('./data/fixture.json')
 const assert = require('assert')
 
-const mailgun = require('../lib/mailgun')({
+const mailgun = require('../')({
   'apiKey': auth.api_key,
   'domain': auth.domain
 })
@@ -45,7 +45,7 @@ describe('Routes', () => {
     mailgun.routes(routeId).info((err, body) => {
       assert.ifError(err)
       assert.ok(body.route)
-      assert.equal(routeId, body.route.id)
+      assert.strictEqual(routeId, body.route.id)
       done()
     })
   })
@@ -58,7 +58,7 @@ describe('Routes', () => {
     }, (err, body) => {
       assert.ifError(err)
       assert.ok(body.message)
-      assert.equal(routeId, body.id)
+      assert.strictEqual(routeId, body.id)
       done()
     })
   })
@@ -71,7 +71,7 @@ describe('Routes', () => {
     }, (err, body) => {
       assert.ifError(err)
       assert.ok(body.message)
-      assert.equal(routeId, body.id)
+      assert.strictEqual(routeId, body.id)
       done()
     })
   })

@@ -2,7 +2,7 @@ const auth = require('./data/auth.json')
 const fixture = require('./data/fixture.json')
 const assert = require('assert')
 
-const mailgun = require('../lib/mailgun')({
+const mailgun = require('../')({
   'apiKey': auth.api_key,
   'domain': auth.domain
 })
