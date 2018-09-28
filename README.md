@@ -387,7 +387,7 @@ Please check Mailgun [email validation documentation](https://documentation.mail
 
 Checks if email is valid.
 
-- `private` - wether it's private validate
+- `private` - whether it's private validate
 - `options` - any additional options
 
 Example usage:
