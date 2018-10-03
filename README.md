@@ -96,7 +96,7 @@ list.members('bob@gmail.com').delete(function (err, data) {
 * `mute` - Set to `true` if you wish to mute the console error logs in `validateWebhook()` function
 * `proxy` - The proxy URI in format `http[s]://[auth@]host:port`. ex: `'http://proxy.example.com:8080'`
 * `timeout` - Request timeout in milliseconds
-* `host` - the mailgun host (default: 'api.mailgun.net')
+* `host` - the mailgun host (default: 'api.mailgun.net'). Note that if you are using the EU region the host should be set to  'api.eu.mailgun.net'
 * `protocol` - the mailgun protocol (default: 'https:', possible values: 'http:' or 'https:')
 * `port` - the mailgun port (default: '443')
 * `endpoint` - the mailgun host (default: '/v3')
