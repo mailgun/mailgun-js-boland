@@ -44,7 +44,7 @@ mailgun.messages().send(data, function (error, body) {
 });
 ```
 
-Note that the `to` field is required and should contain all recipients ("TO", "CC" and "BCC") of the message (see https://documentation.mailgun.com/api-sending.html#sending). Additionally `cc` and `bcc` fields can be specified. Recipients in those fields will be addressed as such.
+Note that the `to` field is required and should be a string containing 1 or more comma-separated addresses. Additionally `cc` and `bcc` fields can be specified. Recipients in those fields will be addressed as such.  See https://documentation.mailgun.com/api-sending.html#sending for additional details.
 
 Messages stored using the Mailgun `store()` action can be retrieved using `messages(<message_key>).info()` function.
 Optionally the MIME representation of the message can be retrieved if `MIME` argument is passed in and set to `true`.
@@ -101,9 +101,9 @@ list.members('bob@gmail.com').delete(function (err, data) {
 * `port` - the mailgun port (default: '443')
 * `endpoint` - the mailgun host (default: '/v3')
 * `retry` - the number of **total attempts** to do when performing requests. Default is `1`.
-That is, we will try an operation only once with no retries on error. You can also use a config 
+That is, we will try an operation only once with no retries on error. You can also use a config
 object compatible with the `async` library for more control as to how the retries take place.
-See docs [here](https://caolan.github.io/async/docs.html#retry) 
+See docs [here](https://caolan.github.io/async/docs.html#retry)
 
 
 #### Attachments
