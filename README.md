@@ -28,7 +28,7 @@ of the `error` object passed in the callback.
 See the `/docs` folder for detailed documentation. For full usage examples see the `/test` folder.
 
 ```js
-var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
+var api_key = 'XXXXXXXXXXXXXXXXXXXXXXX';
 var domain = 'www.mydomain.com';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
@@ -428,7 +428,7 @@ mailgun.parse([ 'test@mail.com', 'test2@mail.com' ], function (err, body) {
 To run the test suite you must first have a Mailgun account with a domain setup. Then create a file named _./test/data/auth.json_, which contains your credentials as JSON, for example:
 
 ```json
-{ "api_key": "key-XXXXXXXXXXXXXXXXXXXXXXX", "public_api_key": "pubkey-XXXXXXXXXXXXXXXXXXXXXXX", "domain": "mydomain.mailgun.org" }
+{ "api_key": "XXXXXXXXXXXXXXXXXXXXXXX", "public_api_key": "XXXXXXXXXXXXXXXXXXXXXXX", "domain": "mydomain.mailgun.org" }
 ```
 
 You should edit _./test/data/fixture.json_ and modify the data to match your context.
