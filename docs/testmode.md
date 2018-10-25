@@ -3,7 +3,7 @@
 Test mode can be turned on using `testMode` option. When on, no requests are actually sent to Mailgun, rather we log the request options and applicable payload and form data. By default we log to `console.log`, unless `DEBUG` is turned on, in which case we use debug logging.
 
 ```js
-mailgun = require('../')({ apiKey: api_key, domain: domain, testMode: true })
+mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain, testMode: true })
 
 const data = {
   from: 'mailgunjs+test1@gmail.com',
@@ -47,7 +47,7 @@ const logger = (httpOptions, payload, form) => {
   console.log(`%s %s payload: %s form: %s`, method, path, hasPayload, hasForm)
 }
 
-mailgun = require('../')({ apiKey: api_key, domain: domain, testMode: true, testModeLogger: logger })
+mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain, testMode: true, testModeLogger: logger })
 
 const data = {
   from: 'mailgunjs+test1@gmail.com',
