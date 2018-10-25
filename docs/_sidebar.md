@@ -6,6 +6,8 @@
   - [Promises](/promises)
   - [Webhook Validation](/webhook)
   - [Email Validation](/email_validation)
+  - [Debug Logging](/debug)
+  - [Test Mode](/testmode)
   - [Tests](/tests)
 - API Reference
   - [Message](/api/message)
