@@ -4,8 +4,11 @@ const clone = require('clone')
 const assert = require('assert')
 const path = require('path')
 const debug = require('debug')
+const sinon = require('sinon')
 
 let mailgun
+let log, sandbox
+
 describe('test mode', () => {
   describe('default operation', () => {
     before(() => {
@@ -24,7 +27,9 @@ describe('test mode', () => {
       const msg = clone(fixture.message)
 
       mailgun.messages().send(msg, (err, body) => {
-        assert.ifError(err)
+        assert.strictEqual(err, undefined)
+        assert.strictEqual(body, undefined)
+
         done()
       })
     })
@@ -36,7 +41,8 @@ describe('test mode', () => {
       msg.attachment = filename
 
       mailgun.messages().send(msg, (err, body) => {
-        assert.ifError(err)
+        assert.strictEqual(err, undefined)
+        assert.strictEqual(body, undefined)
 
         done()
       })
@@ -66,7 +72,9 @@ describe('test mode', () => {
       const msg = clone(fixture.message)
 
       mailgun.messages().send(msg, (err, body) => {
-        assert.ifError(err)
+        assert.strictEqual(err, undefined)
+        assert.strictEqual(body, undefined)
+
         done()
       })
     })
@@ -89,14 +97,34 @@ describe('test mode', () => {
     })
 
     beforeEach(done => {
+      sandbox = sinon.createSandbox()
+      log = sandbox.spy(console, 'log')
+
       setTimeout(done, 100)
+    })
+
+    afterEach(() => {
+      sandbox.restore()
     })
 
     it('test messages().send()', done => {
       const msg = clone(fixture.message)
 
       mailgun.messages().send(msg, (err, body) => {
-        assert.ifError(err)
+        assert.strictEqual(err, undefined)
+        assert.strictEqual(body, undefined)
+
+        assert.ok(log.calledOnce)
+        assert.ok(
+          log.calledWith(
+            `%s %s payload: %s form: %s`,
+            'POST',
+            '/v3/sandbox77047.mailgun.org/messages',
+            true,
+            false
+          )
+        )
+
         done()
       })
     })
@@ -108,7 +136,19 @@ describe('test mode', () => {
       msg.attachment = filename
 
       mailgun.messages().send(msg, (err, body) => {
-        assert.ifError(err)
+        assert.strictEqual(err, undefined)
+        assert.strictEqual(body, undefined)
+
+        assert.ok(log.calledOnce)
+        assert.ok(
+          log.calledWith(
+            `%s %s payload: %s form: %s`,
+            'POST',
+            '/v3/sandbox77047.mailgun.org/messages',
+            false,
+            true
+          )
+        )
 
         done()
       })
