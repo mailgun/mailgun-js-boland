@@ -8,6 +8,10 @@ Simple Node.js module for [Mailgun](http://www.mailgun.com).
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://www.paypal.me/bojandj)
 [![Buy me a coffee](https://img.shields.io/badge/buy%20me-a%20coffee-orange.svg?style=flat-square)](https://www.buymeacoffee.com/bojand)
 
+# Maintenance Notice
+
+This library is no longer maintained. It was started over [6 years ago](https://github.com/bojand/mailgun-js/commit/7a1a1407a1105945a7e435e0a65b986ea34f320c) because we were Mailgun customers and needed a good Node.js client. Since then this module has become more popular then ever expected, and even [official documentation](https://documentation.mailgun.com/en/latest/api-sending.html#examples) references it. Likewise a lot has changed over the years. Due to various factors my employer nor I use Mailgun any more, and we have not for a couple of years now. I have attempted to maintain the library but over time that has proved increasingly more difficult as I do not use it and have no need for it. I have reached out to Mailgun to inquire if they would take over the module and repository but never received any meaningful response. I would be happy to add a well-intentioned contributor to maintain this; but I do not have the time, incentive, and plans to maintain this module any more.
+
 ## Installation
 
 `npm install mailgun-js`
