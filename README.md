@@ -107,7 +107,7 @@ list.members('bob@gmail.com').delete(function (err, data) {
 * `retry` - the number of **total attempts** to do when performing requests. Default is `1`.
 That is, we will try an operation only once with no retries on error. You can also use a config
 object compatible with the `async` library for more control as to how the retries take place.
-See docs [here](https://caolan.github.io/async/docs.html#retry)
+See docs [here](https://caolan.github.io/async/v3/docs.html#retry)
 * `testMode` - turn test mode on. If test mode is on, no requests are made, rather the request options and data is logged
 * `testModeLogger` - custom test mode logging function
 
