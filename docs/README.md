@@ -90,7 +90,7 @@ list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
 * `publicApiKey` - Your public Mailgun API KEY
 * `domain` - Your Mailgun Domain (Please note: domain field is `MY-DOMAIN-NAME.com`, not https://api.mailgun.net/v3/MY-DOMAIN-NAME.com)
 * `mute` - Set to `true` if you wish to mute the console error logs in `validateWebhook()` function
-* `proxy` - The proxy URI in format `http[s]://[auth@]host:port`. ex: `'http://proxy.example.com:8080'`
+* `agent` - The [Agent](https://nodejs.org/docs/latest-v10.x/api/http.html#http_class_http_agent) to use - see [request](https://nodejs.org/docs/latest-v10.x/api/http.html#http_http_request_options_callback) options for the provided values. **Note** When providing an `agent` it must be able to handle the provided (or default) `protocol`.
 * `timeout` - Request timeout in milliseconds
 * `host` - the mailgun host (default: 'api.mailgun.net')
 * `protocol` - the mailgun protocol (default: 'https:', possible values: 'http:' or 'https:')
